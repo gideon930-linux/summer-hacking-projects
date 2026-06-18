@@ -1,2 +1,85 @@
-# summer-hacking-projects
-My summer cybersecurity project tracker and beginner-friendly lab documentation.
+# Summer Hacking Projects
+
+A beginner-friendly cybersecurity project tracker built to document my hands-on learning, track progress, and help other beginners follow along.
+
+## Live Tracker
+
+[View the tracker](https://gideon930-linux.github.io/summer-hacking-projects/)
+
+## About This Repository
+
+This repository is part of my cybersecurity learning journey as a student building practical skills in a safe lab environment. My goal is to complete hands-on projects, document what I learn, and build a public portfolio that shows real growth over time.
+
+## What This Tracker Includes
+
+- An interactive GitHub Pages project tracker
+- Beginner and intermediate cybersecurity project ideas
+- Progress tracking for completed projects
+- A place to organize notes and future writeups
+- A beginner-friendly portfolio project
+
+## Focus Areas
+
+- Network scanning and enumeration
+- Packet capture and traffic analysis
+- Web application testing
+- Password attacks in controlled labs
+- OSINT and reconnaissance
+- Vulnerability scanning
+- Lab documentation and writeups
+
+## Rules for This Project
+
+All work should be done only in legal, authorized, and controlled environments such as:
+
+- My homelab
+- CTF platforms
+- Intentionally vulnerable machines
+- Personal test systems
+
+## Current Goal
+
+My goal is to complete and document cybersecurity projects this summer, improve my practical skills, and create writeups that are useful to other beginners. [cite:6]
+
+## Planned Workflow
+
+For each project I complete, I plan to add:
+
+1. The objective
+2. Tools used
+3. Lab setup
+4. Commands or steps
+5. Results
+6. Screenshots
+7. Lessons learned
+
+## Project Progress
+
+- [ ] Port Scanning with Nmap
+- [ ] Network Packet Analysis
+- [ ] DNS Enumeration
+- [ ] HTTP Headers Analysis
+- [ ] Burp Suite Basics
+
+## Related Repository
+
+I also document my broader homelab and cybersecurity work here:
+
+[homelab-cyber-range](https://github.com/gideon930-linux/homelab-cyber-range)
+
+## Tools I Commonly Use
+
+- Kali Linux
+- Proxmox
+- OPNsense
+- Ubuntu
+- Windows 11
+- Docker
+- Nmap
+- Wireshark
+- Burp Suite
+- OpenVAS
+
+## Author
+
+GitHub: [gideon930-linux](https://github.com/gideon930-linux)
