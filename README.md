@@ -1,10 +1,12 @@
+# Summer Hacking Project 
+
 Port Scanning with Nmap — quickest win, builds momentum.
 
 DNS Enumeration — natural follow-up after discovering hosts and services.
 
 Network Packet Analysis — finish with Wireshark so you can capture traffic from the first two.# Summer Hacking Projects
 
-A beginner-friendly cybersecurity project tracker built to document my hands-on learning, track progress, and help other beginners follow along.
+# A beginner-friendly cybersecurity project tracker built to document my hands-on learning, track progress, and help other beginners follow along.
 
 ## Live Tracker
 
