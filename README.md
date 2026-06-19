@@ -67,6 +67,10 @@ For each project I complete, I plan to add:
 - [ ] HTTP Headers Analysis
 - [ ] Burp Suite Basics
 
+## Completed Project Writeups
+
+- [Project 01 – Port Scanning with Nmap](./01-port-scanning-with-nmap.md)
+
 ## Related Repository
 
 I also document my broader homelab and cybersecurity work here:
