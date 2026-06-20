@@ -225,16 +225,16 @@
       { id:40, level:"intermediate", title:"Creating Custom Exploits for Web Applications", tools:["Python","Burp Suite","Lab Apps"], desc:"Write small proof-of-concept requests for issues you already understand in safe training targets.", steps:["Pick a known lab vulnerability","Manually reproduce it first","Build a minimal Python PoC","Validate carefully","Document how the exploit works"] }
     ];
 
-    const state = {
-  filter: 'all',
-  query: '',
-  completed: {
-    1: true,
-    17: true
-  },
-  notes: {},
-  selectedId: null
-};
+     const state = {
+   filter: 'all',
+   query: '',
+   completed: {
+     1: true,
+     17: true
+   },
+   notes: {},
+   selectedId: null
+   };
 
     const beginnerGrid = document.getElementById('beginnerGrid');
     const intermediateGrid = document.getElementById('intermediateGrid');
