@@ -243,7 +243,7 @@ dig example.com TXT
 
 # Reverse lookup for a known IP
 dig -x 8.8.8.8
-
+ 
 # Query a specific DNS server directly
 dig @8.8.8.8 example.com
 
