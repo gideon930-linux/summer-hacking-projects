@@ -115,6 +115,11 @@ Results:
 - Service/version detection gives much better context than a basic scan alone.
 - The Ubuntu server had minimal exposure, while the lab host exposed several web-related services.
 
+## Completed Project Writeups
+
+- [Project 01 – Port Scanning with Nmap](01-port-scanning-with-nmap.md)
+- [Project 02 – DNS Enumeration with dig](02-dns-enumeration.md)
+  
 ## Files Created
 
 - `nmap-host-discovery.txt`
