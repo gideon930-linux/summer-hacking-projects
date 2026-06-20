@@ -69,8 +69,9 @@ For each project I complete, I plan to add:
 
 ## Completed Project Writeups
 
-- [Project 01 – Port Scanning with Nmap](./01-port-scanning-with-nmap.md)
-
+- [Project 01 – Port Scanning with Nmap](01-port-scanning-with-nmap.md)
+- [Project 02 – DNS Enumeration with dig](02-dns-enumeration.md)
+  
 ## Related Repository
 
 I also document my broader homelab and cybersecurity work here:
