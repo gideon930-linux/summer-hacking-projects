@@ -226,12 +226,15 @@
     ];
 
     const state = {
-      filter: 'all',
-      query: '',
-      completed: {},
-      notes: {},
-      selectedId: null
-    };
+  filter: 'all',
+  query: '',
+  completed: {
+    1: true,
+    17: true
+  },
+  notes: {},
+  selectedId: null
+};
 
     const beginnerGrid = document.getElementById('beginnerGrid');
     const intermediateGrid = document.getElementById('intermediateGrid');
