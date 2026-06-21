@@ -594,8 +594,11 @@
     </div>
   </div>
 
+
   <script>
+    // ── Project Data (40 total: 20 beginner, 20 intermediate) ─────────────────
     const projects = [
+      // ── BEGINNER ──────────────────────────────────────────────────────────
       {
         id: 0,
         title: "Network Mapping Basics",
@@ -688,67 +691,6 @@
       },
       {
         id: 6,
-        title: "Web Directory Enumeration",
-        difficulty: "intermediate",
-        description: "Enumerate directories and files on a lab web target to find exposed content.",
-        tags: ["web", "enumeration", "gobuster"],
-        tools: ["Gobuster", "curl", "Lab web target"],
-        goal: "Understand how content discovery supports web assessment.",
-        steps: [
-          "Run directory enumeration against a lab web app.",
-          "Identify valid directories and files.",
-          "Review the HTTP response codes.",
-          "Document interesting findings."
-        ]
-      },
-      {
-        id: 7,
-        title: "Vulnerability Scan Review",
-        difficulty: "intermediate",
-        description: "Run a lab vulnerability scan and analyze the results for useful remediation planning.",
-        tags: ["openvas", "vulnerability-management", "reporting"],
-        tools: ["OpenVAS", "Target VM", "Browser"],
-        goal: "Learn how to interpret scanner output instead of just running scans.",
-        steps: [
-          "Launch a scan against a safe target.",
-          "Review severity ratings and affected services.",
-          "Pick one finding and explain the risk.",
-          "Write a simple remediation note."
-        ]
-      },
-      {
-        id: 8,
-        title: "HTTP Header Inspection",
-        difficulty: "intermediate",
-        description: "Inspect security-related HTTP headers and understand their defensive purpose.",
-        tags: ["http", "headers", "web-security"],
-        tools: ["Browser DevTools", "curl", "Lab site"],
-        goal: "Learn how response headers affect browser security behavior.",
-        steps: [
-          "Inspect response headers from a site you control.",
-          "Look for HSTS, CSP, and X-Frame-Options.",
-          "Note which headers are missing.",
-          "Explain what each one helps protect."
-        ]
-      },
-
-      {
-        id: 9,
-        title: "SMB Share Enumeration",
-        difficulty: "intermediate",
-        description: "Enumerate SMB shares and identify accessible resources in a Windows-focused lab.",
-        tags: ["smb", "windows", "enumeration"],
-        tools: ["smbclient", "enum4linux", "Windows target"],
-        goal: "Understand how file sharing exposure appears during enumeration.",
-        steps: [
-          "Identify an SMB-enabled host.",
-          "Enumerate available shares.",
-          "Record anonymous versus authenticated access.",
-          "Document risky findings and basic remediation ideas."
-        ]
-      },
-      {
-        id: 10,
         title: "SSH Hardening Check",
         difficulty: "beginner",
         description: "Review SSH settings on a Linux host and identify safer baseline configurations.",
@@ -763,7 +705,7 @@
         ]
       },
       {
-        id: 11,
+        id: 7,
         title: "Password Hash Identification",
         difficulty: "beginner",
         description: "Practice recognizing common password hash formats in sample lab data.",
@@ -778,7 +720,7 @@
         ]
       },
       {
-        id: 12,
+        id: 8,
         title: "Simple Bash Automation",
         difficulty: "beginner",
         description: "Write a short bash script to automate a repetitive recon or logging task.",
@@ -793,37 +735,7 @@
         ]
       },
       {
-        id: 13,
-        title: "Web Login Surface Review",
-        difficulty: "intermediate",
-        description: "Inspect a lab login page for obvious attack surface and defensive controls.",
-        tags: ["web", "auth", "assessment"],
-        tools: ["Browser DevTools", "curl", "Lab app"],
-        goal: "Learn to review authentication surfaces methodically.",
-        steps: [
-          "Inspect form fields and requests.",
-          "Review response behavior for failed logins.",
-          "Look for security headers and cookie flags.",
-          "Document observations and recommendations."
-        ]
-      },
-      {
-        id: 14,
-        title: "Container Exposure Review",
-        difficulty: "intermediate",
-        description: "Review a Docker or LXC service for unnecessary exposure such as open ports or weak defaults.",
-        tags: ["docker", "lxc", "hardening"],
-        tools: ["docker", "ss", "netstat"],
-        goal: "Understand how container services can accidentally broaden attack surface.",
-        steps: [
-          "List running containers or services.",
-          "Review exposed ports and bindings.",
-          "Check for default credentials or unnecessary services.",
-          "Write a hardening checklist."
-        ]
-      },
-      {
-        id: 15,
+        id: 9,
         title: "HTTP Response Code Review",
         difficulty: "beginner",
         description: "Test pages and endpoints to understand common HTTP status codes in context.",
@@ -838,7 +750,7 @@
         ]
       },
       {
-        id: 16,
+        id: 10,
         title: "Service Banner Grabbing",
         difficulty: "beginner",
         description: "Collect service banners from lab hosts and review what information they reveal.",
@@ -851,9 +763,473 @@
           "Compare banners with scan results.",
           "Record what information should ideally be hidden."
         ]
+      },
+      {
+        id: 11,
+        title: "Open Port Risk Assessment",
+        difficulty: "beginner",
+        description: "Scan a lab machine and assess which open ports represent risk and why.",
+        tags: ["nmap", "risk", "ports"],
+        tools: ["Nmap", "notes", "CVE references"],
+        goal: "Connect open ports to real risk context instead of just listing them.",
+        steps: [
+          "Run a full port scan on a lab target.",
+          "Look up the purpose of each open port.",
+          "Rate each port as low, medium, or high risk for your environment.",
+          "Recommend which ports should be closed or filtered."
+        ]
+      },
+      {
+        id: 12,
+        title: "File Permission Audit",
+        difficulty: "beginner",
+        description: "Review Linux file and directory permissions for misconfigurations on a lab host.",
+        tags: ["linux", "permissions", "hardening"],
+        tools: ["ls -la", "find", "chmod"],
+        goal: "Understand how overly permissive file settings create risk.",
+        steps: [
+          "List permissions on sensitive directories.",
+          "Find world-writable files using find.",
+          "Identify any SUID or SGID binaries.",
+          "Document recommended permission changes."
+        ]
+      },
+      {
+        id: 13,
+        title: "User Account Enumeration",
+        difficulty: "beginner",
+        description: "Identify local user accounts on a Linux lab host and assess their privileges.",
+        tags: ["linux", "users", "enumeration"],
+        tools: ["/etc/passwd", "id", "groups"],
+        goal: "Learn what account information is exposed on a local system.",
+        steps: [
+          "Review /etc/passwd for user accounts.",
+          "Check sudo and group memberships.",
+          "Identify any unnecessary or default accounts.",
+          "Document accounts that should be removed or restricted."
+        ]
+      },
+      {
+        id: 14,
+        title: "ICMP and Ping Analysis",
+        difficulty: "beginner",
+        description: "Use ping and Wireshark together to understand ICMP traffic and what it reveals.",
+        tags: ["icmp", "ping", "wireshark"],
+        tools: ["ping", "Wireshark", "Lab host"],
+        goal: "Connect command-line output to raw packet-level detail.",
+        steps: [
+          "Ping a lab host while capturing in Wireshark.",
+          "Identify ICMP request and reply packets.",
+          "Record TTL values and what they suggest.",
+          "Test what happens when a host is unreachable."
+        ]
+      },
+      {
+        id: 15,
+        title: "cron Job Review",
+        difficulty: "beginner",
+        description: "Inspect scheduled tasks on a Linux lab host for potential persistence or abuse vectors.",
+        tags: ["cron", "linux", "persistence"],
+        tools: ["crontab", "/etc/cron.d", "ls"],
+        goal: "Understand where attackers hide persistent tasks and how defenders find them.",
+        steps: [
+          "List all user and system cron jobs.",
+          "Review what each scheduled task does.",
+          "Identify any tasks pointing to unusual paths.",
+          "Document jobs that should be removed or reviewed."
+        ]
+      },
+      {
+        id: 16,
+        title: "Network Interface Review",
+        difficulty: "beginner",
+        description: "Examine network interfaces, IP assignments, and routing tables on a lab host.",
+        tags: ["networking", "linux", "enumeration"],
+        tools: ["ip a", "ip route", "ss"],
+        goal: "Build a mental map of a host's network footprint from the inside.",
+        steps: [
+          "List all interfaces and their addresses.",
+          "Review the routing table.",
+          "Identify any unexpected interfaces or routes.",
+          "Compare inside-view output with an outside Nmap scan."
+        ]
+      },
+      {
+        id: 17,
+        title: "ARP Cache Inspection",
+        difficulty: "beginner",
+        description: "Review ARP entries on a lab host to map IP-to-MAC relationships on the local segment.",
+        tags: ["arp", "networking", "recon"],
+        tools: ["arp -a", "ip neigh", "Wireshark"],
+        goal: "Understand how hosts discover each other at Layer 2.",
+        steps: [
+          "Display the current ARP cache.",
+          "Generate traffic and watch new entries appear.",
+          "Identify all hosts on the local segment.",
+          "Note how ARP could be abused in an attack scenario."
+        ]
+      },
+      {
+        id: 18,
+        title: "Password Policy Review",
+        difficulty: "beginner",
+        description: "Check password policy settings on a Linux lab host and compare them to recommended defaults.",
+        tags: ["passwords", "linux", "hardening"],
+        tools: ["PAM", "/etc/login.defs", "chage"],
+        goal: "Know where password rules live and how to strengthen them.",
+        steps: [
+          "Review /etc/login.defs for aging and length settings.",
+          "Check PAM configuration for complexity rules.",
+          "Run chage to inspect an account's expiry settings.",
+          "Document gaps between current policy and CIS benchmark guidance."
+        ]
+      },
+      {
+        id: 19,
+        title: "HTTP Header Inspection",
+        difficulty: "beginner",
+        description: "Inspect security-related HTTP headers and understand their defensive purpose.",
+        tags: ["http", "headers", "web-security"],
+        tools: ["Browser DevTools", "curl", "Lab site"],
+        goal: "Learn how response headers affect browser security behavior.",
+        steps: [
+          "Inspect response headers from a site you control.",
+          "Look for HSTS, CSP, and X-Frame-Options.",
+          "Note which headers are missing.",
+          "Explain what each one helps protect."
+        ]
+      },
+
+      // ── INTERMEDIATE ──────────────────────────────────────────────────────
+      {
+        id: 20,
+        title: "Web Directory Enumeration",
+        difficulty: "intermediate",
+        description: "Enumerate directories and files on a lab web target to find exposed content.",
+        tags: ["web", "enumeration", "gobuster"],
+        tools: ["Gobuster", "curl", "Lab web target"],
+        goal: "Understand how content discovery supports web assessment.",
+        steps: [
+          "Run directory enumeration against a lab web app.",
+          "Identify valid directories and files.",
+          "Review the HTTP response codes.",
+          "Document interesting findings."
+        ]
+      },
+      {
+        id: 21,
+        title: "Vulnerability Scan Review",
+        difficulty: "intermediate",
+        description: "Run a lab vulnerability scan and analyze the results for useful remediation planning.",
+        tags: ["openvas", "vulnerability-management", "reporting"],
+        tools: ["OpenVAS", "Target VM", "Browser"],
+        goal: "Learn how to interpret scanner output instead of just running scans.",
+        steps: [
+          "Launch a scan against a safe target.",
+          "Review severity ratings and affected services.",
+          "Pick one finding and explain the risk.",
+          "Write a simple remediation note."
+        ]
+      },
+      {
+        id: 22,
+        title: "SMB Share Enumeration",
+        difficulty: "intermediate",
+        description: "Enumerate SMB shares and identify accessible resources in a Windows-focused lab.",
+        tags: ["smb", "windows", "enumeration"],
+        tools: ["smbclient", "enum4linux", "Windows target"],
+        goal: "Understand how file sharing exposure appears during enumeration.",
+        steps: [
+          "Identify an SMB-enabled host.",
+          "Enumerate available shares.",
+          "Record anonymous versus authenticated access.",
+          "Document risky findings and basic remediation ideas."
+        ]
+      },
+      {
+        id: 23,
+        title: "Web Login Surface Review",
+        difficulty: "intermediate",
+        description: "Inspect a lab login page for obvious attack surface and defensive controls.",
+        tags: ["web", "auth", "assessment"],
+        tools: ["Browser DevTools", "curl", "Lab app"],
+        goal: "Learn to review authentication surfaces methodically.",
+        steps: [
+          "Inspect form fields and requests.",
+          "Review response behavior for failed logins.",
+          "Look for security headers and cookie flags.",
+          "Document observations and recommendations."
+        ]
+      },
+      {
+        id: 24,
+        title: "Container Exposure Review",
+        difficulty: "intermediate",
+        description: "Review a Docker or LXC service for unnecessary exposure such as open ports or weak defaults.",
+        tags: ["docker", "lxc", "hardening"],
+        tools: ["docker", "ss", "netstat"],
+        goal: "Understand how container services can accidentally broaden attack surface.",
+        steps: [
+          "List running containers or services.",
+          "Review exposed ports and bindings.",
+          "Check for default credentials or unnecessary services.",
+          "Write a hardening checklist."
+        ]
+      },
+      {
+        id: 25,
+        title: "Proxmox VM Hardening",
+        difficulty: "intermediate",
+        description: "Review and harden a Proxmox VM for unnecessary services, open ports, and weak defaults.",
+        tags: ["proxmox", "hardening", "virtualization"],
+        tools: ["Proxmox UI", "ssh", "nmap"],
+        goal: "Apply layered hardening to a hypervisor-hosted VM.",
+        steps: [
+          "Audit running services inside the VM.",
+          "Disable or remove anything not needed.",
+          "Restrict network access via firewall rules.",
+          "Document changes made and why."
+        ]
+      },
+      {
+        id: 26,
+        title: "Password Cracking Lab",
+        difficulty: "intermediate",
+        description: "Use a wordlist attack against hashed credentials in a controlled lab environment.",
+        tags: ["hashcat", "passwords", "cracking"],
+        tools: ["Hashcat", "rockyou.txt", "sample hashes"],
+        goal: "Understand why weak passwords fall quickly and how hash strength matters.",
+        steps: [
+          "Generate or obtain safe practice hashes.",
+          "Run a dictionary attack with a common wordlist.",
+          "Record which hashes cracked and how fast.",
+          "Summarize what makes a password cracking-resistant."
+        ]
+      },
+      {
+        id: 27,
+        title: "Metasploit Basics",
+        difficulty: "intermediate",
+        description: "Use Metasploit to exploit a known vulnerability in a lab target such as Metasploitable.",
+        tags: ["metasploit", "exploitation", "lab"],
+        tools: ["Metasploit", "Metasploitable", "Kali"],
+        goal: "Learn the basic exploit-search-run workflow in a safe environment.",
+        steps: [
+          "Search for a module matching your target service.",
+          "Set required options (RHOSTS, payload).",
+          "Run the exploit and confirm access.",
+          "Document the vulnerability and what access was gained."
+        ]
+      },
+      {
+        id: 28,
+        title: "OSINT Footprinting",
+        difficulty: "intermediate",
+        description: "Use passive open-source tools to gather information about a target domain or organization.",
+        tags: ["osint", "recon", "passive"],
+        tools: ["theHarvester", "Maltego", "Shodan"],
+        goal: "Understand what an attacker can learn without touching the target directly.",
+        steps: [
+          "Choose a safe practice target (your own domain or a lab domain).",
+          "Run email and subdomain harvesting.",
+          "Check Shodan for exposed services.",
+          "Write a report of findings as if briefing a client."
+        ]
+      },
+      {
+        id: 29,
+        title: "Wireless Network Recon",
+        difficulty: "intermediate",
+        description: "Survey nearby wireless networks and analyze what information beacons expose.",
+        tags: ["wireless", "wifi", "recon"],
+        tools: ["airmon-ng", "airodump-ng", "Wireshark"],
+        goal: "Understand what 802.11 management frames reveal about a network.",
+        steps: [
+          "Enable monitor mode on a wireless adapter.",
+          "Capture beacon frames in the area.",
+          "Record SSIDs, BSSIDs, channels, and encryption types.",
+          "Document any open or WEP networks as high-risk findings."
+        ]
+      },
+      {
+        id: 30,
+        title: "Active Directory Enumeration",
+        difficulty: "intermediate",
+        description: "Enumerate users, groups, and policies in a lab Active Directory environment.",
+        tags: ["active-directory", "windows", "enumeration"],
+        tools: ["BloodHound", "ldapsearch", "net commands"],
+        goal: "Map the AD structure an attacker would target for privilege escalation.",
+        steps: [
+          "Enumerate domain users and groups.",
+          "Identify privileged accounts and admin group membership.",
+          "Find accounts with weak or no expiry policies.",
+          "Document the attack paths you discovered."
+        ]
+      },
+      {
+        id: 31,
+        title: "Linux Privilege Escalation",
+        difficulty: "intermediate",
+        description: "Identify and exploit a misconfiguration to escalate from a low-privilege user to root in a lab.",
+        tags: ["privesc", "linux", "exploitation"],
+        tools: ["LinPEAS", "sudo -l", "find"],
+        goal: "Learn the most common local privilege escalation paths on Linux.",
+        steps: [
+          "Start as a low-privilege user on the lab host.",
+          "Run automated enumeration to find misconfigurations.",
+          "Exploit one finding to gain elevated access.",
+          "Document the path and how to remediate it."
+        ]
+      },
+      {
+        id: 32,
+        title: "Web Application SQL Injection",
+        difficulty: "intermediate",
+        description: "Test a vulnerable lab web application for SQL injection and extract sample data.",
+        tags: ["sqli", "web", "exploitation"],
+        tools: ["SQLMap", "Burp Suite", "DVWA"],
+        goal: "Understand how input validation failures lead to database exposure.",
+        steps: [
+          "Set up a vulnerable app such as DVWA.",
+          "Manually test an input field for injection.",
+          "Use SQLMap to automate and confirm the finding.",
+          "Document the vulnerable parameter and sample extracted data."
+        ]
+      },
+      {
+        id: 33,
+        title: "Cross-Site Scripting Lab",
+        difficulty: "intermediate",
+        description: "Identify and demonstrate a reflected or stored XSS vulnerability in a lab web app.",
+        tags: ["xss", "web", "exploitation"],
+        tools: ["Browser", "Burp Suite", "DVWA"],
+        goal: "Understand how unsanitized output leads to script injection.",
+        steps: [
+          "Find an input field that reflects output to the page.",
+          "Inject a simple script payload.",
+          "Confirm execution in the browser.",
+          "Write a description of the risk and a remediation recommendation."
+        ]
+      },
+      {
+        id: 34,
+        title: "Incident Response Simulation",
+        difficulty: "intermediate",
+        description: "Respond to a simulated security event by collecting evidence, triaging, and writing an incident report.",
+        tags: ["incident-response", "blue-team", "reporting"],
+        tools: ["journalctl", "Wireshark", "notes"],
+        goal: "Practice the structured steps of an IR process from detection to documentation.",
+        steps: [
+          "Review logs for indicators of compromise.",
+          "Identify affected hosts and timeline of events.",
+          "Contain the simulated threat.",
+          "Write a post-incident report with lessons learned."
+        ]
+      },
+      {
+        id: 35,
+        title: "OPNsense IDS Rule Tuning",
+        difficulty: "intermediate",
+        description: "Configure and test Suricata rules inside OPNsense to detect lab attack traffic.",
+        tags: ["ids", "opnsense", "suricata"],
+        tools: ["OPNsense", "Suricata", "Nmap"],
+        goal: "Learn how detection rules are written, enabled, and tested.",
+        steps: [
+          "Enable Suricata on an OPNsense interface.",
+          "Download a rule set and enable a relevant rule.",
+          "Generate traffic that should trigger the rule.",
+          "Confirm the alert fires and document what triggered it."
+        ]
+      },
+      {
+        id: 36,
+        title: "Phishing Email Analysis",
+        difficulty: "intermediate",
+        description: "Analyze a sample phishing email for indicators of compromise including headers, links, and attachments.",
+        tags: ["phishing", "email", "analysis"],
+        tools: ["email headers", "VirusTotal", "any.run"],
+        goal: "Build the habit of methodical email triage used in SOC environments.",
+        steps: [
+          "Obtain a safe phishing sample from a repository.",
+          "Inspect raw headers for spoofed or unusual fields.",
+          "Check embedded URLs against threat intelligence.",
+          "Write a triage report with verdict and indicators."
+        ]
+      },
+      {
+        id: 37,
+        title: "Threat Modeling Exercise",
+        difficulty: "intermediate",
+        description: "Apply STRIDE to a simple lab service to identify and prioritize potential threats.",
+        tags: ["threat-modeling", "stride", "planning"],
+        tools: ["STRIDE template", "draw.io", "notes"],
+        goal: "Practice structured threat thinking before touching a lab target.",
+        steps: [
+          "Choose a lab service or application to model.",
+          "Draw a basic data flow diagram.",
+          "Apply STRIDE categories to each component.",
+          "Prioritize findings by likelihood and impact."
+        ]
+      },
+      {
+        id: 38,
+        title: "TLS Certificate Inspection",
+        difficulty: "intermediate",
+        description: "Examine TLS certificates on lab services for weak configuration, expiry, and chain issues.",
+        tags: ["tls", "certificates", "hardening"],
+        tools: ["openssl", "Browser DevTools", "testssl.sh"],
+        goal: "Learn how certificate problems undermine transport security.",
+        steps: [
+          "Connect to a lab HTTPS service and inspect its certificate.",
+          "Check the cipher suite and protocol version.",
+          "Run testssl.sh for a full report.",
+          "Document any findings and recommended fixes."
+        ]
+      },
+      {
+        id: 39,
+        title: "SIEM Log Ingestion Lab",
+        difficulty: "intermediate",
+        description: "Forward logs from a lab host into a SIEM and build a basic detection rule.",
+        tags: ["siem", "logging", "detection"],
+        tools: ["Wazuh", "rsyslog", "Lab host"],
+        goal: "Understand how logs flow from source to detection platform.",
+        steps: [
+          "Configure a lab host to forward logs to Wazuh.",
+          "Confirm logs are arriving and indexed.",
+          "Create a simple rule to alert on failed SSH logins.",
+          "Trigger the condition and confirm the alert fires."
+        ]
       }
     ];
 
+    // ── Persistence via localStorage ──────────────────────────────────────────
+    const STORAGE_KEY = 'hackingTracker_v1';
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return;
+        const saved = JSON.parse(raw);
+        if (saved.completed) state.completed = saved.completed;
+        if (saved.notes)     state.notes     = saved.notes;
+      } catch (e) {
+        console.warn('Could not load saved state:', e);
+      }
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+          completed: state.completed,
+          notes:     state.notes
+        }));
+      } catch (e) {
+        console.warn('Could not save state:', e);
+      }
+    }
+
+    // ── App State ──────────────────────────────────────────────────────────────
     const state = {
       filter: 'all',
       search: '',
@@ -862,30 +1238,34 @@
       completed: {}
     };
 
-    const beginnerGrid = document.getElementById('beginnerGrid');
-    const intermediateGrid = document.getElementById('intermediateGrid');
-    const beginnerSection = document.getElementById('beginnerSection');
+    loadState();
+
+    // ── DOM refs ───────────────────────────────────────────────────────────────
+    const beginnerGrid      = document.getElementById('beginnerGrid');
+    const intermediateGrid  = document.getElementById('intermediateGrid');
+    const beginnerSection   = document.getElementById('beginnerSection');
     const intermediateSection = document.getElementById('intermediateSection');
-    const searchInput = document.getElementById('searchInput');
-    const progressRing = document.getElementById('progressRing');
-    const progressPercent = document.getElementById('progressPercent');
-    const completedCount = document.getElementById('completedCount');
-    const remainingCount = document.getElementById('remainingCount');
-    const totalCount = document.getElementById('totalCount');
-    const beginnerCount = document.getElementById('beginnerCount');
+    const searchInput       = document.getElementById('searchInput');
+    const progressRing      = document.getElementById('progressRing');
+    const progressPercent   = document.getElementById('progressPercent');
+    const completedCount    = document.getElementById('completedCount');
+    const remainingCount    = document.getElementById('remainingCount');
+    const totalCount        = document.getElementById('totalCount');
+    const beginnerCount     = document.getElementById('beginnerCount');
     const intermediateCount = document.getElementById('intermediateCount');
 
-    const modalBackdrop = document.getElementById('modalBackdrop');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalMeta = document.getElementById('modalMeta');
+    const modalBackdrop  = document.getElementById('modalBackdrop');
+    const modalTitle     = document.getElementById('modalTitle');
+    const modalMeta      = document.getElementById('modalMeta');
     const modalDescription = document.getElementById('modalDescription');
-    const modalSteps = document.getElementById('modalSteps');
-    const modalTools = document.getElementById('modalTools');
-    const modalGoal = document.getElementById('modalGoal');
-    const projectNotes = document.getElementById('projectNotes');
-    const toggleDoneBtn = document.getElementById('toggleDoneBtn');
-    const closeModalBtn = document.getElementById('closeModalBtn');
+    const modalSteps     = document.getElementById('modalSteps');
+    const modalTools     = document.getElementById('modalTools');
+    const modalGoal      = document.getElementById('modalGoal');
+    const projectNotes   = document.getElementById('projectNotes');
+    const toggleDoneBtn  = document.getElementById('toggleDoneBtn');
+    const closeModalBtn  = document.getElementById('closeModalBtn');
 
+    // ── Helpers ────────────────────────────────────────────────────────────────
     function matchesProject(project) {
       const text = [
         project.title,
@@ -946,35 +1326,38 @@
     }
 
     function render() {
-      const filtered = projects.filter(matchesProject);
-      const beginner = filtered.filter(p => p.difficulty === 'beginner');
+      const filtered    = projects.filter(matchesProject);
+      const beginner    = filtered.filter(p => p.difficulty === 'beginner');
       const intermediate = filtered.filter(p => p.difficulty === 'intermediate');
 
-      renderGrid(beginnerGrid, beginner, 'No beginner projects match your current filter.');
+      renderGrid(beginnerGrid,     beginner,     'No beginner projects match your current filter.');
       renderGrid(intermediateGrid, intermediate, 'No intermediate projects match your current filter.');
 
-      beginnerSection.style.display = projects.some(p => p.difficulty === 'beginner') ? 'block' : 'none';
-      intermediateSection.style.display = projects.some(p => p.difficulty === 'intermediate') ? 'block' : 'none';
+      beginnerSection.style.display    = 'block';
+      intermediateSection.style.display = 'block';
 
-      beginnerCount.textContent = `${projects.filter(p => p.difficulty === 'beginner').length} projects`;
-      intermediateCount.textContent = `${projects.filter(p => p.difficulty === 'intermediate').length} projects`;
+      const bTotal = projects.filter(p => p.difficulty === 'beginner').length;
+      const iTotal = projects.filter(p => p.difficulty === 'intermediate').length;
+      beginnerCount.textContent    = `${bTotal} projects`;
+      intermediateCount.textContent = `${iTotal} projects`;
 
       updateStats();
       syncFilterUI();
     }
 
     function updateStats() {
-      const total = projects.length;
-      const complete = Object.keys(state.completed).filter(id => state.completed[id]).length;
+      const total    = projects.length;
+      const complete = Object.values(state.completed).filter(Boolean).length;
       const remaining = total - complete;
-      const percent = total ? Math.round((complete / total) * 100) : 0;
-      const degrees = Math.round((percent / 100) * 360);
+      const percent  = total ? Math.round((complete / total) * 100) : 0;
+      const degrees  = Math.round((percent / 100) * 360);
 
-      completedCount.textContent = String(complete);
-      remainingCount.textContent = String(remaining);
-      totalCount.textContent = String(total);
+      completedCount.textContent  = String(complete);
+      remainingCount.textContent  = String(remaining);
+      totalCount.textContent      = String(total);
       progressPercent.textContent = `${percent}%`;
-      progressRing.style.background = `conic-gradient(var(--green) ${degrees}deg, rgba(255,255,255,.06) ${degrees}deg)`;
+      progressRing.style.background =
+        `conic-gradient(var(--green) ${degrees}deg, rgba(255,255,255,.06) ${degrees}deg)`;
     }
 
     function syncFilterUI() {
@@ -988,14 +1371,14 @@
       if (!project) return;
 
       state.activeProjectId = id;
-      modalTitle.textContent = project.title;
-      modalMeta.textContent = `${project.difficulty} • ${project.tags.join(' • ')}`;
+      modalTitle.textContent       = project.title;
+      modalMeta.textContent        = `${project.difficulty} • ${project.tags.join(' • ')}`;
       modalDescription.textContent = project.description;
-      modalGoal.textContent = project.goal;
-      modalSteps.innerHTML = project.steps.map(step => `<li>${escapeHtml(step)}</li>`).join('');
-      modalTools.innerHTML = project.tools.map(tool => `<li>${escapeHtml(tool)}</li>`).join('');
-      projectNotes.value = state.notes[id] || '';
-      toggleDoneBtn.textContent = state.completed[id] ? 'Mark Incomplete' : 'Mark Complete';
+      modalGoal.textContent        = project.goal;
+      modalSteps.innerHTML  = project.steps.map(s => `<li>${escapeHtml(s)}</li>`).join('');
+      modalTools.innerHTML  = project.tools.map(t => `<li>${escapeHtml(t)}</li>`).join('');
+      projectNotes.value           = state.notes[id] || '';
+      toggleDoneBtn.textContent    = state.completed[id] ? 'Mark Incomplete' : 'Mark Complete';
       modalBackdrop.classList.add('show');
       modalBackdrop.setAttribute('aria-hidden', 'false');
     }
@@ -1008,12 +1391,14 @@
 
     function toggleProject(id) {
       state.completed[id] = !state.completed[id];
+      saveState();
       render();
       if (state.activeProjectId === id) {
         toggleDoneBtn.textContent = state.completed[id] ? 'Mark Incomplete' : 'Mark Complete';
       }
     }
 
+    // ── Events ─────────────────────────────────────────────────────────────────
     document.querySelectorAll('.chip').forEach(chip => {
       chip.addEventListener('click', () => {
         state.filter = chip.dataset.filter;
@@ -1021,22 +1406,22 @@
       });
     });
 
-    searchInput.addEventListener('input', (e) => {
+    searchInput.addEventListener('input', e => {
       state.search = e.target.value.trim();
       render();
     });
 
-    document.addEventListener('click', (e) => {
+    document.addEventListener('click', e => {
       const button = e.target.closest('[data-action]');
       if (!button) return;
       const id = Number(button.dataset.id);
-      if (button.dataset.action === 'view') openProject(id);
+      if (button.dataset.action === 'view')   openProject(id);
       if (button.dataset.action === 'toggle') toggleProject(id);
     });
 
     closeModalBtn.addEventListener('click', closeModal);
 
-    modalBackdrop.addEventListener('click', (e) => {
+    modalBackdrop.addEventListener('click', e => {
       if (e.target === modalBackdrop) closeModal();
     });
 
@@ -1047,10 +1432,11 @@
     projectNotes.addEventListener('input', () => {
       if (state.activeProjectId !== null) {
         state.notes[state.activeProjectId] = projectNotes.value;
+        saveState();
       }
     });
 
-    document.addEventListener('keydown', (e) => {
+    document.addEventListener('keydown', e => {
       if (e.key === 'Escape') closeModal();
     });
 
