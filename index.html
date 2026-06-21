@@ -44,6 +44,80 @@
       margin-bottom: 28px;
     }
 
+    .backup-area {
+      display:flex;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .btn-backup {
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      cursor:pointer;
+      border:1px solid rgba(58,168,255,.28);
+      background:rgba(58,168,255,.08);
+      color:var(--green);
+      border-radius:12px;
+      padding:10px 16px;
+      font-size:.9rem;
+      font-weight:700;
+      transition: background .15s, border-color .15s;
+    }
+
+    .btn-backup:hover {
+      background:rgba(58,168,255,.16);
+      border-color:rgba(58,168,255,.5);
+    }
+
+    .btn-backup:disabled { opacity:.45; cursor:not-allowed; }
+
+    .btn-restore {
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      cursor:pointer;
+      border:1px solid var(--line);
+      background:#0f1412;
+      color:var(--muted);
+      border-radius:12px;
+      padding:10px 16px;
+      font-size:.9rem;
+      font-weight:700;
+      transition: background .15s;
+    }
+
+    .btn-restore:hover { background:#151c19; color:var(--text); }
+    .btn-restore:disabled { opacity:.45; cursor:not-allowed; }
+
+    .backup-status      { font-size:.82rem; color:var(--muted); white-space:nowrap; }
+    .backup-status.ok   { color:#5ecb8a; }
+    .backup-status.err  { color:#ff6b6b; }
+
+    .token-modal { width:min(480px,100%); padding:28px; }
+    .token-modal h3 { margin:0 0 8px; font-size:1.3rem; }
+    .token-modal p  { color:var(--muted); margin:0 0 18px; line-height:1.6; font-size:.95rem; }
+
+    .token-input {
+      width:100%;
+      background:#0f1412;
+      color:var(--text);
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:13px 15px;
+      font-size:1rem;
+      outline:none;
+      margin-bottom:16px;
+      font-family:monospace;
+    }
+
+    .token-input:focus { border-color:rgba(58,168,255,.4); }
+
+    .token-note { font-size:.8rem; color:var(--muted); margin-bottom:18px; line-height:1.5; }
+    .token-note a { color:var(--green); }
+    .token-actions { display:flex; gap:10px; justify-content:flex-end; }
+
     .brand {
       display:flex;
       align-items:center;
@@ -479,6 +553,31 @@
         <div>
           Summer Hacking Project
           <small>100 Hacking Projects Tracker</small>
+        </div>
+      </div>
+      <div class="backup-area">
+        <span class="backup-status" id="backupStatus"></span>
+        <button class="btn-restore" id="restoreBtn" type="button" title="Restore progress from GitHub backup">
+          &#8635; Restore
+        </button>
+        <button class="btn-backup" id="backupBtn" type="button" title="Save progress to GitHub">
+          &#9729; Backup to GitHub
+        </button>
+      </div>
+    </div>
+
+    <!-- Token entry modal -->
+    <div class="modal-backdrop" id="tokenBackdrop" aria-hidden="true">
+      <div class="card token-modal" role="dialog" aria-modal="true" aria-labelledby="tokenModalTitle">
+        <h3 id="tokenModalTitle">GitHub Personal Access Token</h3>
+        <p>A token with <strong>repo</strong> scope is required to push backups. It is stored only in this browser's localStorage and never sent anywhere except the GitHub API.</p>
+        <input class="token-input" id="tokenInput" type="password" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off" spellcheck="false" />
+        <div class="token-note">
+          Need a token? <a href="https://github.com/settings/tokens/new?scopes=repo&description=hacking-tracker-backup" target="_blank" rel="noopener">Create a fine-grained token</a> with <em>Contents: Read and Write</em> on this repo only.
+        </div>
+        <div class="token-actions">
+          <button class="btn btn-secondary" id="tokenCancelBtn" type="button">Cancel</button>
+          <button class="btn btn-primary" id="tokenSaveBtn" type="button">Save &amp; Continue</button>
         </div>
       </div>
     </div>
@@ -1441,6 +1540,194 @@
     });
 
     render();
+
+    // ── GitHub Backup / Restore ───────────────────────────────────────────────
+    const REPO_OWNER    = 'gideon930-linux';
+    const REPO_NAME     = 'summer-hacking-projects';
+    const BACKUP_BRANCH = 'progress-backup';
+    const LATEST_PATH   = 'backups/latest.json';
+    const TOKEN_KEY     = 'hackingTracker_ghToken';
+    const GH_API        = 'https://api.github.com';
+
+    const backupBtn      = document.getElementById('backupBtn');
+    const restoreBtn     = document.getElementById('restoreBtn');
+    const backupStatus   = document.getElementById('backupStatus');
+    const tokenBackdrop  = document.getElementById('tokenBackdrop');
+    const tokenInput     = document.getElementById('tokenInput');
+    const tokenCancelBtn = document.getElementById('tokenCancelBtn');
+    const tokenSaveBtn   = document.getElementById('tokenSaveBtn');
+
+    function setStatus(msg, type = '') {
+      backupStatus.textContent = msg;
+      backupStatus.className   = 'backup-status' + (type ? ' ' + type : '');
+    }
+
+    function getSavedToken() {
+      return localStorage.getItem(TOKEN_KEY) || '';
+    }
+
+    function b64Encode(str) {
+      return btoa(unescape(encodeURIComponent(str)));
+    }
+
+    async function ghRequest(path, method = 'GET', body = null, token) {
+      const opts = {
+        method,
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Accept': 'application/vnd.github+json',
+          'Content-Type': 'application/json'
+        }
+      };
+      if (body) opts.body = JSON.stringify(body);
+      const res = await fetch(`${GH_API}${path}`, opts);
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(`GitHub ${res.status}: ${err.message || res.statusText}`);
+      }
+      return res.status === 204 ? null : res.json();
+    }
+
+    async function upsertFile(path, contentStr, commitMsg, token) {
+      const contentB64 = b64Encode(contentStr);
+      let sha = null;
+      try {
+        const existing = await ghRequest(
+          `/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}?ref=${BACKUP_BRANCH}`,
+          'GET', null, token
+        );
+        sha = existing.sha;
+      } catch (_) { /* new file — sha stays null */ }
+
+      const payload = { message: commitMsg, content: contentB64, branch: BACKUP_BRANCH };
+      if (sha) payload.sha = sha;
+      return ghRequest(
+        `/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`,
+        'PUT', payload, token
+      );
+    }
+
+    async function runBackup(token) {
+      backupBtn.disabled = true;
+      setStatus('Backing up…');
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) {
+        setStatus('Nothing to back up — mark some projects first.', 'err');
+        backupBtn.disabled = false;
+        return;
+      }
+      let parsed;
+      try { parsed = JSON.parse(raw); }
+      catch { setStatus('Tracker state is corrupt.', 'err'); backupBtn.disabled = false; return; }
+
+      const done = Object.values(parsed.completed || {}).filter(Boolean).length;
+      const ts   = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19) + 'Z';
+      const wrapper = JSON.stringify({
+        meta: { exported_at: ts, projects_completed: done, storage_key: STORAGE_KEY },
+        state: parsed
+      }, null, 2);
+
+      const datedPath = `backups/progress-${ts}.json`;
+      try {
+        await upsertFile(datedPath,   wrapper, `backup: snapshot ${ts} (${done} completed)`, token);
+        await upsertFile(LATEST_PATH, wrapper, `backup: update latest.json (${ts})`,         token);
+        const label = ts.slice(0, 10) + ' ' + ts.slice(11, 16).replace('-', ':') + ' UTC';
+        setStatus(`✓ Saved ${label} — ${done} completed`, 'ok');
+        localStorage.setItem('hackingTracker_lastBackup', ts);
+      } catch (err) {
+        console.error(err);
+        if (err.message.includes('401') || err.message.includes('403')) {
+          localStorage.removeItem(TOKEN_KEY);
+          setStatus('Token rejected — re-enter it and try again.', 'err');
+        } else if (err.message.includes('404')) {
+          setStatus('Repo/branch not found — check token has repo scope.', 'err');
+        } else {
+          setStatus('Backup failed: ' + err.message, 'err');
+        }
+      } finally {
+        backupBtn.disabled = false;
+      }
+    }
+
+    async function runRestore(token) {
+      restoreBtn.disabled = true;
+      setStatus('Fetching backup…');
+      try {
+        const data = await ghRequest(
+          `/repos/${REPO_OWNER}/${REPO_NAME}/contents/${LATEST_PATH}?ref=${BACKUP_BRANCH}`,
+          'GET', null, token
+        );
+        const json = JSON.parse(atob(data.content.replace(/\n/g, '')));
+        const restoredState = json.state || json;
+        if (!restoredState.completed && !restoredState.notes)
+          throw new Error('Unrecognised backup format.');
+        state.completed = restoredState.completed || {};
+        state.notes     = restoredState.notes     || {};
+        saveState();
+        render();
+        const done = Object.values(state.completed).filter(Boolean).length;
+        setStatus(`✓ Restored — ${done} projects completed`, 'ok');
+      } catch (err) {
+        console.error(err);
+        if (err.message.includes('404')) {
+          setStatus('No backup found yet on progress-backup branch.', 'err');
+        } else {
+          setStatus('Restore failed: ' + err.message, 'err');
+        }
+      } finally {
+        restoreBtn.disabled = false;
+      }
+    }
+
+    function openTokenModal(onSave) {
+      tokenInput.value = getSavedToken();
+      tokenBackdrop.classList.add('show');
+      tokenBackdrop.setAttribute('aria-hidden', 'false');
+      tokenSaveBtn.onclick = () => {
+        const t = tokenInput.value.trim();
+        if (!t) { tokenInput.focus(); return; }
+        localStorage.setItem(TOKEN_KEY, t);
+        tokenBackdrop.classList.remove('show');
+        tokenBackdrop.setAttribute('aria-hidden', 'true');
+        onSave(t);
+      };
+    }
+
+    tokenCancelBtn.addEventListener('click', () => {
+      tokenBackdrop.classList.remove('show');
+      tokenBackdrop.setAttribute('aria-hidden', 'true');
+    });
+
+    tokenBackdrop.addEventListener('click', e => {
+      if (e.target === tokenBackdrop) {
+        tokenBackdrop.classList.remove('show');
+        tokenBackdrop.setAttribute('aria-hidden', 'true');
+      }
+    });
+
+    tokenInput.addEventListener('keydown', e => {
+      if (e.key === 'Enter') tokenSaveBtn.click();
+    });
+
+    backupBtn.addEventListener('click', () => {
+      const token = getSavedToken();
+      if (!token) { openTokenModal(t => runBackup(t)); }
+      else         { runBackup(token); }
+    });
+
+    restoreBtn.addEventListener('click', () => {
+      const token = getSavedToken();
+      if (!token) { openTokenModal(t => runRestore(t)); }
+      else         { runRestore(token); }
+    });
+
+    // Show last backup time on load
+    const lastBackup = localStorage.getItem('hackingTracker_lastBackup');
+    if (lastBackup) {
+      const label = lastBackup.slice(0,10) + ' ' + lastBackup.slice(11,16).replace('-',':') + ' UTC';
+      setStatus('Last backup: ' + label);
+    }
+
   </script>
 </body>
 </html>
