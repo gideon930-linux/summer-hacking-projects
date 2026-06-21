@@ -72,6 +72,15 @@ For each project I complete, I plan to add:
 - [Project 01 – Port Scanning with Nmap](01-port-scanning-with-nmap.md)
 - [Project 02 – DNS Enumeration with dig](02-dns-enumeration.md)
   
+## Reconnaissance and Enumeration Labs
+
+- Nmap port scanning notes:
+  - [docs/nmap-port-scanning.md](docs/nmap-port-scanning.md)
+  - [docs/nmap-port-scanning2.md](docs/nmap-port-scanning2.md)
+  - [docs/nmap-port-scanning3.md](docs/nmap-port-scanning3.md)
+- DNS enumeration notes:
+  - [docs/dig-dns-enumeration.md](docs/dig-dns-enumeration.md)
+
 ## Related Repository
 
 I also document my broader homelab and cybersecurity work here:
