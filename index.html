@@ -1,4 +1,4 @@
-<!DOCTYPE html>      
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -12,9 +12,11 @@
       --text: #e8efe9;
       --muted: #95a39a;
       --line: #243029;
-      --green: #3aa8ff;
-      --green-2: #1d7fe0;
+      --green: #19f0b4;
+      --green-2: #0fc28f;
       --blue: #3aa8ff;
+      --blue-soft: rgba(58,168,255,.28);
+      --blue-strong: rgba(58,168,255,.58);
       --orange: #ff8b5e;
       --shadow: 0 18px 50px rgba(0,0,0,.35);
       --radius: 18px;
@@ -58,11 +60,11 @@
       width: 36px;
       height:36px;
       border-radius:12px;
-      background:linear-gradient(135deg, rgba(58,168,255,.25), rgba(29,127,224,.08));
-      border:1px solid rgba(58,168,255,.2);
+      background:linear-gradient(135deg, rgba(58,168,255,.22), rgba(58,168,255,.08));
+      border:1px solid rgba(58,168,255,.22);
       display:grid;
       place-items:center;
-      color:var(--green);
+      color:var(--blue);
     }
 
     .brand small {
@@ -81,7 +83,7 @@
 
     .card {
       background: linear-gradient(180deg, var(--panel), var(--panel-2));
-      border:1px solid var(--line);
+      border:1px solid rgba(58,168,255,.14);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
     }
@@ -92,7 +94,7 @@
       display:inline-flex;
       align-items:center;
       gap:8px;
-      color:var(--green);
+      color:var(--blue);
       background:rgba(58,168,255,.08);
       border:1px solid rgba(58,168,255,.18);
       border-radius:999px;
@@ -108,7 +110,7 @@
       letter-spacing: -.04em;
     }
 
-    h1 .accent { color: var(--green); }
+    h1 .accent { color: var(--blue); }
 
     .lede {
       color: var(--muted);
@@ -127,7 +129,7 @@
     .stat .num {
       font-size:2rem;
       font-weight:800;
-      color:var(--green);
+      color:var(--blue);
       line-height:1;
     }
 
@@ -150,7 +152,7 @@
       width: 158px;
       height: 158px;
       border-radius:50%;
-      background: conic-gradient(var(--green) 0deg, rgba(255,255,255,.06) 0deg);
+      background: conic-gradient(var(--blue) 0deg, rgba(255,255,255,.06) 0deg);
       display:grid;
       place-items:center;
       position:relative;
@@ -163,18 +165,15 @@
       inset:10px;
       border-radius:50%;
       background: var(--panel);
-      border:1px solid var(--line);
+      border:1px solid rgba(58,168,255,.14);
     }
 
-    .ring-inner {
-      position:relative;
-      z-index:1;
-    }
+    .ring-inner { position:relative; z-index:1; }
 
     .ring-value {
       font-size: 2rem;
       font-weight: 800;
-      color: var(--green);
+      color: var(--blue);
     }
 
     .ring-label {
@@ -190,22 +189,22 @@
       margin: 18px 0 24px;
     }
 
-    .search { flex:1 1 320px; }
+    .search {
+      flex:1 1 320px;
+    }
 
-    .search input,
-    .notes textarea {
+    .search input, .notes textarea {
       width:100%;
       background:#0f1412;
       color:var(--text);
-      border:1px solid var(--line);
+      border:1px solid rgba(58,168,255,.16);
       border-radius:14px;
       padding:14px 16px;
       font-size:1rem;
       outline:none;
     }
 
-    .search input:focus,
-    .notes textarea:focus {
+    .search input:focus, .notes textarea:focus {
       border-color: rgba(58,168,255,.45);
       box-shadow: 0 0 0 3px rgba(58,168,255,.12);
     }
@@ -217,7 +216,7 @@
     }
 
     .chip {
-      border:1px solid var(--line);
+      border:1px solid rgba(58,168,255,.14);
       background: #101512;
       color: var(--muted);
       padding:10px 14px;
@@ -226,7 +225,7 @@
     }
 
     .chip.active {
-      color: var(--green);
+      color: var(--blue);
       border-color: rgba(58,168,255,.32);
       background: rgba(58,168,255,.08);
     }
@@ -281,11 +280,26 @@
       padding:18px;
       position:relative;
       overflow:hidden;
+      border:1px solid var(--blue-soft);
+      box-shadow:
+        0 0 0 1px rgba(58,168,255,.06) inset,
+        var(--shadow);
+    }
+
+    .project:hover {
+      border-color: var(--blue-strong);
+      box-shadow:
+        0 0 0 1px rgba(58,168,255,.12) inset,
+        0 0 0 3px rgba(58,168,255,.06),
+        var(--shadow);
     }
 
     .project.done {
-      border-color: rgba(58,168,255,.36);
-      box-shadow: 0 0 0 1px rgba(58,168,255,.08) inset, var(--shadow);
+      border-color: rgba(58,168,255,.62);
+      box-shadow:
+        0 0 0 1px rgba(58,168,255,.14) inset,
+        0 0 0 3px rgba(58,168,255,.08),
+        var(--shadow);
     }
 
     .project-top {
@@ -306,17 +320,16 @@
       width:28px;
       height:28px;
       border-radius:50%;
-      border:1px solid var(--line);
+      border:1px solid rgba(58,168,255,.18);
       display:grid;
       place-items:center;
       color: transparent;
       background:#0f1412;
-      font-weight:900;
     }
 
     .project.done .check {
-      color: var(--bg);
-      background: var(--green);
+      color: #081019;
+      background: var(--blue);
       border-color: transparent;
     }
 
@@ -344,7 +357,7 @@
       font-size:.78rem;
       color:#c7d5cc;
       background:#0c1110;
-      border:1px solid var(--line);
+      border:1px solid rgba(58,168,255,.14);
       border-radius:999px;
       padding:6px 9px;
     }
@@ -365,19 +378,24 @@
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, var(--green), var(--green-2));
-      color:#031a2b;
+      background: linear-gradient(135deg, var(--blue), #218fff);
+      color:#081019;
     }
 
     .btn-secondary {
       background:#0f1412;
       color:var(--text);
-      border:1px solid var(--line);
+      border:1px solid rgba(58,168,255,.14);
     }
 
     .empty {
       color: var(--muted);
       padding: 16px 4px;
+    }
+
+    .meta {
+      color:var(--muted);
+      margin-bottom:18px;
     }
 
     .modal-backdrop {
@@ -405,11 +423,6 @@
       font-size: 1.8rem;
     }
 
-    .meta {
-      color:var(--muted);
-      margin-bottom:18px;
-    }
-
     .modal-grid {
       display:grid;
       grid-template-columns: 1fr 1fr;
@@ -418,7 +431,7 @@
 
     .box {
       background:#0d1210;
-      border:1px solid var(--line);
+      border:1px solid rgba(58,168,255,.14);
       border-radius:16px;
       padding:16px;
     }
@@ -442,9 +455,15 @@
 
     .modal-actions {
       display:flex;
-      justify-content:flex-end;
+      justify-content:space-between;
       gap:10px;
       margin-top:20px;
+      flex-wrap:wrap;
+    }
+
+    .modal-actions-right {
+      display:flex;
+      gap:10px;
       flex-wrap:wrap;
     }
 
@@ -458,6 +477,7 @@
     @media (max-width: 920px) {
       .hero { grid-template-columns: 1fr; }
       .modal-grid { grid-template-columns: 1fr; }
+      .modal-actions { justify-content:flex-end; }
     }
   </style>
 </head>
@@ -465,49 +485,39 @@
   <div class="wrap">
     <div class="topbar">
       <div class="brand">
-        <div class="brand-badge">#</div>
+        <div class="brand-badge">⬢</div>
         <div>
-          Summer Hacking Project
-          <small>100 Hacking Projects Tracker</small>
+          Gideon930 / hacking-projects
+          <small>Summer 2026 learning roadmap</small>
         </div>
       </div>
     </div>
 
     <section class="hero">
       <div class="card hero-main">
-        <div class="eyebrow">Hands-on cybersecurity learning</div>
+        <div class="eyebrow">● Hands-on cybersecurity learning</div>
         <h1>100 <span class="accent">Hacking</span> Projects Tracker</h1>
         <p class="lede">
           Track projects, notes, and progress across beginner and intermediate cybersecurity labs.
           Built to document hands-on learning, maintain momentum, and create a public portfolio over time.
         </p>
-
         <div class="stats">
-          <div class="stat">
-            <div class="num" id="completedCount">0</div>
-            <div class="label">Completed</div>
-          </div>
-          <div class="stat">
-            <div class="num" id="remainingCount">0</div>
-            <div class="label">Remaining</div>
-          </div>
-          <div class="stat">
-            <div class="num" id="totalCount">0</div>
-            <div class="label">Total tracked</div>
-          </div>
+          <div class="stat"><div class="num" id="completedCount">0</div><div class="label">Completed</div></div>
+          <div class="stat"><div class="num" id="remainingCount">40</div><div class="label">Remaining</div></div>
+          <div class="stat"><div class="num" id="shownCount">40</div><div class="label">Total tracked</div></div>
         </div>
       </div>
 
       <div class="card hero-side">
-        <div class="ring" id="progressRing">
+        <div class="ring" id="ring">
           <div class="ring-inner">
-            <div class="ring-value" id="progressPercent">0%</div>
+            <div class="ring-value" id="ringValue">0%</div>
             <div class="ring-label">Complete</div>
           </div>
         </div>
-        <p class="lede" style="max-width: 26ch; font-size: .98rem;">
+        <div class="meta">
           Use the filters, open project details, and mark finished projects as you go.
-        </p>
+        </div>
       </div>
     </section>
 
@@ -515,274 +525,229 @@
       <div class="search">
         <input id="searchInput" type="text" placeholder="Search projects, tags, or tools..." />
       </div>
-
       <div class="filters">
         <button class="chip active" data-filter="all">All</button>
         <button class="chip" data-filter="beginner">Beginner</button>
         <button class="chip" data-filter="intermediate">Intermediate</button>
         <button class="chip" data-filter="done">Completed</button>
-        <button class="chip" data-filter="todo">To Do</button>
+        <button class="chip" data-filter="pending">To Do</button>
       </div>
     </div>
 
-    <section class="section" id="beginnerSection">
+    <section class="section">
       <div class="section-head">
-        <h2 class="section-title">Beginner Projects <span class="pill beginner">Beginner</span></h2>
-        <div class="count" id="beginnerCount">0 projects</div>
+        <h2 class="section-title"><span class="pill beginner">Beginner</span> Beginner Projects</h2>
+        <div class="count" id="beginnerCount">0 / 30</div>
       </div>
       <div class="grid" id="beginnerGrid"></div>
     </section>
 
-    <section class="section" id="intermediateSection">
+    <section class="section">
       <div class="section-head">
-        <h2 class="section-title">Intermediate Projects <span class="pill intermediate">Intermediate</span></h2>
-        <div class="count" id="intermediateCount">0 projects</div>
+        <h2 class="section-title"><span class="pill intermediate">Intermediate</span> Intermediate Projects</h2>
+        <div class="count" id="intermediateCount">0 / 10</div>
       </div>
       <div class="grid" id="intermediateGrid"></div>
     </section>
 
-    <footer>
-      Built for hands-on learning, documentation, and consistent progress.
-    </footer>
+    <footer>Built by Gideon930 • Summer 2026 • beginner-friendly portfolio tracker</footer>
   </div>
 
-  <div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal-backdrop" id="modalBackdrop" aria-hidden="true">
     <div class="card modal">
-      <h2 id="modalTitle">Project Title</h2>
-      <div class="meta" id="modalMeta">Difficulty • Tags</div>
+      <h2 id="modalTitle"></h2>
+      <div class="meta" id="modalMeta"></div>
 
       <div class="modal-grid">
         <div class="box">
-          <h4>Overview</h4>
-          <p id="modalDescription" class="meta" style="margin:0; line-height:1.7;"></p>
+          <h4>Description</h4>
+          <p id="modalDesc" class="meta" style="color:var(--text); line-height:1.7; margin:0;"></p>
         </div>
-
-        <div class="box">
-          <h4>Suggested Steps</h4>
-          <ul id="modalSteps"></ul>
-        </div>
-
         <div class="box">
           <h4>Tools</h4>
-          <ul id="modalTools"></ul>
+          <div class="tags" id="modalTools"></div>
         </div>
+      </div>
 
-        <div class="box">
-          <h4>Learning Goal</h4>
-          <p id="modalGoal" class="meta" style="margin:0; line-height:1.7;"></p>
-        </div>
+      <div class="box" style="margin-top:20px;">
+        <h4>Suggested steps</h4>
+        <ul id="modalSteps"></ul>
       </div>
 
       <div class="notes">
-        <textarea id="projectNotes" placeholder="Add notes for this project..."></textarea>
+        <h4 style="margin:0 0 10px;">Your Notes</h4>
+        <textarea id="modalNotes" placeholder="Add lab notes, filenames, target IPs, lessons learned, or a future README outline..."></textarea>
       </div>
 
       <div class="modal-actions">
-        <button class="btn btn-secondary" id="closeModalBtn">Close</button>
-        <button class="btn btn-primary" id="toggleDoneBtn">Mark Complete</button>
+        <button class="btn btn-secondary" id="resetProgressBtn">Reset saved progress</button>
+        <div class="modal-actions-right">
+          <button class="btn btn-secondary" id="closeModalBtn">Close</button>
+          <button class="btn btn-primary" id="toggleCompleteBtn">Mark Complete</button>
+        </div>
       </div>
     </div>
   </div>
 
   <script>
-    const projects = [
-      {
-        id: 1,
-        title: "Port Scanning with Nmap",
-        difficulty: "beginner",
-        description: "Learn host discovery, service detection, and basic port scanning in a safe lab environment.",
-        tags: ["nmap", "recon", "networking"],
-        tools: ["Nmap", "Kali Linux", "Target VM"],
-        goal: "Understand how scanners identify hosts, ports, and services.",
-        steps: [
-          "Scan a local lab host with a basic TCP SYN scan.",
-          "Run service version detection and compare results.",
-          "Document common ports and what they mean.",
-          "Save findings in your notes."
-        ]
-      },
-      {
-        id: 2,
-        title: "DNS Enumeration",
-        difficulty: "beginner",
-        description: "Practice collecting DNS information such as records, subdomains, and name servers.",
-        tags: ["dns", "recon", "enumeration"],
-        tools: ["dig", "nslookup", "host"],
-        goal: "Build a strong foundation in DNS-based reconnaissance.",
-        steps: [
-          "Query A, MX, and NS records.",
-          "Compare outputs from multiple DNS tools.",
-          "Record how each record type supports recon work.",
-          "Write a short summary of findings."
-        ]
-      },
-      {
-        id: 3,
-        title: "Packet Capture with Wireshark",
-        difficulty: "beginner",
-        description: "Capture and inspect network traffic to understand protocols and communication patterns.",
-        tags: ["wireshark", "packets", "analysis"],
-        tools: ["Wireshark", "Browser", "Ping"],
-        goal: "Recognize common protocols and basic packet flow behavior.",
-        steps: [
-          "Capture traffic during a website visit.",
-          "Filter for DNS and HTTP or HTTPS traffic.",
-          "Identify source and destination addresses.",
-          "Document what you observed."
-        ]
-      },
-      {
-        id: 4,
-        title: "Linux Log Review",
-        difficulty: "beginner",
-        description: "Inspect authentication and system logs to spot normal versus suspicious activity.",
-        tags: ["linux", "logs", "blue-team"],
-        tools: ["journalctl", "/var/log", "grep"],
-        goal: "Learn how defenders review local log activity.",
-        steps: [
-          "Open authentication or system logs.",
-          "Search for failed login attempts.",
-          "Identify timestamps and relevant events.",
-          "Summarize what counts as suspicious."
-        ]
-      },
-      {
-        id: 5,
-        title: "Firewall Rule Review",
-        difficulty: "beginner",
-        description: "Read and understand basic firewall rules and traffic decisions in a lab environment.",
-        tags: ["firewall", "opnsense", "network-security"],
-        tools: ["OPNsense", "Lab client", "Ping"],
-        goal: "Understand how allow and deny rules affect traffic flow.",
-        steps: [
-          "Create or inspect a simple allow rule.",
-          "Test access before and after the rule change.",
-          "Review the logs for matches.",
-          "Document the result."
-        ]
-      },
-      {
-        id: 6,
-        title: "Web Directory Enumeration",
-        difficulty: "intermediate",
-        description: "Enumerate directories and files on a lab web target to find exposed content.",
-        tags: ["web", "enumeration", "gobuster"],
-        tools: ["Gobuster", "curl", "Lab web target"],
-        goal: "Understand how content discovery supports web assessment.",
-        steps: [
-          "Run directory enumeration against a lab web app.",
-          "Identify valid directories and files.",
-          "Review the HTTP response codes.",
-          "Document interesting findings."
-        ]
-      },
-      {
-        id: 7,
-        title: "Vulnerability Scan Review",
-        difficulty: "intermediate",
-        description: "Run a lab vulnerability scan and analyze the results for useful remediation planning.",
-        tags: ["openvas", "vulnerability-management", "reporting"],
-        tools: ["OpenVAS", "Target VM", "Browser"],
-        goal: "Learn how to interpret scanner output instead of just running scans.",
-        steps: [
-          "Launch a scan against a safe target.",
-          "Review severity ratings and affected services.",
-          "Pick one finding and explain the risk.",
-          "Write a simple remediation note."
-        ]
-      },
-      {
-        id: 8,
-        title: "HTTP Header Inspection",
-        difficulty: "intermediate",
-        description: "Inspect security-related HTTP headers and understand their defensive purpose.",
-        tags: ["http", "headers", "web-security"],
-        tools: ["Browser DevTools", "curl", "Lab site"],
-        goal: "Learn how response headers affect browser security behavior.",
-        steps: [
-          "Inspect response headers from a site you control.",
-          "Look for HSTS, CSP, and X-Frame-Options.",
-          "Note which headers are missing.",
-          "Explain what each one helps protect."
-        ]
-      }
+    const PROJECTS = [
+      { id:1, level:"beginner", title:"Port Scanning with Nmap", tools:["nmap","recon","networking"], desc:"Learn host discovery, service detection, and basic port scanning in a safe lab environment.", steps:["Run host discovery on a lab subnet","Identify live systems","Scan a target with service detection","Record open ports and services","Write a short results summary"] },
+      { id:2, level:"beginner", title:"DNS Enumeration", tools:["dns","recon","enumeration"], desc:"Practice collecting DNS information such as records, subdomains, and name servers.", steps:["Query A, MX, NS, and TXT records","Compare responses from different resolvers","Run a reverse lookup with dig -x","Trace resolution with +trace","Document useful findings"] },
+      { id:3, level:"beginner", title:"Packet Capture with Wireshark", tools:["wireshark","packets","analysis"], desc:"Capture and inspect network traffic to understand protocols and communication patterns.", steps:["Start a packet capture","Generate simple lab traffic","Filter by protocol","Inspect packet details","Summarize what you observed"] },
+      { id:4, level:"beginner", title:"HTTP Headers Analysis", tools:["curl","burp","web"], desc:"Examine request and response headers to understand web server behavior and security headers.", steps:["Request a test page with curl -I","Inspect headers in browser devtools","Compare results with Burp","Identify missing security headers","Write recommendations"] },
+      { id:5, level:"beginner", title:"Burp Suite Basics", tools:["burp","proxy","web"], desc:"Learn how to intercept and inspect requests in a controlled web lab environment.", steps:["Configure browser proxy settings","Capture a request","Send it to Repeater","Modify a safe parameter","Document the result"] },
+      { id:6, level:"beginner", title:"Service Enumeration", tools:["nmap","services","linux"], desc:"Identify exposed services and versions on systems you own in your lab.", steps:["Scan a lab host","Use -sV","Review service banners","Research common uses","Record the exposure"] },
+      { id:7, level:"beginner", title:"Ping Sweep", tools:["nmap","icmp","discovery"], desc:"Map live hosts on your lab subnet using safe discovery techniques.", steps:["Run a ping scan","List active devices","Identify expected vs unexpected systems","Take notes on host roles","Save output"] },
+      { id:8, level:"beginner", title:"Basic Firewall Testing", tools:["opnsense","nmap","lab"], desc:"Compare how a firewall changes the visibility of ports and services.", steps:["Scan before rule changes","Apply a controlled firewall rule","Rescan the target","Compare results","Write observations"] },
+      { id:9, level:"beginner", title:"Linux Log Review", tools:["linux","logs","journalctl"], desc:"Practice reviewing logs on a Linux system after scans or service access.", steps:["Check authentication logs","Review service logs","Match log entries to activity","Extract useful timestamps","Write a brief incident timeline"] },
+      { id:10, level:"beginner", title:"Windows Service Discovery", tools:["windows","nmap","services"], desc:"Assess how a Windows system appears on the network when common ports are filtered or open.", steps:["Scan the Windows host","Review filtered vs open ports","Compare with host firewall rules","Document results","Note defensive takeaways"] },
+      { id:11, level:"beginner", title:"SSH Exposure Review", tools:["ssh","linux","hardening"], desc:"Evaluate how SSH is exposed on a server and document basic hardening ideas.", steps:["Scan for SSH","Verify version information","Review SSH config","List hardening ideas","Write a short summary"] },
+      { id:12, level:"beginner", title:"Web App Surface Mapping", tools:["browser","curl","burp"], desc:"Map reachable pages, ports, and common web components on a test application.", steps:["Identify app ports","Visit main routes","Capture a request","List visible technologies","Record observations"] },
+      { id:13, level:"beginner", title:"ARP Basics", tools:["arp","ip","networking"], desc:"Learn how local network neighbors are discovered and displayed.", steps:["View ARP cache","Ping a host","View cache again","Map IP to MAC entries","Take notes"] },
+      { id:14, level:"beginner", title:"Traceroute Basics", tools:["traceroute","networking","routing"], desc:"Understand packet paths and hop behavior using traceroute in a safe environment.", steps:["Run traceroute to a safe target","Review hop responses","Note timeouts or delays","Explain what hops mean","Save results"] },
+      { id:15, level:"beginner", title:"TCP vs UDP Notes", tools:["networking","protocols","study"], desc:"Compare TCP and UDP behavior using simple observations and documentation.", steps:["Review protocol basics","Capture traffic examples","Note differences","Explain common use cases","Create comparison notes"] },
+      { id:16, level:"beginner", title:"Banner Grabbing", tools:["nc","curl","telnet"], desc:"Collect simple service banners from systems you own in your lab.", steps:["Connect to a service","Record banners","Compare with scan results","Document what the banner reveals","Write defensive notes"] },
+      { id:17, level:"beginner", title:"Subnet Mapping", tools:["ipcalc","networking","planning"], desc:"Document your subnet layout and host groupings for your homelab.", steps:["List subnets","Assign roles to systems","Document gateway addresses","Record host IPs","Create a clear network note"] },
+      { id:18, level:"beginner", title:"DNS Resolver Comparison", tools:["dig","dns","google"], desc:"Compare how your local resolver and a public resolver answer the same DNS questions.", steps:["Query your local resolver","Query 8.8.8.8","Compare results","Note TTL or answer differences","Write findings"] },
+      { id:19, level:"beginner", title:"Cookie Inspection", tools:["browser","burp","cookies"], desc:"Inspect cookies in a test web app and learn what session data looks like.", steps:["Log into a safe test app","Inspect cookies","Note flags like HttpOnly","Compare cookies across requests","Write short notes"] },
+      { id:20, level:"beginner", title:"Static Site Deployment", tools:["github-pages","git","html"], desc:"Publish a simple static project or tracker to GitHub Pages.", steps:["Create or update index.html","Commit changes","Push to GitHub","Enable Pages","Verify deployment"] },
+      { id:21, level:"beginner", title:"DNS Reverse Lookup Practice", tools:["dig","ptr","dns"], desc:"Use PTR lookups to see how reverse DNS works.", steps:["Use dig -x on known IPs","Review PTR results","Compare expected hostnames","Take notes","Document examples"] },
+      { id:22, level:"beginner", title:"Search Operators Practice", tools:["browser","osint","search"], desc:"Practice search operator usage for harmless and defensive OSINT research.", steps:["Use site: and filetype: operators","Record example queries","Explain what each operator does","Keep scope harmless","Write takeaways"] },
+      { id:23, level:"beginner", title:"Lab Asset Inventory", tools:["notes","inventory","lab"], desc:"Create a clean list of hosts, operating systems, and roles in your lab.", steps:["List systems","Record IPs","Record operating systems","Record service roles","Store the inventory"] },
+      { id:24, level:"beginner", title:"Security Header Checklist", tools:["http","headers","web"], desc:"Create a checklist for common HTTP security headers in your test apps.", steps:["List common headers","Check a lab app","Record present vs missing headers","Explain why they matter","Save checklist"] },
+      { id:25, level:"beginner", title:"Basic Tomcat Exposure Review", tools:["tomcat","nmap","web"], desc:"Review Tomcat exposure and basic service visibility in your lab.", steps:["Identify Tomcat ports","Confirm service detection","Visit the app if safe","Document exposure","Write notes"] },
+      { id:26, level:"beginner", title:"Recon Output Organization", tools:["git","notes","markdown"], desc:"Practice organizing recon notes into markdown files for your portfolio.", steps:["Create a docs folder","Name files consistently","Add headings","Add commands and results","Commit to Git"] },
+      { id:27, level:"beginner", title:"Simple Service Availability Test", tools:["curl","nc","lab"], desc:"Check whether key services are reachable and responding.", steps:["Test HTTP connectivity","Test SSH connectivity","Record results","Compare with scan data","Write a short summary"] },
+      { id:28, level:"beginner", title:"Lab VM Role Review", tools:["proxmox","vm","lab"], desc:"Document the purpose of each VM in your cyber range.", steps:["List VMs","Write each role","Record IPs","Note exposed services","Save the documentation"] },
+      { id:29, level:"beginner", title:"Safe Recon Workflow", tools:["workflow","notes","recon"], desc:"Create your own repeatable checklist for basic scanning and enumeration.", steps:["List scan order","List tools used","Document output filenames","Add legal scope reminder","Store checklist in markdown"] },
+      { id:30, level:"beginner", title:"Beginner Writeup Formatting", tools:["markdown","github","documentation"], desc:"Practice writing a clear beginner-friendly lab writeup using markdown.", steps:["Add objective","Add lab setup","Add commands","Add results","Add lessons learned"] },
+
+      { id:31, level:"intermediate", title:"Advanced Nmap Timing Comparison", tools:["nmap","timing","analysis"], desc:"Compare scan behavior using different timing templates against your lab targets.", steps:["Run a baseline scan","Try different timing flags","Compare speed and results","Document tradeoffs","Write recommendations"] },
+      { id:32, level:"intermediate", title:"NSE Script Review", tools:["nmap","nse","scripts"], desc:"Use safe NSE scripts to collect additional service information in your lab.", steps:["Choose safe scripts","Run against a target","Review extra output","Document findings","Save results"] },
+      { id:33, level:"intermediate", title:"Full Port Audit", tools:["nmap","ports","audit"], desc:"Perform a full TCP port scan against a controlled lab host and compare it to top-1000 results.", steps:["Run a default scan","Run a full port scan","Compare differences","Document hidden services","Write lessons learned"] },
+      { id:34, level:"intermediate", title:"Multi-Host Service Comparison", tools:["nmap","comparison","lab"], desc:"Compare service exposure across Windows, Ubuntu, and app hosts in your lab.", steps:["Scan multiple hosts","Tabulate open ports","Note differences by OS or role","Explain why they differ","Write a summary"] },
+      { id:35, level:"intermediate", title:"DNS Trace Walkthrough", tools:["dig","trace","dns"], desc:"Use +trace and explain each stage of DNS delegation from root to authoritative server.", steps:["Run dig +trace","Identify root servers","Identify TLD servers","Identify authoritative servers","Write a walkthrough"] },
+      { id:36, level:"intermediate", title:"Web Service Fingerprinting", tools:["http","headers","nmap"], desc:"Fingerprint lab web services using headers, titles, and version detection.", steps:["Capture headers","Review titles","Compare with nmap output","Identify server software","Document findings"] },
+      { id:37, level:"intermediate", title:"Segmented Network Review", tools:["opnsense","routing","segmentation"], desc:"Document how network segmentation changes access between hosts and services.", steps:["Map segments","Test allowed flows","Document blocked flows","Compare before and after","Write notes"] },
+      { id:38, level:"intermediate", title:"SSH and Web Exposure Audit", tools:["ssh","http","audit"], desc:"Review exposure of SSH and web services together across your range.", steps:["Identify exposed hosts","Document SSH vs web exposure","Compare risk levels","Write security notes","Save results"] },
+      { id:39, level:"intermediate", title:"Blue Team Detection Notes", tools:["logs","detection","defense"], desc:"Record how scans and recon activity appear in logs and monitoring tools.", steps:["Run a known scan","Collect relevant logs","Match scan activity to logs","Document detections","Write defensive takeaways"] },
+      { id:40, level:"intermediate", title:"Portfolio Lab Summary", tools:["markdown","github","portfolio"], desc:"Create a polished summary page linking your completed summer lab projects and notes.", steps:["List finished projects","Link writeups","Link supporting docs","Add screenshots if desired","Publish cleanly to GitHub"] }
     ];
 
+    const STORAGE_KEY = 'summer-hacking-projects-state-v1';
+
     const state = {
-      filter: "all",
-      search: "",
-      activeProjectId: null,
+      filter: 'all',
+      query: '',
+      completed: {},
       notes: {},
-      completed: {}
+      selectedId: null
     };
 
-    const beginnerGrid = document.getElementById("beginnerGrid");
-    const intermediateGrid = document.getElementById("intermediateGrid");
-    const beginnerSection = document.getElementById("beginnerSection");
-    const intermediateSection = document.getElementById("intermediateSection");
-    const searchInput = document.getElementById("searchInput");
-    const progressRing = document.getElementById("progressRing");
-    const progressPercent = document.getElementById("progressPercent");
-    const completedCount = document.getElementById("completedCount");
-    const remainingCount = document.getElementById("remainingCount");
-    const totalCount = document.getElementById("totalCount");
-    const beginnerCount = document.getElementById("beginnerCount");
-    const intermediateCount = document.getElementById("intermediateCount");
+    const beginnerGrid = document.getElementById('beginnerGrid');
+    const intermediateGrid = document.getElementById('intermediateGrid');
+    const searchInput = document.getElementById('searchInput');
+    const chips = [...document.querySelectorAll('.chip')];
+    const modalBackdrop = document.getElementById('modalBackdrop');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalMeta = document.getElementById('modalMeta');
+    const modalDesc = document.getElementById('modalDesc');
+    const modalTools = document.getElementById('modalTools');
+    const modalSteps = document.getElementById('modalSteps');
+    const modalNotes = document.getElementById('modalNotes');
+    const toggleCompleteBtn = document.getElementById('toggleCompleteBtn');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const resetProgressBtn = document.getElementById('resetProgressBtn');
 
-    const modalBackdrop = document.getElementById("modalBackdrop");
-    const modalTitle = document.getElementById("modalTitle");
-    const modalMeta = document.getElementById("modalMeta");
-    const modalDescription = document.getElementById("modalDescription");
-    const modalSteps = document.getElementById("modalSteps");
-    const modalTools = document.getElementById("modalTools");
-    const modalGoal = document.getElementById("modalGoal");
-    const projectNotes = document.getElementById("projectNotes");
-    const toggleDoneBtn = document.getElementById("toggleDoneBtn");
-    const closeModalBtn = document.getElementById("closeModalBtn");
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return;
+        const saved = JSON.parse(raw);
 
-    function matchesProject(project) {
-      const text = [
-        project.title,
-        project.description,
-        project.difficulty,
-        project.tags.join(" "),
-        project.tools.join(" ")
-      ].join(" ").toLowerCase();
+        if (saved.completed && typeof saved.completed === 'object') {
+          state.completed = saved.completed;
+        }
+        if (saved.notes && typeof saved.notes === 'object') {
+          state.notes = saved.notes;
+        }
+      } catch (err) {
+        console.warn('Could not load saved tracker state:', err);
+      }
+    }
 
-      const matchesSearch = text.includes(state.search.toLowerCase());
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+          completed: state.completed,
+          notes: state.notes
+        }));
+      } catch (err) {
+        console.warn('Could not save tracker state:', err);
+      }
+    }
 
-      const isDone = !!state.completed[project.id];
+    function matchesFilter(project) {
+      if (state.filter === 'all') return true;
+      if (state.filter === 'done') return !!state.completed[project.id];
+      if (state.filter === 'pending') return !state.completed[project.id];
+      return project.level === state.filter;
+    }
 
-      const matchesFilter =
-        state.filter === "all" ||
-        state.filter === project.difficulty ||
-        (state.filter === "done" && isDone) ||
-        (state.filter === "todo" && !isDone);
+    function matchesQuery(project) {
+      if (!state.query) return true;
+      const hay = [project.title, project.desc, project.level, ...project.tools].join(' ').toLowerCase();
+      return hay.includes(state.query.toLowerCase());
+    }
 
-      return matchesSearch && matchesFilter;
+    function visibleProjects(level) {
+      return PROJECTS.filter(p => p.level === level && matchesFilter(p) && matchesQuery(p));
+    }
+
+    function totalCompleted() {
+      return Object.values(state.completed).filter(Boolean).length;
+    }
+
+    function updateStats() {
+      const shown = PROJECTS.filter(p => matchesFilter(p) && matchesQuery(p)).length;
+      const completed = totalCompleted();
+      const total = PROJECTS.length;
+      const remaining = total - completed;
+      const progress = Math.round((completed / total) * 100);
+
+      document.getElementById('completedCount').textContent = completed;
+      document.getElementById('remainingCount').textContent = remaining;
+      document.getElementById('shownCount').textContent = shown;
+      document.getElementById('ringValue').textContent = progress + '%';
+      document.getElementById('ring').style.background =
+        `conic-gradient(var(--blue) ${progress * 3.6}deg, rgba(255,255,255,.06) 0deg)`;
+
+      document.getElementById('beginnerCount').textContent =
+        `${Object.keys(state.completed).filter(id => state.completed[id] && Number(id) <= 30).length} / 30`;
+
+      document.getElementById('intermediateCount').textContent =
+        `${Object.keys(state.completed).filter(id => state.completed[id] && Number(id) >= 31).length} / 10`;
+    }
+
+    function tagList(tools) {
+      return tools.map(t => `<span class="tag">${t}</span>`).join('');
     }
 
     function projectCard(project) {
       const done = !!state.completed[project.id];
-
       return `
-        <article class="card project ${done ? "done" : ""}">
+        <article class="card project ${done ? 'done' : ''}" data-id="${project.id}">
           <div class="project-top">
-            <div class="project-id">Project ${project.id.toString().padStart(2, "0")}</div>
-            <div class="check">${done ? "✓" : "✓"}</div>
+            <div class="project-id">Project ${String(project.id).padStart(2, '0')}</div>
+            <div class="check">✓</div>
           </div>
-
           <h3>${project.title}</h3>
-          <p>${project.description}</p>
-
-          <div class="tags">
-            ${project.tags.map(tag => `<span class="tag">${tag}</span>`).join("")}
-          </div>
-
+          <p>${project.desc}</p>
+          <div class="tags">${tagList(project.tools)}</div>
           <div class="actions">
-            <button class="btn btn-secondary" onclick="openProject(${project.id})">View details</button>
-            <button class="btn btn-primary" onclick="toggleProject(${project.id})">
-              ${done ? "Completed" : "Mark done"}
+            <button class="btn btn-secondary" data-open="${project.id}">View details</button>
+            <button class="btn ${done ? 'btn-secondary' : 'btn-primary'}" data-toggle="${project.id}">
+              ${done ? 'Completed' : 'Mark done'}
             </button>
           </div>
         </article>
@@ -790,116 +755,118 @@
     }
 
     function render() {
-      const filtered = projects.filter(matchesProject);
-      const beginner = filtered.filter(p => p.difficulty === "beginner");
-      const intermediate = filtered.filter(p => p.difficulty === "intermediate");
+      const beginners = visibleProjects('beginner');
+      const intermediate = visibleProjects('intermediate');
 
-      beginnerGrid.innerHTML = beginner.length
-        ? beginner.map(projectCard).join("")
-        : `<div class="empty">No beginner projects match your current filter.</div>`;
+      beginnerGrid.innerHTML = beginners.length
+        ? beginners.map(projectCard).join('')
+        : '<div class="empty">No beginner projects match your current filter.</div>';
 
       intermediateGrid.innerHTML = intermediate.length
-        ? intermediate.map(projectCard).join("")
-        : `<div class="empty">No intermediate projects match your current filter.</div>`;
-
-      beginnerSection.style.display = (beginner.length || state.filter === "all" || state.filter === "beginner" || state.search) ? "block" : "none";
-      intermediateSection.style.display = (intermediate.length || state.filter === "all" || state.filter === "intermediate" || state.search) ? "block" : "none";
-
-      beginnerCount.textContent = `${projects.filter(p => p.difficulty === "beginner").length} projects`;
-      intermediateCount.textContent = `${projects.filter(p => p.difficulty === "intermediate").length} projects`;
+        ? intermediate.map(projectCard).join('')
+        : '<div class="empty">No intermediate projects match your current filter.</div>';
 
       updateStats();
-      syncFilterUI();
+      bindProjectButtons();
     }
 
-    function updateStats() {
-      const total = projects.length;
-      const complete = Object.keys(state.completed).filter(id => state.completed[id]).length;
-      const remaining = total - complete;
-      const percent = total ? Math.round((complete / total) * 100) : 0;
-      const degrees = Math.round((percent / 100) * 360);
+    function bindProjectButtons() {
+      document.querySelectorAll('[data-open]').forEach(btn => {
+        btn.addEventListener('click', () => openModal(Number(btn.dataset.open)));
+      });
 
-      completedCount.textContent = complete;
-      remainingCount.textContent = remaining;
-      totalCount.textContent = total;
-      progressPercent.textContent = `${percent}%`;
-      progressRing.style.background = `conic-gradient(var(--green) ${degrees}deg, rgba(255,255,255,.06) ${degrees}deg)`;
-    }
+      document.querySelectorAll('[data-toggle]').forEach(btn => {
+        btn.addEventListener('click', () => toggleComplete(Number(btn.dataset.toggle)));
+      });
 
-    function syncFilterUI() {
-      document.querySelectorAll(".chip").forEach(chip => {
-        chip.classList.toggle("active", chip.dataset.filter === state.filter);
+      document.querySelectorAll('.project').forEach(card => {
+        card.addEventListener('dblclick', () => openModal(Number(card.dataset.id)));
       });
     }
 
-    function openProject(id) {
-      const project = projects.find(p => p.id === id);
-      if (!project) return;
+    function toggleComplete(id) {
+      state.completed[id] = !state.completed[id];
+      saveState();
+      render();
+      if (state.selectedId === id) updateModal(id);
+    }
 
-      state.activeProjectId = id;
-      modalTitle.textContent = project.title;
-      modalMeta.textContent = `${project.difficulty} • ${project.tags.join(" • ")}`;
-      modalDescription.textContent = project.description;
-      modalGoal.textContent = project.goal;
-      modalSteps.innerHTML = project.steps.map(step => `<li>${step}</li>`).join("");
-      modalTools.innerHTML = project.tools.map(tool => `<li>${tool}</li>`).join("");
-      projectNotes.value = state.notes[id] || "";
-      toggleDoneBtn.textContent = state.completed[id] ? "Mark Incomplete" : "Mark Complete";
-      modalBackdrop.classList.add("show");
+    function openModal(id) {
+      state.selectedId = id;
+      updateModal(id);
+      modalBackdrop.classList.add('show');
+      modalBackdrop.setAttribute('aria-hidden', 'false');
+    }
+
+    function updateModal(id) {
+      const p = PROJECTS.find(x => x.id === id);
+      if (!p) return;
+
+      modalTitle.textContent = `Project ${String(p.id).padStart(2,'0')} – ${p.title}`;
+      modalMeta.textContent = `${p.level.toUpperCase()} • ${p.tools.length} tools listed`;
+      modalDesc.textContent = p.desc;
+      modalTools.innerHTML = tagList(p.tools);
+      modalSteps.innerHTML = p.steps.map(step => `<li>${step}</li>`).join('');
+      modalNotes.value = state.notes[id] || '';
+      toggleCompleteBtn.textContent = state.completed[id] ? 'Mark Pending' : 'Mark Complete';
     }
 
     function closeModal() {
-      modalBackdrop.classList.remove("show");
-      state.activeProjectId = null;
+      modalBackdrop.classList.remove('show');
+      modalBackdrop.setAttribute('aria-hidden', 'true');
     }
 
-    function toggleProject(id) {
-      state.completed[id] = !state.completed[id];
+    function resetSavedProgress() {
+      const ok = confirm('This will clear all saved completed projects and notes for this tracker in your browser. Continue?');
+      if (!ok) return;
+
+      state.completed = {};
+      state.notes = {};
+      saveState();
       render();
 
-      if (state.activeProjectId === id) {
-        toggleDoneBtn.textContent = state.completed[id] ? "Mark Incomplete" : "Mark Complete";
+      if (state.selectedId != null) {
+        updateModal(state.selectedId);
       }
     }
 
-    document.querySelectorAll(".chip").forEach(chip => {
-      chip.addEventListener("click", () => {
-        state.filter = chip.dataset.filter;
-        render();
-      });
-    });
+    chips.forEach(chip => chip.addEventListener('click', () => {
+      chips.forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      state.filter = chip.dataset.filter;
+      render();
+    }));
 
-    searchInput.addEventListener("input", (e) => {
-      state.search = e.target.value.trim();
+    searchInput.addEventListener('input', e => {
+      state.query = e.target.value.trim();
       render();
     });
 
-    closeModalBtn.addEventListener("click", closeModal);
+    modalNotes.addEventListener('input', e => {
+      if (state.selectedId != null) {
+        state.notes[state.selectedId] = e.target.value;
+        saveState();
+      }
+    });
 
-    modalBackdrop.addEventListener("click", (e) => {
+    closeModalBtn.addEventListener('click', closeModal);
+
+    toggleCompleteBtn.addEventListener('click', () => {
+      if (state.selectedId != null) toggleComplete(state.selectedId);
+    });
+
+    resetProgressBtn.addEventListener('click', resetSavedProgress);
+
+    modalBackdrop.addEventListener('click', e => {
       if (e.target === modalBackdrop) closeModal();
     });
 
-    toggleDoneBtn.addEventListener("click", () => {
-      if (state.activeProjectId !== null) {
-        toggleProject(state.activeProjectId);
-      }
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeModal();
     });
 
-    projectNotes.addEventListener("input", () => {
-      if (state.activeProjectId !== null) {
-        state.notes[state.activeProjectId] = projectNotes.value;
-      }
-    });
-
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") closeModal();
-    });
-
-    window.openProject = openProject;
-    window.toggleProject = toggleProject;
-
-    render();
+    loadState();
+    render();   
   </script>
 </body>
-</html>
+</html>  
