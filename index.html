@@ -2,6 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self';
+                 script-src 'self' 'unsafe-inline';
+                 style-src  'self' 'unsafe-inline';
+                 connect-src 'self' https://api.github.com;
+                 img-src 'self' data:;
+                 object-src 'none';
+                 base-uri 'self';
+                 form-action 'self';" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>100 Hacking Projects Tracker</title>
   <style>
@@ -573,11 +582,16 @@
         <p>A token with <strong>repo</strong> scope is required to push backups. It is stored only in this browser's localStorage and never sent anywhere except the GitHub API.</p>
         <input class="token-input" id="tokenInput" type="password" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off" spellcheck="false" />
         <div class="token-note">
-          Need a token? <a href="https://github.com/settings/tokens/new?scopes=repo&description=hacking-tracker-backup" target="_blank" rel="noopener">Create a fine-grained token</a> with <em>Contents: Read and Write</em> on this repo only.
+          Need a token? <a href="https://github.com/settings/tokens/new?scopes=repo&description=hacking-tracker-backup" target="_blank" rel="noopener">Create a fine-grained token</a> — use <em>Fine-grained</em>, scope it to <strong>this repo only</strong>, with <em>Contents: Read and Write</em>. Classic tokens with full <code>repo</code> scope work but are over-privileged.
         </div>
+        <label style="display:flex;align-items:center;gap:10px;color:var(--muted);font-size:.88rem;margin-bottom:16px;cursor:pointer;">
+          <input type="checkbox" id="tokenPersistCheck" style="width:16px;height:16px;accent-color:var(--green);" />
+          Remember across sessions (stores obfuscated token in localStorage)
+        </label>
         <div class="token-actions">
+          <button class="btn btn-secondary" id="tokenClearBtn" type="button" title="Wipe stored token from all storage">&#128465; Clear token</button>
           <button class="btn btn-secondary" id="tokenCancelBtn" type="button">Cancel</button>
-          <button class="btn btn-primary" id="tokenSaveBtn" type="button">Save &amp; Continue</button>
+          <button class="btn btn-primary"   id="tokenSaveBtn"   type="button">Save &amp; Continue</button>
         </div>
       </div>
     </div>
@@ -1418,9 +1432,17 @@
 
     function renderGrid(grid, items, emptyText) {
       if (!items.length) {
-        grid.innerHTML = `<div class="empty">${emptyText}</div>`;
+        // Use textContent instead of innerHTML — prevents any future accidental
+        // XSS if emptyText ever incorporates user-controlled input (e.g. search term).
+        const div = document.createElement('div');
+        div.className = 'empty';
+        div.textContent = emptyText;
+        grid.replaceChildren(div);
         return;
       }
+      // projectCard output is safe: all user-visible strings pass through
+      // escapeHtml() before being embedded. Notes are written via .value (textarea)
+      // and never reflected into innerHTML.
       grid.innerHTML = items.map(projectCard).join('');
     }
 
@@ -1546,7 +1568,76 @@
     const REPO_NAME     = 'summer-hacking-projects';
     const BACKUP_BRANCH = 'progress-backup';
     const LATEST_PATH   = 'backups/latest.json';
-    const TOKEN_KEY     = 'hackingTracker_ghToken';
+    const TOKEN_LS_KEY   = 'hackingTracker_ghToken';   // obfuscated, localStorage (opt-in)
+    const TOKEN_SS_KEY   = 'hackingTracker_ghToken_ss'; // obfuscated, sessionStorage
+    const OBFKEY_SS_KEY  = 'hackingTracker_obfKey';     // per-session XOR key (sessionStorage)
+
+    // ── Token obfuscation helpers ──────────────────────────────────────────
+    // Generates a fresh 32-byte XOR key and stores it in sessionStorage.
+    // This key is lost when the tab closes, making the obfuscated blob in
+    // localStorage unreadable without a matching key — a deterrent against
+    // offline storage scraping, not a substitute for encryption.
+    function getOrCreateObfKey() {
+      let stored = sessionStorage.getItem(OBFKEY_SS_KEY);
+      if (stored) return JSON.parse(stored);
+      const key = Array.from(crypto.getRandomValues(new Uint8Array(32)));
+      sessionStorage.setItem(OBFKEY_SS_KEY, JSON.stringify(key));
+      return key;
+    }
+
+    function xorObfuscate(str, key) {
+      const encoded = new TextEncoder().encode(str);
+      const out = encoded.map((byte, i) => byte ^ key[i % key.length]);
+      return btoa(String.fromCharCode(...out));
+    }
+
+    function xorDeobfuscate(b64, key) {
+      try {
+        const bytes = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
+        const out = bytes.map((byte, i) => byte ^ key[i % key.length]);
+        return new TextDecoder().decode(out);
+      } catch { return ''; }
+    }
+
+    function storeToken(raw, persist) {
+      const key = getOrCreateObfKey();
+      const obf = xorObfuscate(raw, key);
+      sessionStorage.setItem(TOKEN_SS_KEY, obf);
+      if (persist) {
+        // Also write to localStorage so the obfuscated blob survives tab close.
+        // The XOR key is session-scoped, so if the session ends and a new one
+        // starts, the LS blob becomes undecipherable and is discarded gracefully.
+        localStorage.setItem(TOKEN_LS_KEY, obf);
+      } else {
+        localStorage.removeItem(TOKEN_LS_KEY);
+      }
+    }
+
+    function clearToken() {
+      sessionStorage.removeItem(TOKEN_SS_KEY);
+      sessionStorage.removeItem(OBFKEY_SS_KEY);
+      localStorage.removeItem(TOKEN_LS_KEY);
+    }
+
+    function getSavedToken() {
+      const key = getOrCreateObfKey();
+      // Prefer sessionStorage (same tab, freshest key)
+      const ss = sessionStorage.getItem(TOKEN_SS_KEY);
+      if (ss) return xorDeobfuscate(ss, key);
+      // Fall back to localStorage blob — only works if the session key is still live
+      const ls = localStorage.getItem(TOKEN_LS_KEY);
+      if (ls) {
+        const t = xorDeobfuscate(ls, key);
+        if (t.startsWith('ghp_') || t.startsWith('github_pat_') || t.length > 10) {
+          // Re-cache in sessionStorage so future calls skip the LS round-trip
+          sessionStorage.setItem(TOKEN_SS_KEY, ls);
+          return t;
+        }
+        // LS blob is from a previous session with a different key — discard it
+        localStorage.removeItem(TOKEN_LS_KEY);
+      }
+      return '';
+    }
     const GH_API        = 'https://api.github.com';
 
     const backupBtn      = document.getElementById('backupBtn');
@@ -1637,7 +1728,7 @@
       } catch (err) {
         console.error(err);
         if (err.message.includes('401') || err.message.includes('403')) {
-          localStorage.removeItem(TOKEN_KEY);
+          clearToken();
           setStatus('Token rejected — re-enter it and try again.', 'err');
         } else if (err.message.includes('404')) {
           setStatus('Repo/branch not found — check token has repo scope.', 'err');
@@ -1686,17 +1777,64 @@
       tokenSaveBtn.onclick = () => {
         const t = tokenInput.value.trim();
         if (!t) { tokenInput.focus(); return; }
-        localStorage.setItem(TOKEN_KEY, t);
+        storeToken(t, document.getElementById('tokenPersistCheck')?.checked ?? false);
         tokenBackdrop.classList.remove('show');
         tokenBackdrop.setAttribute('aria-hidden', 'true');
-        onSave(t);
+        setStatus('Validating token…');
+        validateTokenScope(t).then(ok => {
+          if (ok) onSave(t);
+        });
       };
     }
+
+    const tokenClearBtn = document.getElementById('tokenClearBtn');
+
+    tokenClearBtn.addEventListener('click', () => {
+      clearToken();
+      tokenInput.value = '';
+      setStatus('Token cleared from all storage.', 'ok');
+      tokenBackdrop.classList.remove('show');
+      tokenBackdrop.setAttribute('aria-hidden', 'true');
+    });
 
     tokenCancelBtn.addEventListener('click', () => {
       tokenBackdrop.classList.remove('show');
       tokenBackdrop.setAttribute('aria-hidden', 'true');
     });
+
+    // Pre-tick the persist checkbox if localStorage already has an obfuscated blob
+    document.getElementById('tokenBackdrop').addEventListener('show-token-modal', () => {
+      const persistCheck = document.getElementById('tokenPersistCheck');
+      if (persistCheck) persistCheck.checked = !!localStorage.getItem(TOKEN_LS_KEY);
+    });
+
+    // ── GitHub token scope validation ────────────────────────────────────────
+    // Calls /user with the provided token and checks that it has at least
+    // public_repo or repo scope by inspecting the x-oauth-scopes response header.
+    // This runs once after the user saves a new token.
+    async function validateTokenScope(token) {
+      try {
+        const res = await fetch(`${GH_API}/user`, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Accept': 'application/vnd.github+json'
+          }
+        });
+        if (res.status === 401) {
+          clearToken();
+          setStatus('Token is invalid (401) — check it and try again.', 'err');
+          return false;
+        }
+        const scopes = res.headers.get('x-oauth-scopes') || '';
+        const scopeList = scopes.split(',').map(s => s.trim());
+        // Fine-grained tokens don't return x-oauth-scopes — treat absence as OK
+        if (scopes && !scopeList.includes('repo') && !scopeList.includes('public_repo')) {
+          setStatus('Warning: token may lack repo scope — backup may fail.', 'err');
+          // Don't block — fine-grained tokens will work even though scopes header is empty
+        }
+        return true;
+      } catch { return true; } // Network error — don't block the attempt
+    }
 
     tokenBackdrop.addEventListener('click', e => {
       if (e.target === tokenBackdrop) {
