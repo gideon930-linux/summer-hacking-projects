@@ -71,7 +71,7 @@ For each project I complete, I plan to add:
 
 - [Project 01 – Port Scanning with Nmap](01-port-scanning-with-nmap.md)
 - [Project 02 – DNS Enumeration with dig](02-dns-enumeration.md)
-  
+- [Project 03 – Web Secret Audit and CSP Remediation](project-03-web-secret-audit-writeup.md)  
 ## Reconnaissance and Enumeration Labs
 
 - Nmap port scanning notes:
