@@ -80,6 +80,7 @@ For each project I complete, I plan to add:
   - [docs/nmap-port-scanning3.md](docs/nmap-port-scanning3.md)
 - DNS enumeration notes:
   - [docs/dig-dns-enumeration.md](docs/dig-dns-enumeration.md)
+  - [Part 02 – DNS Enumeration with dig](02-dns-enumeration.md)
 
 ## Related Repository
 
