@@ -1,4 +1,4 @@
-# Project 02 (part 2) – dns enumeration with dig tridenttech.edu google.com
+# Project 02 (part 2) – DNS numeration with dig tridenttech.edu google.com
 
 ## Objective
 
