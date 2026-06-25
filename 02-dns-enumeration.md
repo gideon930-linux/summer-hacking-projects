@@ -38,7 +38,7 @@ example.com.            300     IN      A       104.20.23.154
 
 - `example.com` resolves to two IPv4 addresses: `172.66.147.243` and `104.20.23.154`.
 - TTL of `300` seconds indicates the time the answer can be cached.
-- The `SERVER` line shows `192.168.3.1#53`, meaning the query went through the lab DNS/router.
+- The `SERVER` line shows `192.168.3.1#53`, meaning the query went through the lab DNS/router. 
 
 ### 1.2 Short A record output
 
