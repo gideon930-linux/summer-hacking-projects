@@ -1,6 +1,6 @@
 # Project 02 (part 2) – DNS numeration with dig tridenttech.edu google.com
 
-## Objective
+**Objective**
 
 Use `dig` to enumerate DNS information for two public domains (`tridenttech.edu` and `google.com`), compare the results, and explain what they reveal from a security and reconnaissance point of view.
 
