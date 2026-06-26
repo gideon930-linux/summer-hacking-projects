@@ -1,4 +1,4 @@
-03 – Web Secret Audit and CSP Remediation — Completed Write-Up
+## 03 – Web Secret Audit and CSP Remediation — Completed Write-Up
 
 | Field            | Value                                                      |
 | ---------------- | ---------------------------------------------------------- |
