@@ -24,7 +24,7 @@ This repository is part of my cybersecurity learning journey as a student buildi
 - A place to organize notes and future writeups
 - A beginner-friendly portfolio project
 
-## Focus Areas
+## Focus Areas add Web3 Security:
 
 - Network scanning and enumeration
 - Packet capture and traffic analysis
@@ -33,6 +33,8 @@ This repository is part of my cybersecurity learning journey as a student buildi
 - OSINT and reconnaissance
 - Vulnerability scanning
 - Lab documentation and writeups
+* Web3 Security & Smart Contract Auditing  
+
 
 ## Rules for This Project
 
@@ -71,7 +73,8 @@ For each project I complete, I plan to add:
 
 - [Project 01 – Port Scanning with Nmap](01-port-scanning-with-nmap.md)
 - [Project 02 – DNS Enumeration with dig](02-dns-enumeration.md)
-- [Project 03 – Web Secret Audit and CSP Remediation](project-03-web-secret-audit-writeup.md)  
+- [Project 03 – Web Secret Audit and CSP Remediation](project-03-web-secret-audit-writeup.md)
+- [Project 04 – Ethernaut Smart Contract Audits (Level 00 & 01)](documentation/ethernaut-web3-audits.md)
 ## Reconnaissance and Enumeration Labs
 
 - Nmap port scanning notes:
@@ -93,6 +96,7 @@ I also document my broader homelab and cybersecurity work here:
 - Kali Linux
 - Proxmox
 - OPNsense
+- Foundry (Anvil, Forge, Cast) 
 - Ubuntu
 - Windows 11
 - Docker
