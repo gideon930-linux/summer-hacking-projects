@@ -1,6 +1,6 @@
 ## Objective
 
-Bypass access-control mechanisms protecting the Fallback.sol contract, force an arbitrary state modification to hijack the master owner address variable, and completely drain the balance via unauthorized liquidity exfiltration.
+Bypass access-control mechanisms protecting the Fallback.sol contract, force an arbitrary state modification to hijack the master owner address variable, and completely drain the balance via unauthorized liquidity exfiltration.   
 
 ## Exploitation Commands (PoC)
 Bash
