@@ -574,43 +574,52 @@ function buildUI() {
   renderAll();
 }
 
-function toggleNotes(id, btn) {
-  const panel = document.getElementById('notes-' + id);
-  const visible = panel.classList.toggle('visible');
-  btn.textContent = visible ? '− notes' : '+ notes';
+function renderAll() {
+  updateStats();
+
+  document.querySelectorAll('.level-card').forEach(card => {
+    const id = parseInt(card.dataset.id, 10);
+    const level = LEVELS.find(l => l.id === id);
+    if (!level) return;
+
+    const status = getStatus(id);
+    card.className = 'level-card status-' + status;
+
+    const hide = !cardMatchesFilter(id) || !cardMatchesSearch(level);
+    if (hide) card.classList.add('hidden');
+
+    const nameEl = card.querySelector('.card-name');
+    if (nameEl) nameEl.textContent = 'Level ' + id + ': ' + level.name;
+  });
+
+  PARTS.forEach(part => {
+    const section = document.getElementById('section-' + part.id);
+    if (!section) return;
+
+    const grid = section.querySelector('.cards-grid');
+    if (!grid) return;
+
+    const visible = grid.querySelectorAll('.level-card:not(.hidden)').length;
+    let empty = grid.querySelector('.empty-state');
+
+    if (visible === 0) {
+      if (!empty) {
+        empty = document.createElement('div');
+        empty.className = 'empty-state';
+        empty.innerHTML = '<div class="icon">🔍</div><p>No levels match your filter.</p>';
+        grid.appendChild(empty);
+      }
+    } else if (empty) {
+      empty.remove();
+    }
+
+    const [start, end] = part.range;
+    const partLevels = LEVELS.filter(l => l.id >= start && l.id <= end);
+    const partDone = partLevels.filter(l => getStatus(l.id) === 'done').length;
+    const badge = section.querySelector('.section-badge');
+    if (badge) badge.innerHTML = '<span>' + partDone + '</span>/' + partLevels.length;
+  });
 }
-
-// THEME TOGGLE
-(function(){
-  const btn = document.querySelector('[data-theme-toggle]');
-  const html = document.documentElement;
-  const sun = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';
-  const moon = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
-  let dark = true;
-  html.setAttribute('data-theme', 'dark');
-  btn.innerHTML = sun;
-  btn.addEventListener('click', () => {
-    dark = !dark;
-    html.setAttribute('data-theme', dark ? 'dark' : 'light');
-    btn.innerHTML = dark ? sun : moon;
-  });
-})();
-
-// SEARCH
-document.getElementById('search').addEventListener('input', e => {
-  searchQuery = e.target.value.trim();
-  renderAll();
-});
-
-// FILTERS
-document.querySelectorAll('.filter-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    currentFilter = btn.dataset.filter;
-    renderAll();
-  });
-});
 
 buildUI();
 </script>
