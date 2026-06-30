@@ -11,7 +11,7 @@ Network Packet Analysis — finish with Wireshark so you can capture traffic fro
 ## Live Tracker
 
 [View the tracker](https://gideon930-linux.github.io/summer-hacking-projects/)
-ethernaut-tracker.html 
+
 
 ## About This Repository
 
