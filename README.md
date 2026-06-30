@@ -77,9 +77,6 @@ For each project I complete, I plan to add:
 - [Project 03 – Web Secret Audit and CSP Remediation](project-03-web-secret-audit-writeup.md)
 - [Project 04 – Ethernaut Smart Contract Audits (Level 00 & 01)](documentation/ethernaut-web3-audits.md)
 <<<<<<< HEAD
-  
-## Reconnaissance and Enumeration Lab
-=======
 
 ## Reconnaissance and Enumeration Labs
 >>>>>>> 5080ee3 (Link Ethernaut tracker and writeups from README)
