@@ -288,10 +288,13 @@ function buildUI() {
   }
 })();
 
-document.getElementById('search').addEventListener('input', e => {
-  searchQuery = e.target.value.trim();
-  renderAll();
-});
+const searchEl = document.getElementById('search');
+if (searchEl) {
+  searchEl.addEventListener('input', e => {
+    searchQuery = e.target.value.trim();
+    renderAll();
+  });
+}
 
 document.querySelectorAll('.filter-btn').forEach(btn => {
   btn.addEventListener('click', () => {
