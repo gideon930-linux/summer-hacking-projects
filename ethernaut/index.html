@@ -1,309 +1,713 @@
-<script>
-const LEVELS = [
-  {id:0, name:"Hello Ethernaut", part:0, objective:"Learn how to interact with the game's web3 console interface, fetch the contract's hidden parameters, and successfully invoke the authenticate() function using the uncovered passkey.", hasWriteup:false},
-  {id:1, name:"Fallback", part:0, objective:"Hijack administrative ownership of the target contract by triggering its insecure receive()/fallback functions and completely drain its native Ether balance.", hasWriteup:false},
-  {id:2, name:"Fallout", part:0, objective:"Claim ownership of the contract by exploiting a misspelled constructor function that was mistakenly left exposed as a standard, publicly callable function.", hasWriteup:true},
-  {id:3, name:"Coin Flip", part:0, objective:"Break the contract's pseudo-random number generator (PRNG) by building an exploit contract that pre-computes block hashes, allowing you to guess the correct outcome 10 times consecutively.", hasWriteup:true},
-  {id:4, name:"Telephone", part:0, objective:"Steal administrative control of the contract by executing your call through an intermediary contract proxy to force a mismatch between tx.origin and msg.sender.", hasWriteup:true},
-  {id:5, name:"Token", part:0, objective:"Exploit an unchecked arithmetic subtraction flaw in an outdated compiler version (^0.6.0) to trigger an integer underflow, giving your player account an astronomical token balance.", hasWriteup:true},
-  {id:6, name:"Delegation", part:1, objective:"Force the target contract to run code inside your own context via a low-level delegatecall inside its fallback method, allowing you to overwrite its storage slot 0 and claim ownership.", hasWriteup:false},
-  {id:7, name:"Force", part:1, objective:"Bypass the contract's lack of payable functions or fallback handlers by using a secondary contract with selfdestruct to forcefully inject Ether into the victim's balance.", hasWriteup:false},
-  {id:8, name:"Vault", part:1, objective:"Read the contract's raw storage slots directly from the blockchain to uncover a password variable that was mistakenly assumed to be secure because it was marked private.", hasWriteup:false},
-  {id:9, name:"King", part:1, objective:"Break a 'King of the Hill' style game by claiming the throne through an exploit contract that completely lacks a receive() or fallback handler, permanently bricking future attempts to reclaim it.", hasWriteup:false},
-  {id:10, name:"Re-entrancy", part:1, objective:"Exploit an incorrect state-update order (State Mutation after External Call) to recursively invoke the withdraw() function, draining all funds before the contract can update your balance ledger.", hasWriteup:false},
-  {id:11, name:"Elevator", part:1, objective:"Implement an interface with changing state results (returning false on the first call and true on the second call) to trick the target contract into letting you access the top floor.", hasWriteup:false},
-  {id:12, name:"Privacy", part:1, objective:"Deep-dive into how data is packed into 32-byte storage slots to accurately locate, extract, and truncate a private cryptographic key from an array.", hasWriteup:false},
-  {id:13, name:"Gatekeeper One", part:2, objective:"Bypass three strict verification gates by computing precise transaction gas limits, manipulating datatype casting, and spoofing origin signatures.", hasWriteup:false},
-  {id:14, name:"Gatekeeper Two", part:2, objective:"Pass a new set of verification gates by calling the target contract from within your exploit contract's constructor (forcing extcodesize to be zero) and solving a bitwise XOR equation.", hasWriteup:false},
-  {id:15, name:"Naught Coin", part:2, objective:"Bypass a locked 10-year transfer restriction on your ERC20 tokens by using the standard approve() and transferFrom() functions instead of the restricted transfer() function.", hasWriteup:false},
-  {id:16, name:"Preservation", part:2, objective:"Exploit a data storage slot collision between a main contract and its library contract during a delegatecall to overwrite and hijack the contract's upgrade routing pointer.", hasWriteup:false},
-  {id:17, name:"Recovery", part:2, objective:"Calculate the missing address of a lost contract instance (generated via nonce and deployer paths) and invoke its emergency recovery function to reclaim lost Ether.", hasWriteup:false},
-  {id:18, name:"MagicNumber", part:2, objective:"Write a raw bytecode execution string using minimal EVM opcodes that returns the number 42 within a tiny, strict 10-gas execution footprint.", hasWriteup:false},
-  {id:19, name:"Alien Codex", part:2, objective:"Exploit an array size underflow in an unstructured storage array to cause a storage slot overflow, allowing you to overwrite slot 0 and claim administrative ownership.", hasWriteup:false},
-  {id:20, name:"Denial", part:3, objective:"Create a denial-of-service (DoS) condition that halts a contract's fund distribution system by writing a fallback function that completely exhausts all remaining execution gas.", hasWriteup:false},
-  {id:21, name:"Shop", part:3, objective:"Manipulate a contract's pricing state by implementing an external view function that changes its returned price based on whether the item has already been purchased.", hasWriteup:false},
-  {id:22, name:"Dex", part:3, objective:"Exploit a flawed mathematical formula used to calculate token prices in a decentralized exchange, using a series of alternating trades to completely drain its liquidity pools.", hasWriteup:false},
-  {id:23, name:"Dex Two", part:3, objective:"Bypass a decentralized exchange's token validation check by creating your own malicious ERC20 token and trading it for all the legitimate assets in the liquidity pool.", hasWriteup:false},
-  {id:24, name:"Puzzle Wallet", part:3, objective:"Exploit a storage slot conflict in an upgradable proxy contract to cause a multicall loop, allowing you to register a deposit twice and withdraw more funds than you actually deposited.", hasWriteup:false},
-  {id:25, name:"Motorbike", part:3, objective:"Hijack an uninitialized UUPS proxy implementation contract, initialize yourself as the owner, and force it to execute a selfdestruct call to completely break the system.", hasWriteup:false},
-  {id:26, name:"Double Entry Point", part:3, objective:"Build an on-chain monitoring bot (Forta detection system) to intercept a malicious transfer and protect an underlying legacy vault from being drained through an exposed entry point.", hasWriteup:false},
-  {id:27, name:"Good Samaritan", part:3, objective:"Force a custom error handling revert mechanism to trick a token donation loop into emptying its entire treasury vault into your wallet.", hasWriteup:false},
-  {id:28, name:"Gatekeeper Three", part:3, objective:"Pass a final set of authentication gates by leveraging password leaks, forcing Ether into the contract via a payable construct, and manipulating the contract's timestamp records.", hasWriteup:false}
-];
-
-const PARTS = [
-  {id:0, icon:"🏁", title:"Part 1: Core Mechanics & Fundamental Concepts", range:[0,5]},
-  {id:1, icon:"⚙️", title:"Part 2: EVM Architecture & Basic Flow Controls", range:[6,12]},
-  {id:2, icon:"🔒", title:"Part 3: Advanced Gatekeepers & Token Standards", range:[13,19]},
-  {id:3, icon:"📈", title:"Part 4: Complex DeFi Logic, Proxies & Edge Cases", range:[20,28]}
-];
-
-const STORAGE_KEY = 'ethernaut_tracker_v1';
-
-function loadState() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : {};
-  } catch (e) {
-    return {};
-  }
-}
-
-function saveState(state) {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-  } catch (e) {}
-}
-
-let state = loadState();
-let currentFilter = 'all';
-let searchQuery = '';
-
-[2, 3, 4, 5].forEach(id => {
-  if (!state[id]) state[id] = {};
-  if (!state[id].status) state[id].status = 'done';
-});
-saveState(state);
-
-function getStatus(id) {
-  return (state[id] && state[id].status) || 'open';
-}
-
-function getNotes(id) {
-  return (state[id] && state[id].notes) || '';
-}
-
-function setStatus(id, status) {
-  if (!state[id]) state[id] = {};
-  state[id].status = status;
-  saveState(state);
-  renderAll();
-}
-
-function setNotes(id, notes) {
-  if (!state[id]) state[id] = {};
-  state[id].notes = notes;
-  saveState(state);
-}
-
-function updateStats() {
-  const done = LEVELS.filter(l => getStatus(l.id) === 'done').length;
-  const failed = LEVELS.filter(l => getStatus(l.id) === 'failed').length;
-  const pct = Math.round((done / LEVELS.length) * 100);
-
-  document.getElementById('stat-done').textContent = done;
-  document.getElementById('stat-failed').textContent = failed;
-  document.getElementById('stat-pct').textContent = pct + '%';
-  document.getElementById('progress-fill').style.width = pct + '%';
-}
-
-function cardMatchesFilter(id) {
-  const status = getStatus(id);
-  if (currentFilter === 'done') return status === 'done';
-  if (currentFilter === 'failed') return status === 'failed';
-  if (currentFilter === 'open') return status === 'open';
-  return true;
-}
-
-function cardMatchesSearch(level) {
-  if (!searchQuery) return true;
-  const q = searchQuery.toLowerCase();
-  return (
-    level.name.toLowerCase().includes(q) ||
-    level.objective.toLowerCase().includes(q) ||
-    String(level.id).includes(q)
-  );
-}
-
-function renderAll() {
-  updateStats();
-
-  document.querySelectorAll('.level-card').forEach(card => {
-    const id = parseInt(card.dataset.id, 10);
-    const level = LEVELS.find(l => l.id === id);
-    if (!level) return;
-
-    const status = getStatus(id);
-    card.className = 'level-card status-' + status;
-
-    const hide = !cardMatchesFilter(id) || !cardMatchesSearch(level);
-    if (hide) {
-      card.classList.add('hidden');
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ethernaut CTF Tracker</title>
+  <style>
+    :root {
+      --bg: #0b0f0d;
+      --panel: #111715;
+      --panel-2: #151c19;
+      --text: #e8efe9;
+      --muted: #95a39a;
+      --line: #243029;
+      --green: #33a86f;
+      --green-2: #1d7f50;
+      --red: #d35c5c;
+      --amber: #c7a44c;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 18px;
     }
 
-    const nameEl = card.querySelector('.card-name');
-    if (nameEl) {
-      nameEl.textContent = 'Level ' + id + ': ' + level.name;
+    [data-theme="light"] {
+      --bg: #f4f7f5;
+      --panel: #ffffff;
+      --panel-2: #f0f4f1;
+      --text: #122018;
+      --muted: #5a6b61;
+      --line: #d6e0da;
+      --green: #158f57;
+      --green-2: #0c6f42;
+      --red: #c94f4f;
+      --amber: #a07b20;
+      --shadow: 0 10px 30px rgba(0,0,0,.08);
     }
-  });
 
-  PARTS.forEach(part => {
-    const section = document.getElementById('section-' + part.id);
-    if (!section) return;
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
 
-    const grid = section.querySelector('.cards-grid');
-    if (!grid) return;
+    .app {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 24px;
+    }
 
-    const visible = grid.querySelectorAll('.level-card:not(.hidden)').length;
-    let empty = grid.querySelector('.empty-state');
+    .topbar {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
 
-    if (visible === 0) {
-      if (!empty) {
-        empty = document.createElement('div');
-        empty.className = 'empty-state';
-        empty.innerHTML = '<div class="icon">🔍</div><p>No levels match your filter.</p>';
-        grid.appendChild(empty);
+    .brand h1 {
+      margin: 0;
+      font-size: 2rem;
+      letter-spacing: 0.08em;
+      color: #19f08c;
+    }
+
+    .brand p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .theme-toggle {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 10px 12px;
+      cursor: pointer;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .stat-card, .progress-card, .controls, .section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .stat-card {
+      padding: 18px;
+    }
+
+    .stat-card .value {
+      font-size: 2rem;
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .stat-card .label {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+    }
+
+    .progress-card {
+      padding: 18px;
+    }
+
+    .progress-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 12px;
+      background: var(--panel-2);
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+    }
+
+    #progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--green), #25e38a);
+      transition: width 0.2s ease;
+    }
+
+    .controls {
+      padding: 16px;
+      margin-bottom: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    #search {
+      flex: 1 1 320px;
+      min-width: 240px;
+      border: 1px solid var(--line);
+      background: var(--panel-2);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 12px 14px;
+      outline: none;
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .filter-btn, .status-toggle, .notes-toggle, .writeup-badge {
+      border: 1px solid var(--line);
+      background: var(--panel-2);
+      color: var(--text);
+      border-radius: 999px;
+      padding: 10px 12px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .filter-btn.active {
+      background: var(--green-2);
+      border-color: var(--green);
+      color: #fff;
+    }
+
+    .section {
+      padding: 18px;
+      margin-bottom: 18px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      font-weight: 700;
+      font-size: 1.05rem;
+    }
+
+    .section-badge {
+      margin-left: auto;
+      color: var(--muted);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 0.85rem;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+    }
+
+    .level-card {
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .level-card.hidden {
+      display: none;
+    }
+
+    .status-done {
+      border-color: rgba(51,168,111,.5);
+    }
+
+    .status-failed {
+      border-color: rgba(211,92,92,.45);
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card-num {
+      font-size: 0.84rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+
+    .card-status-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--amber);
+      border: 1px solid rgba(255,255,255,.15);
+    }
+
+    .status-done .card-status-dot {
+      background: var(--green);
+    }
+
+    .status-failed .card-status-dot {
+      background: var(--red);
+    }
+
+    .card-name {
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .card-objective {
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .card-footer {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .btn-done {
+      background: rgba(51,168,111,.14);
+    }
+
+    .btn-failed {
+      background: rgba(211,92,92,.14);
+    }
+
+    .btn-reset {
+      background: rgba(199,164,76,.14);
+    }
+
+    .card-notes {
+      display: none;
+    }
+
+    .card-notes.visible {
+      display: block;
+    }
+
+    .notes-textarea {
+      width: 100%;
+      min-height: 100px;
+      resize: vertical;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--text);
+      padding: 12px;
+    }
+
+    .empty-state {
+      grid-column: 1 / -1;
+      padding: 26px;
+      text-align: center;
+      color: var(--muted);
+      border: 1px dashed var(--line);
+      border-radius: 16px;
+    }
+
+    .icon {
+      font-size: 1.6rem;
+      margin-bottom: 8px;
+    }
+
+    @media (max-width: 900px) {
+      .stats {
+        grid-template-columns: 1fr 1fr;
       }
-    } else if (empty) {
-      empty.remove();
     }
 
-    const [start, end] = part.range;
-    const partLevels = LEVELS.filter(l => l.id >= start && l.id <= end);
-    const partDone = partLevels.filter(l => getStatus(l.id) === 'done').length;
-    const badge = section.querySelector('.section-badge');
-    if (badge) {
-      badge.innerHTML = '<span>' + partDone + '</span>/' + partLevels.length;
+    @media (max-width: 640px) {
+      .app {
+        padding: 16px;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .topbar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .theme-toggle {
+        align-self: flex-end;
+      }
     }
-  });
-}
-
-function toggleNotes(id, btn) {
-  const panel = document.getElementById('notes-' + id);
-  if (!panel) return;
-  const visible = panel.classList.toggle('visible');
-  if (btn) {
-    btn.textContent = visible ? '− notes' : '+ notes';
-  }
-}
-
-function buildUI() {
-  const main = document.getElementById('main');
-  main.innerHTML = '';
-
-  PARTS.forEach(part => {
-    const [start, end] = part.range;
-    const partLevels = LEVELS.filter(l => l.id >= start && l.id <= end);
-    const partDone = partLevels.filter(l => getStatus(l.id) === 'done').length;
-
-    const section = document.createElement('section');
-    section.className = 'section';
-    section.id = 'section-' + part.id;
-    section.innerHTML = `
-      <div class="section-header">
-        <span class="section-icon">${part.icon}</span>
-        <span class="section-title">${part.title}</span>
-        <span class="section-badge"><span>${partDone}</span>/${partLevels.length}</span>
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <h1>ETHERNAUT_CTF</h1>
+        <p>OpenZeppelin // 29 Levels // EVM Security</p>
       </div>
-    `;
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme">☀</button>
+    </header>
 
-    const grid = document.createElement('div');
-    grid.className = 'cards-grid';
+    <section class="stats">
+      <div class="stat-card">
+        <div class="value" id="stat-done">0</div>
+        <div class="label">SOLVED</div>
+      </div>
 
-    partLevels.forEach(level => {
-      const status = getStatus(level.id);
-      const notes = getNotes(level.id);
+      <div class="stat-card">
+        <div class="value" id="stat-failed">0</div>
+        <div class="label">FAILED</div>
+      </div>
 
-      const card = document.createElement('div');
-      card.className = 'level-card status-' + status;
-      card.dataset.id = level.id;
+      <div class="stat-card">
+        <div class="value">29</div>
+        <div class="label">TOTAL</div>
+      </div>
 
-      card.innerHTML = `
-        <div class="card-top">
-          <span class="card-num">LVL-${String(level.id).padStart(2, '0')}</span>
-          <div style="flex:1"></div>
-          ${level.hasWriteup ? '<span class="writeup-badge" title="Writeup available">📄 writeup</span>' : ''}
-          <div class="card-status-dot"></div>
+      <div class="progress-card">
+        <div class="progress-row">
+          <span>PROGRESS</span>
+          <span id="stat-pct">0%</span>
         </div>
-        <div class="card-body">
-          <div class="card-name">Level ${level.id}: ${level.name}</div>
-          <div class="card-objective">${level.objective}</div>
+        <div class="progress-bar">
+          <div id="progress-fill"></div>
         </div>
-        <div class="card-footer">
-          <button class="status-toggle btn-done">✓ Solved</button>
-          <button class="status-toggle btn-failed">✗ Failed</button>
-          <button class="status-toggle btn-reset">Reset</button>
-          <button class="notes-toggle">+ notes</button>
-        </div>
-        <div class="card-notes ${notes ? 'visible' : ''}" id="notes-${level.id}">
-          <textarea class="notes-textarea" placeholder="Add notes, tx hashes, exploit steps...">${notes}</textarea>
-        </div>
-      `;
+      </div>
+    </section>
 
-      const doneBtn = card.querySelector('.btn-done');
-      const failedBtn = card.querySelector('.btn-failed');
-      const resetBtn = card.querySelector('.btn-reset');
-      const notesBtn = card.querySelector('.notes-toggle');
-      const textarea = card.querySelector('.notes-textarea');
+    <section class="controls">
+      <input id="search" type="text" placeholder="search levels..." />
+      <div class="filters">
+        <button class="filter-btn active" data-filter="all">ALL</button>
+        <button class="filter-btn" data-filter="done">✓ SOLVED</button>
+        <button class="filter-btn" data-filter="failed">✗ FAILED</button>
+        <button class="filter-btn" data-filter="open">OPEN</button>
+      </div>
+    </section>
 
-      doneBtn.addEventListener('click', e => {
-        e.stopPropagation();
-        setStatus(level.id, 'done');
+    <main id="main"></main>
+  </div>
+
+  <script>
+    const LEVELS = [
+      {id:0, name:"Hello Ethernaut", part:0, objective:"Learn how to interact with the game's web3 console interface, fetch the contract's hidden parameters, and successfully invoke the authenticate() function using the uncovered passkey.", hasWriteup:false},
+      {id:1, name:"Fallback", part:0, objective:"Hijack administrative ownership of the target contract by triggering its insecure receive()/fallback functions and completely drain its native Ether balance.", hasWriteup:false},
+      {id:2, name:"Fallout", part:0, objective:"Claim ownership of the contract by exploiting a misspelled constructor function that was mistakenly left exposed as a standard, publicly callable function.", hasWriteup:true},
+      {id:3, name:"Coin Flip", part:0, objective:"Break the contract's pseudo-random number generator (PRNG) by building an exploit contract that pre-computes block hashes, allowing you to guess the correct outcome 10 times consecutively.", hasWriteup:true},
+      {id:4, name:"Telephone", part:0, objective:"Steal administrative control of the contract by executing your call through an intermediary contract proxy to force a mismatch between tx.origin and msg.sender.", hasWriteup:true},
+      {id:5, name:"Token", part:0, objective:"Exploit an unchecked arithmetic subtraction flaw in an outdated compiler version (^0.6.0) to trigger an integer underflow, giving your player account an astronomical token balance.", hasWriteup:true},
+      {id:6, name:"Delegation", part:1, objective:"Force the target contract to run code inside your own context via a low-level delegatecall inside its fallback method, allowing you to overwrite its storage slot 0 and claim ownership.", hasWriteup:false},
+      {id:7, name:"Force", part:1, objective:"Bypass the contract's lack of payable functions or fallback handlers by using a secondary contract with selfdestruct to forcefully inject Ether into the victim's balance.", hasWriteup:false},
+      {id:8, name:"Vault", part:1, objective:"Read the contract's raw storage slots directly from the blockchain to uncover a password variable that was mistakenly assumed to be secure because it was marked private.", hasWriteup:false},
+      {id:9, name:"King", part:1, objective:"Break a 'King of the Hill' style game by claiming the throne through an exploit contract that completely lacks a receive() or fallback handler, permanently bricking future attempts to reclaim it.", hasWriteup:false},
+      {id:10, name:"Re-entrancy", part:1, objective:"Exploit an incorrect state-update order (State Mutation after External Call) to recursively invoke the withdraw() function, draining all funds before the contract can update your balance ledger.", hasWriteup:false},
+      {id:11, name:"Elevator", part:1, objective:"Implement an interface with changing state results (returning false on the first call and true on the second call) to trick the target contract into letting you access the top floor.", hasWriteup:false},
+      {id:12, name:"Privacy", part:1, objective:"Deep-dive into how data is packed into 32-byte storage slots to accurately locate, extract, and truncate a private cryptographic key from an array.", hasWriteup:false},
+      {id:13, name:"Gatekeeper One", part:2, objective:"Bypass three strict verification gates by computing precise transaction gas limits, manipulating datatype casting, and spoofing origin signatures.", hasWriteup:false},
+      {id:14, name:"Gatekeeper Two", part:2, objective:"Pass a new set of verification gates by calling the target contract from within your exploit contract's constructor (forcing extcodesize to be zero) and solving a bitwise XOR equation.", hasWriteup:false},
+      {id:15, name:"Naught Coin", part:2, objective:"Bypass a locked 10-year transfer restriction on your ERC20 tokens by using the standard approve() and transferFrom() functions instead of the restricted transfer() function.", hasWriteup:false},
+      {id:16, name:"Preservation", part:2, objective:"Exploit a data storage slot collision between a main contract and its library contract during a delegatecall to overwrite and hijack the contract's upgrade routing pointer.", hasWriteup:false},
+      {id:17, name:"Recovery", part:2, objective:"Calculate the missing address of a lost contract instance (generated via nonce and deployer paths) and invoke its emergency recovery function to reclaim lost Ether.", hasWriteup:false},
+      {id:18, name:"MagicNumber", part:2, objective:"Write a raw bytecode execution string using minimal EVM opcodes that returns the number 42 within a tiny, strict 10-gas execution footprint.", hasWriteup:false},
+      {id:19, name:"Alien Codex", part:2, objective:"Exploit an array size underflow in an unstructured storage array to cause a storage slot overflow, allowing you to overwrite slot 0 and claim administrative ownership.", hasWriteup:false},
+      {id:20, name:"Denial", part:3, objective:"Create a denial-of-service (DoS) condition that halts a contract's fund distribution system by writing a fallback function that completely exhausts all remaining execution gas.", hasWriteup:false},
+      {id:21, name:"Shop", part:3, objective:"Manipulate a contract's pricing state by implementing an external view function that changes its returned price based on whether the item has already been purchased.", hasWriteup:false},
+      {id:22, name:"Dex", part:3, objective:"Exploit a flawed mathematical formula used to calculate token prices in a decentralized exchange, using a series of alternating trades to completely drain its liquidity pools.", hasWriteup:false},
+      {id:23, name:"Dex Two", part:3, objective:"Bypass a decentralized exchange's token validation check by creating your own malicious ERC20 token and trading it for all the legitimate assets in the liquidity pool.", hasWriteup:false},
+      {id:24, name:"Puzzle Wallet", part:3, objective:"Exploit a storage slot conflict in an upgradable proxy contract to cause a multicall loop, allowing you to register a deposit twice and withdraw more funds than you actually deposited.", hasWriteup:false},
+      {id:25, name:"Motorbike", part:3, objective:"Hijack an uninitialized UUPS proxy implementation contract, initialize yourself as the owner, and force it to execute a selfdestruct call to completely break the system.", hasWriteup:false},
+      {id:26, name:"Double Entry Point", part:3, objective:"Build an on-chain monitoring bot (Forta detection system) to intercept a malicious transfer and protect an underlying legacy vault from being drained through an exposed entry point.", hasWriteup:false},
+      {id:27, name:"Good Samaritan", part:3, objective:"Force a custom error handling revert mechanism to trick a token donation loop into emptying its entire treasury vault into your wallet.", hasWriteup:false},
+      {id:28, name:"Gatekeeper Three", part:3, objective:"Pass a final set of authentication gates by leveraging password leaks, forcing Ether into the contract via a payable construct, and manipulating the contract's timestamp records.", hasWriteup:false}
+    ];
+
+    const PARTS = [
+      {id:0, icon:"🏁", title:"Part 1: Core Mechanics & Fundamental Concepts", range:[0,5]},
+      {id:1, icon:"⚙️", title:"Part 2: EVM Architecture & Basic Flow Controls", range:[6,12]},
+      {id:2, icon:"🔒", title:"Part 3: Advanced Gatekeepers & Token Standards", range:[13,19]},
+      {id:3, icon:"📈", title:"Part 4: Complex DeFi Logic, Proxies & Edge Cases", range:[20,28]}
+    ];
+
+    const STORAGE_KEY = 'ethernaut_tracker_v1';
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        return raw ? JSON.parse(raw) : {};
+      } catch (e) {
+        return {};
+      }
+    }
+
+    function saveState(state) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (e) {}
+    }
+
+    let state = loadState();
+    let currentFilter = 'all';
+    let searchQuery = '';
+
+    [2, 3, 4, 5].forEach(id => {
+      if (!state[id]) state[id] = {};
+      if (!state[id].status) state[id].status = 'done';
+    });
+    saveState(state);
+
+    function getStatus(id) {
+      return (state[id] && state[id].status) || 'open';
+    }
+
+    function getNotes(id) {
+      return (state[id] && state[id].notes) || '';
+    }
+
+    function setStatus(id, status) {
+      if (!state[id]) state[id] = {};
+      state[id].status = status;
+      saveState(state);
+      renderAll();
+    }
+
+    function setNotes(id, notes) {
+      if (!state[id]) state[id] = {};
+      state[id].notes = notes;
+      saveState(state);
+    }
+
+    function updateStats() {
+      const done = LEVELS.filter(l => getStatus(l.id) === 'done').length;
+      const failed = LEVELS.filter(l => getStatus(l.id) === 'failed').length;
+      const pct = Math.round((done / LEVELS.length) * 100);
+
+      document.getElementById('stat-done').textContent = done;
+      document.getElementById('stat-failed').textContent = failed;
+      document.getElementById('stat-pct').textContent = pct + '%';
+      document.getElementById('progress-fill').style.width = pct + '%';
+    }
+
+    function cardMatchesFilter(id) {
+      const status = getStatus(id);
+      if (currentFilter === 'done') return status === 'done';
+      if (currentFilter === 'failed') return status === 'failed';
+      if (currentFilter === 'open') return status === 'open';
+      return true;
+    }
+
+    function cardMatchesSearch(level) {
+      if (!searchQuery) return true;
+      const q = searchQuery.toLowerCase();
+      return (
+        level.name.toLowerCase().includes(q) ||
+        level.objective.toLowerCase().includes(q) ||
+        String(level.id).includes(q)
+      );
+    }
+
+    function renderAll() {
+      updateStats();
+
+      document.querySelectorAll('.level-card').forEach(card => {
+        const id = parseInt(card.dataset.id, 10);
+        const level = LEVELS.find(l => l.id === id);
+        if (!level) return;
+
+        const status = getStatus(id);
+        card.className = 'level-card status-' + status;
+
+        const hide = !cardMatchesFilter(id) || !cardMatchesSearch(level);
+        if (hide) {
+          card.classList.add('hidden');
+        }
+
+        const nameEl = card.querySelector('.card-name');
+        if (nameEl) {
+          nameEl.textContent = 'Level ' + id + ': ' + level.name;
+        }
       });
 
-      failedBtn.addEventListener('click', e => {
-        e.stopPropagation();
-        setStatus(level.id, 'failed');
+      PARTS.forEach(part => {
+        const section = document.getElementById('section-' + part.id);
+        if (!section) return;
+
+        const grid = section.querySelector('.cards-grid');
+        if (!grid) return;
+
+        const visible = grid.querySelectorAll('.level-card:not(.hidden)').length;
+        let empty = grid.querySelector('.empty-state');
+
+        if (visible === 0) {
+          if (!empty) {
+            empty = document.createElement('div');
+            empty.className = 'empty-state';
+            empty.innerHTML = '<div class="icon">🔍</div><p>No levels match your filter.</p>';
+            grid.appendChild(empty);
+          }
+        } else if (empty) {
+          empty.remove();
+        }
+
+        const [start, end] = part.range;
+        const partLevels = LEVELS.filter(l => l.id >= start && l.id <= end);
+        const partDone = partLevels.filter(l => getStatus(l.id) === 'done').length;
+        const badge = section.querySelector('.section-badge');
+        if (badge) {
+          badge.innerHTML = '<span>' + partDone + '</span>/' + partLevels.length;
+        }
+      });
+    }
+
+    function toggleNotes(id, btn) {
+      const panel = document.getElementById('notes-' + id);
+      if (!panel) return;
+      const visible = panel.classList.toggle('visible');
+      if (btn) {
+        btn.textContent = visible ? '− notes' : '+ notes';
+      }
+    }
+
+    function buildUI() {
+      const main = document.getElementById('main');
+      main.innerHTML = '';
+
+      PARTS.forEach(part => {
+        const [start, end] = part.range;
+        const partLevels = LEVELS.filter(l => l.id >= start && l.id <= end);
+        const partDone = partLevels.filter(l => getStatus(l.id) === 'done').length;
+
+        const section = document.createElement('section');
+        section.className = 'section';
+        section.id = 'section-' + part.id;
+        section.innerHTML = `
+          <div class="section-header">
+            <span>${part.icon}</span>
+            <span class="section-title">${part.title}</span>
+            <span class="section-badge"><span>${partDone}</span>/${partLevels.length}</span>
+          </div>
+        `;
+
+        const grid = document.createElement('div');
+        grid.className = 'cards-grid';
+
+        partLevels.forEach(level => {
+          const status = getStatus(level.id);
+          const notes = getNotes(level.id);
+
+          const card = document.createElement('div');
+          card.className = 'level-card status-' + status;
+          card.dataset.id = level.id;
+
+          card.innerHTML = `
+            <div class="card-top">
+              <span class="card-num">LVL-${String(level.id).padStart(2, '0')}</span>
+              <div style="flex:1"></div>
+              ${level.hasWriteup ? '<span class="writeup-badge">📄 writeup</span>' : ''}
+              <div class="card-status-dot"></div>
+            </div>
+            <div class="card-body">
+              <div class="card-name">Level ${level.id}: ${level.name}</div>
+              <div class="card-objective">${level.objective}</div>
+            </div>
+            <div class="card-footer">
+              <button class="status-toggle btn-done">✓ Solved</button>
+              <button class="status-toggle btn-failed">✗ Failed</button>
+              <button class="status-toggle btn-reset">Reset</button>
+              <button class="notes-toggle">${notes ? '− notes' : '+ notes'}</button>
+            </div>
+            <div class="card-notes ${notes ? 'visible' : ''}" id="notes-${level.id}">
+              <textarea class="notes-textarea" placeholder="Add notes, tx hashes, exploit steps...">${notes}</textarea>
+            </div>
+          `;
+
+          const doneBtn = card.querySelector('.btn-done');
+          const failedBtn = card.querySelector('.btn-failed');
+          const resetBtn = card.querySelector('.btn-reset');
+          const notesBtn = card.querySelector('.notes-toggle');
+          const textarea = card.querySelector('.notes-textarea');
+
+          doneBtn.addEventListener('click', e => {
+            e.stopPropagation();
+            setStatus(level.id, 'done');
+          });
+
+          failedBtn.addEventListener('click', e => {
+            e.stopPropagation();
+            setStatus(level.id, 'failed');
+          });
+
+          resetBtn.addEventListener('click', e => {
+            e.stopPropagation();
+            setStatus(level.id, 'open');
+          });
+
+          notesBtn.addEventListener('click', e => {
+            e.stopPropagation();
+            toggleNotes(level.id, notesBtn);
+          });
+
+          textarea.addEventListener('input', e => {
+            setNotes(level.id, e.target.value);
+          });
+
+          grid.appendChild(card);
+        });
+
+        section.appendChild(grid);
+        main.appendChild(section);
       });
 
-      resetBtn.addEventListener('click', e => {
-        e.stopPropagation();
-        setStatus(level.id, 'open');
-      });
+      renderAll();
+    }
 
-      notesBtn.addEventListener('click', e => {
-        e.stopPropagation();
-        toggleNotes(level.id, notesBtn);
-      });
+    (function () {
+      const btn = document.querySelector('[data-theme-toggle]');
+      const html = document.documentElement;
+      let dark = true;
 
-      textarea.addEventListener('input', e => {
-        setNotes(level.id, e.target.value);
-      });
+      html.setAttribute('data-theme', 'dark');
+      if (btn) {
+        btn.addEventListener('click', () => {
+          dark = !dark;
+          html.setAttribute('data-theme', dark ? 'dark' : 'light');
+          btn.textContent = dark ? '☀' : '☾';
+        });
+      }
+    })();
 
-      grid.appendChild(card);
+    const searchEl = document.getElementById('search');
+    if (searchEl) {
+      searchEl.addEventListener('input', e => {
+        searchQuery = e.target.value.trim();
+        renderAll();
+      });
+    }
+
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.dataset.filter;
+        renderAll();
+      });
     });
 
-    section.appendChild(grid);
-    main.appendChild(section);
-  });
-
-  renderAll();
-}
-
-(function () {
-  const btn = document.querySelector('[data-theme-toggle]');
-  const html = document.documentElement;
-  const sun = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';
-  const moon = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
-  let dark = true;
-
-  html.setAttribute('data-theme', 'dark');
-  if (btn) {
-    btn.innerHTML = sun;
-    btn.addEventListener('click', () => {
-      dark = !dark;
-      html.setAttribute('data-theme', dark ? 'dark' : 'light');
-      btn.innerHTML = dark ? sun : moon;
-    });
-  }
-})();
-
-const searchEl = document.getElementById('search');
-if (searchEl) {
-  searchEl.addEventListener('input', e => {
-    searchQuery = e.target.value.trim();
-    renderAll();
-  });
-}
-
-document.querySelectorAll('.filter-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    currentFilter = btn.dataset.filter;
-    renderAll();
-  });
-});
-
-buildUI();
-</script>
+    buildUI();
+  </script>
+</body>
+</html>
