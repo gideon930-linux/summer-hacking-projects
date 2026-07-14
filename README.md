@@ -76,10 +76,10 @@ For each project I complete, I plan to add:
 - [Project 02 – DNS Enumeration with dig](02-dns-enumeration.md)
 - [Project 03 – Web Secret Audit and CSP Remediation](project-03-web-secret-audit-writeup.md)
 - [Project 04 – Ethernaut Smart Contract Audits (Level 00 & 01)](documentation/ethernaut-web3-audits.md)
-<<<<<<< HEAD
+
 
 ## Reconnaissance and Enumeration Labs
->>>>>>> 5080ee3 (Link Ethernaut tracker and writeups from README)
+ (Link Ethernaut tracker and writeups from README)
 
 - Nmap port scanning notes:
   - [docs/nmap-port-scanning.md](docs/nmap-port-scanning.md)
@@ -89,14 +89,6 @@ For each project I complete, I plan to add:
   - [docs/dig-dns-enumeration.md](docs/dig-dns-enumeration.md)
   - [Part 02 – DNS Enumeration with dig](02-dns-enumeration.md)
  
- ## Ethernaut
-
-- [Ethernaut Tracker](./ethernaut/)
-- [Level 02 – Fallout](./ethernaut/writeups/Level02%20Fallout%20Report.md)
-- [Level 03 – Coin Flip](./ethernaut/writeups/Level03%20CoinFlip%20Report.md)
-- [Level 04 – Telephone](./ethernaut/writeups/Level04_Telephone_Report.md)
-- [Level 05 – Token](./ethernaut/writeups/Level05_Token_Report.md)
-
 ## Ethernaut
 
 - [Ethernaut Tracker](./ethernaut/)
