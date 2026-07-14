@@ -91,7 +91,8 @@ For each project I complete, I plan to add:
  
 ## Ethernaut
 
-- [Ethernaut Tracker](./ethernaut/)
+- [Ethernaut Tracker](https://gideon930-linux.github.io/summer-hacking-projects/ethernaut/)
+- [Level 00 & 01 – Smart Contract Audits](./ethernaut/writeups/04-ethernaut-smart-contract-audits.md)
 - [Level 02 – Fallout](./ethernaut/writeups/Level02%20Fallout%20Report.md)
 - [Level 03 – Coin Flip](./ethernaut/writeups/Level03%20CoinFlip%20Report.md)
 - [Level 04 – Telephone](./ethernaut/writeups/Level04_Telephone_Report.md)
