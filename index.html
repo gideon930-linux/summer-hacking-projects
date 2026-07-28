@@ -709,9 +709,9 @@
 
 
   <script>
-    // ── Project Data (40 total: 20 beginner, 20 intermediate) ─────────────────
+    // ── Project Data (102 total: 32 beginner, 29 intermediate, 41 advanced ) ─────────────────
     const projects = [
-      // ── BEGINNER ──────────────────────────────────────────────────────────
+      // ── BEGINNER (0-32) ──────────────────────────────────────────────────────────
       {
         id: 0,
         title: "Network Mapping Basics",
@@ -1051,352 +1051,7 @@
           "Explain what each one helps protect."
         ]
       },
-
-      // ── INTERMEDIATE ──────────────────────────────────────────────────────
-      {
         id: 20,
-        title: "Web Directory Enumeration",
-        difficulty: "intermediate",
-        level: "intermediate",
-        levelLabel: "Intermediate",
-        description: "Enumerate directories and files on a lab web target to find exposed content.",
-        tags: ["web", "enumeration", "gobuster"],
-        tools: ["Gobuster", "curl", "Lab web target"],
-        goal: "Understand how content discovery supports web assessment.",
-        steps: [
-          "Run directory enumeration against a lab web app.",
-          "Identify valid directories and files.",
-          "Review the HTTP response codes.",
-          "Document interesting findings."
-        ]
-      },
-      {
-        id: 21,
-        title: "Vulnerability Scan Review",
-        difficulty: "intermediate",
-        level: "intermediate",
-        levelLabel: "Intermediate",
-        description: "Run a lab vulnerability scan and analyze the results for useful remediation planning.",
-        tags: ["openvas", "vulnerability-management", "reporting"],
-        tools: ["OpenVAS", "Target VM", "Browser"],
-        goal: "Learn how to interpret scanner output instead of just running scans.",
-        steps: [
-          "Launch a scan against a safe target.",
-          "Review severity ratings and affected services.",
-          "Pick one finding and explain the risk.",
-          "Write a simple remediation note."
-        ]
-      },
-      {
-        id: 22,
-        title: "SMB Share Enumeration",
-        difficulty: "intermediate",
-        level: "intermediate",
-        levelLabel: "Intermediate",
-        description: "Enumerate SMB shares and identify accessible resources in a Windows-focused lab.",
-        tags: ["smb", "windows", "enumeration"],
-        tools: ["smbclient", "enum4linux", "Windows target"],
-        goal: "Understand how file sharing exposure appears during enumeration.",
-        steps: [
-          "Identify an SMB-enabled host.",
-          "Enumerate available shares.",
-          "Record anonymous versus authenticated access.",
-          "Document risky findings and basic remediation ideas."
-        ]
-      },
-      {
-        id: 23,
-        title: "Web Login Surface Review",
-        difficulty: "intermediate",
-        level: "intermediate",
-        levelLabel: "Intermediate",
-        description: "Inspect a lab login page for obvious attack surface and defensive controls.",
-        tags: ["web", "auth", "assessment"],
-        tools: ["Browser DevTools", "curl", "Lab app"],
-        goal: "Learn to review authentication surfaces methodically.",
-        steps: [
-          "Inspect form fields and requests.",
-          "Review response behavior for failed logins.",
-          "Look for security headers and cookie flags.",
-          "Document observations and recommendations."
-        ]
-      },
-      {
-        id: 24,
-        title: "Container Exposure Review",
-        difficulty: "intermediate",
-        level: "intermediate",
-        levelLabel: "Intermediate",
-        description: "Review a Docker or LXC service for unnecessary exposure such as open ports or weak defaults.",
-        tags: ["docker", "lxc", "hardening"],
-        tools: ["docker", "ss", "netstat"],
-        goal: "Understand how container services can accidentally broaden attack surface.",
-        steps: [
-          "List running containers or services.",
-          "Review exposed ports and bindings.",
-          "Check for default credentials or unnecessary services.",
-          "Write a hardening checklist."
-        ]
-      },
-      {
-        id: 25,
-        title: "Proxmox VM Hardening",
-        difficulty: "intermediate",
-        level: "intermediate",
-        levelLabel: "Intermediate",
-        description: "Review and harden a Proxmox VM for unnecessary services, open ports, and weak defaults.",
-        tags: ["proxmox", "hardening", "virtualization"],
-        tools: ["Proxmox UI", "ssh", "nmap"],
-        goal: "Apply layered hardening to a hypervisor-hosted VM.",
-        steps: [
-          "Audit running services inside the VM.",
-          "Disable or remove anything not needed.",
-          "Restrict network access via firewall rules.",
-          "Document changes made and why."
-        ]
-      },
-      {
-        id: 26,
-        title: "Password Cracking Lab",
-        difficulty: "intermediate",
-        level: "intermediate",
-        levelLabel: "Intermediate",
-        description: "Use a wordlist attack against hashed credentials in a controlled lab environment.",
-        tags: ["hashcat", "passwords", "cracking"],
-        tools: ["Hashcat", "rockyou.txt", "sample hashes"],
-        goal: "Understand why weak passwords fall quickly and how hash strength matters.",
-        steps: [
-          "Generate or obtain safe practice hashes.",
-          "Run a dictionary attack with a common wordlist.",
-          "Record which hashes cracked and how fast.",
-          "Summarize what makes a password cracking-resistant."
-        ]
-      },
-      {
-        id: 27,
-        title: "Metasploit Basics",
-        difficulty: "intermediate",
-        level: "intermediate",
-        levelLabel: "Intermediate",
-        description: "Use Metasploit to exploit a known vulnerability in a lab target such as Metasploitable.",
-        tags: ["metasploit", "exploitation", "lab"],
-        tools: ["Metasploit", "Metasploitable", "Kali"],
-        goal: "Learn the basic exploit-search-run workflow in a safe environment.",
-        steps: [
-          "Search for a module matching your target service.",
-          "Set required options (RHOSTS, payload).",
-          "Run the exploit and confirm access.",
-          "Document the vulnerability and what access was gained."
-        ]
-      },
-      {
-        id: 28,
-        title: "OSINT Footprinting",
-        difficulty: "intermediate",
-        level: "intermediate",
-        levelLabel: "Intermediate",
-        description: "Use passive open-source tools to gather information about a target domain or organization.",
-        tags: ["osint", "recon", "passive"],
-        tools: ["theHarvester", "Maltego", "Shodan"],
-        goal: "Understand what an attacker can learn without touching the target directly.",
-        steps: [
-          "Choose a safe practice target (your own domain or a lab domain).",
-          "Run email and subdomain harvesting.",
-          "Check Shodan for exposed services.",
-          "Write a report of findings as if briefing a client."
-        ]
-      },
-      {
-        id: 29,
-        title: "Wireless Network Recon",
-        difficulty: "intermediate",
-        level: "intermediate",
-        levelLabel: "Intermediate",
-        description: "Survey nearby wireless networks and analyze what information beacons expose.",
-        tags: ["wireless", "wifi", "recon"],
-        tools: ["airmon-ng", "airodump-ng", "Wireshark"],
-        goal: "Understand what 802.11 management frames reveal about a network.",
-        steps: [
-          "Enable monitor mode on a wireless adapter.",
-          "Capture beacon frames in the area.",
-          "Record SSIDs, BSSIDs, channels, and encryption types.",
-          "Document any open or WEP networks as high-risk findings."
-        ]
-      },
-      {
-        id: 30,
-        title: "Active Directory Enumeration",
-        difficulty: "intermediate",
-        level: "intermediate",
-        levelLabel: "Intermediate",
-        description: "Enumerate users, groups, and policies in a lab Active Directory environment.",
-        tags: ["active-directory", "windows", "enumeration"],
-        tools: ["BloodHound", "ldapsearch", "net commands"],
-        goal: "Map the AD structure an attacker would target for privilege escalation.",
-        steps: [
-          "Enumerate domain users and groups.",
-          "Identify privileged accounts and admin group membership.",
-          "Find accounts with weak or no expiry policies.",
-          "Document the attack paths you discovered."
-        ]
-      },
-      {
-        id: 31,
-        title: "Linux Privilege Escalation",
-        difficulty: "intermediate",
-        level: "intermediate",
-        levelLabel: "Intermediate",
-        description: "Identify and exploit a misconfiguration to escalate from a low-privilege user to root in a lab.",
-        tags: ["privesc", "linux", "exploitation"],
-        tools: ["LinPEAS", "sudo -l", "find"],
-        goal: "Learn the most common local privilege escalation paths on Linux.",
-        steps: [
-          "Start as a low-privilege user on the lab host.",
-          "Run automated enumeration to find misconfigurations.",
-          "Exploit one finding to gain elevated access.",
-          "Document the path and how to remediate it."
-        ]
-      },
-      {
-        id: 32,
-        title: "Web Application SQL Injection",
-        difficulty: "intermediate",
-        level: "intermediate",
-        levelLabel: "Intermediate",
-        description: "Test a vulnerable lab web application for SQL injection and extract sample data.",
-        tags: ["sqli", "web", "exploitation"],
-        tools: ["SQLMap", "Burp Suite", "DVWA"],
-        goal: "Understand how input validation failures lead to database exposure.",
-        steps: [
-          "Set up a vulnerable app such as DVWA.",
-          "Manually test an input field for injection.",
-          "Use SQLMap to automate and confirm the finding.",
-          "Document the vulnerable parameter and sample extracted data."
-        ]
-      },
-      {
-        id: 33,
-        title: "Cross-Site Scripting Lab",
-        difficulty: "intermediate",
-        level: "intermediate",
-        levelLabel: "Intermediate",
-        description: "Identify and demonstrate a reflected or stored XSS vulnerability in a lab web app.",
-        tags: ["xss", "web", "exploitation"],
-        tools: ["Browser", "Burp Suite", "DVWA"],
-        goal: "Understand how unsanitized output leads to script injection.",
-        steps: [
-          "Find an input field that reflects output to the page.",
-          "Inject a simple script payload.",
-          "Confirm execution in the browser.",
-          "Write a description of the risk and a remediation recommendation."
-        ]
-      },
-      {
-        id: 34,
-        title: "Incident Response Simulation",
-        difficulty: "intermediate",
-        level: "intermediate",
-        levelLabel: "Intermediate",
-        description: "Respond to a simulated security event by collecting evidence, triaging, and writing an incident report.",
-        tags: ["incident-response", "blue-team", "reporting"],
-        tools: ["journalctl", "Wireshark", "notes"],
-        goal: "Practice the structured steps of an IR process from detection to documentation.",
-        steps: [
-          "Review logs for indicators of compromise.",
-          "Identify affected hosts and timeline of events.",
-          "Contain the simulated threat.",
-          "Write a post-incident report with lessons learned."
-        ]
-      },
-      {
-        id: 35,
-        title: "OPNsense IDS Rule Tuning",
-        difficulty: "intermediate",
-        level: "intermediate",
-        levelLabel: "Intermediate",
-        description: "Configure and test Suricata rules inside OPNsense to detect lab attack traffic.",
-        tags: ["ids", "opnsense", "suricata"],
-        tools: ["OPNsense", "Suricata", "Nmap"],
-        goal: "Learn how detection rules are written, enabled, and tested.",
-        steps: [
-          "Enable Suricata on an OPNsense interface.",
-          "Download a rule set and enable a relevant rule.",
-          "Generate traffic that should trigger the rule.",
-          "Confirm the alert fires and document what triggered it."
-        ]
-      },
-      {
-        id: 36,
-        title: "Phishing Email Analysis",
-        difficulty: "intermediate",
-        level: "intermediate",
-        levelLabel: "Intermediate",
-        description: "Analyze a sample phishing email for indicators of compromise including headers, links, and attachments.",
-        tags: ["phishing", "email", "analysis"],
-        tools: ["email headers", "VirusTotal", "any.run"],
-        goal: "Build the habit of methodical email triage used in SOC environments.",
-        steps: [
-          "Obtain a safe phishing sample from a repository.",
-          "Inspect raw headers for spoofed or unusual fields.",
-          "Check embedded URLs against threat intelligence.",
-          "Write a triage report with verdict and indicators."
-        ]
-      },
-      {
-        id: 37,
-        title: "Threat Modeling Exercise",
-        difficulty: "intermediate",
-        level: "intermediate",
-        levelLabel: "Intermediate",
-        description: "Apply STRIDE to a simple lab service to identify and prioritize potential threats.",
-        tags: ["threat-modeling", "stride", "planning"],
-        tools: ["STRIDE template", "draw.io", "notes"],
-        goal: "Practice structured threat thinking before touching a lab target.",
-        steps: [
-          "Choose a lab service or application to model.",
-          "Draw a basic data flow diagram.",
-          "Apply STRIDE categories to each component.",
-          "Prioritize findings by likelihood and impact."
-        ]
-      },
-      {
-        id: 38,
-        title: "TLS Certificate Inspection",
-        difficulty: "intermediate",
-        level: "intermediate",
-        levelLabel: "Intermediate",
-        description: "Examine TLS certificates on lab services for weak configuration, expiry, and chain issues.",
-        tags: ["tls", "certificates", "hardening"],
-        tools: ["openssl", "Browser DevTools", "testssl.sh"],
-        goal: "Learn how certificate problems undermine transport security.",
-        steps: [
-          "Connect to a lab HTTPS service and inspect its certificate.",
-          "Check the cipher suite and protocol version.",
-          "Run testssl.sh for a full report.",
-          "Document any findings and recommended fixes."
-        ]
-      },
-      {
-        id: 39,
-        title: "SIEM Log Ingestion Lab",
-        difficulty: "intermediate",
-        level: "intermediate",
-        levelLabel: "Intermediate",
-        description: "Forward logs from a lab host into a SIEM and build a basic detection rule.",
-        tags: ["siem", "logging", "detection"],
-        tools: ["Wazuh", "rsyslog", "Lab host"],
-        goal: "Understand how logs flow from source to detection platform.",
-        steps: [
-          "Configure a lab host to forward logs to Wazuh.",
-          "Confirm logs are arriving and indexed.",
-          "Create a simple rule to alert on failed SSH logins.",
-          "Trigger the condition and confirm the alert fires."
-        ]
-      },
-    ]
-              // ── BEGINNER ROADMAP CONTINUED (up to 30) ─────────────────────────────
-      {
-        id: 40,
         title: "MAC Address Spoofing",
         difficulty: "beginner",
         level: "beginner",
@@ -1413,7 +1068,7 @@
         ]
       },
       {
-        id: 41,
+        id: 21,
         title: "Brute Forcing SSH Login",
         difficulty: "beginner",
         level: "beginner",
@@ -1430,7 +1085,7 @@
         ]
       },
       {
-        id: 42,
+        id: 22,
         title: "Simple Password Cracker",
         difficulty: "beginner",
         level: "beginner",
@@ -1447,7 +1102,7 @@
         ]
       },
       {
-        id: 43,
+        id: 23,
         title: "SQL Injection Basics",
         difficulty: "beginner",
         level: "beginner",
@@ -1464,7 +1119,7 @@
         ]
       },
       {
-        id: 44,
+        id: 24,
         title: "Exploring XSS Vulnerabilities",
         difficulty: "beginner",
         level: "beginner",
@@ -1481,7 +1136,7 @@
         ]
       },
       {
-        id: 45,
+        id: 25,
         title: "Wi‑Fi Network Scanning",
         difficulty: "beginner",
         level: "beginner",
@@ -1498,7 +1153,7 @@
         ]
       },
       {
-        id: 46,
+        id: 26,
         title: "Social Engineering Basics",
         difficulty: "beginner",
         level: "beginner",
@@ -1515,7 +1170,7 @@
         ]
       },
       {
-        id: 47,
+        id: 27,
         title: "Information Gathering with Recon‑ng",
         difficulty: "beginner",
         level: "beginner",
@@ -1532,7 +1187,7 @@
         ]
       },
       {
-        id: 48,
+        id: 28,
         title: "Email Phishing Simulation",
         difficulty: "beginner",
         level: "beginner",
@@ -1549,7 +1204,7 @@
         ]
       },
       {
-        id: 49,
+        id: 29,
         title: "Building a Simple Keylogger",
         difficulty: "beginner",
         level: "beginner",
@@ -1566,7 +1221,7 @@
         ]
       },
       {
-        id: 50,
+        id: 30,
         title: "Setting Up a Honeypot",
         difficulty: "beginner",
         level: "beginner",
@@ -1583,7 +1238,7 @@
         ]
       },
       {
-        id: 51,
+        id: 31,
         title: "Packet Sniffing with Scapy",
         difficulty: "beginner",
         level: "beginner",
@@ -1600,7 +1255,7 @@
         ]
       },
       {
-        id: 52,
+        id: 32,
         title: "Google Dorking for OSINT",
         difficulty: "beginner",
         level: "beginner",
@@ -1615,9 +1270,348 @@
           "Compare results with and without advanced operators.",
           "Capture guidance on ethical OSINT boundaries."
         ]
+      // ── INTERMEDIATE (33-72) ──────────────────────────────────────────────────────
+      {
+        id: 33,
+        title: "Web Directory Enumeration",
+        difficulty: "intermediate",
+        level: "intermediate",
+        levelLabel: "Intermediate",
+        description: "Enumerate directories and files on a lab web target to find exposed content.",
+        tags: ["web", "enumeration", "gobuster"],
+        tools: ["Gobuster", "curl", "Lab web target"],
+        goal: "Understand how content discovery supports web assessment.",
+        steps: [
+          "Run directory enumeration against a lab web app.",
+          "Identify valid directories and files.",
+          "Review the HTTP response codes.",
+          "Document interesting findings."
+        ]
       },
-
-      // ── INTERMEDIATE ROADMAP CONTINUED (31–70) ────────────────────────────
+      {
+        id: 34,
+        title: "Vulnerability Scan Review",
+        difficulty: "intermediate",
+        level: "intermediate",
+        levelLabel: "Intermediate",
+        description: "Run a lab vulnerability scan and analyze the results for useful remediation planning.",
+        tags: ["openvas", "vulnerability-management", "reporting"],
+        tools: ["OpenVAS", "Target VM", "Browser"],
+        goal: "Learn how to interpret scanner output instead of just running scans.",
+        steps: [
+          "Launch a scan against a safe target.",
+          "Review severity ratings and affected services.",
+          "Pick one finding and explain the risk.",
+          "Write a simple remediation note."
+        ]
+      },
+      {
+        id: 35,
+        title: "SMB Share Enumeration",
+        difficulty: "intermediate",
+        level: "intermediate",
+        levelLabel: "Intermediate",
+        description: "Enumerate SMB shares and identify accessible resources in a Windows-focused lab.",
+        tags: ["smb", "windows", "enumeration"],
+        tools: ["smbclient", "enum4linux", "Windows target"],
+        goal: "Understand how file sharing exposure appears during enumeration.",
+        steps: [
+          "Identify an SMB-enabled host.",
+          "Enumerate available shares.",
+          "Record anonymous versus authenticated access.",
+          "Document risky findings and basic remediation ideas."
+        ]
+      },
+      {
+        id: 36,
+        title: "Web Login Surface Review",
+        difficulty: "intermediate",
+        level: "intermediate",
+        levelLabel: "Intermediate",
+        description: "Inspect a lab login page for obvious attack surface and defensive controls.",
+        tags: ["web", "auth", "assessment"],
+        tools: ["Browser DevTools", "curl", "Lab app"],
+        goal: "Learn to review authentication surfaces methodically.",
+        steps: [
+          "Inspect form fields and requests.",
+          "Review response behavior for failed logins.",
+          "Look for security headers and cookie flags.",
+          "Document observations and recommendations."
+        ]
+      },
+      {
+        id: 37,
+        title: "Container Exposure Review",
+        difficulty: "intermediate",
+        level: "intermediate",
+        levelLabel: "Intermediate",
+        description: "Review a Docker or LXC service for unnecessary exposure such as open ports or weak defaults.",
+        tags: ["docker", "lxc", "hardening"],
+        tools: ["docker", "ss", "netstat"],
+        goal: "Understand how container services can accidentally broaden attack surface.",
+        steps: [
+          "List running containers or services.",
+          "Review exposed ports and bindings.",
+          "Check for default credentials or unnecessary services.",
+          "Write a hardening checklist."
+        ]
+      },
+      {
+        id: 38,
+        title: "Proxmox VM Hardening",
+        difficulty: "intermediate",
+        level: "intermediate",
+        levelLabel: "Intermediate",
+        description: "Review and harden a Proxmox VM for unnecessary services, open ports, and weak defaults.",
+        tags: ["proxmox", "hardening", "virtualization"],
+        tools: ["Proxmox UI", "ssh", "nmap"],
+        goal: "Apply layered hardening to a hypervisor-hosted VM.",
+        steps: [
+          "Audit running services inside the VM.",
+          "Disable or remove anything not needed.",
+          "Restrict network access via firewall rules.",
+          "Document changes made and why."
+        ]
+      },
+      {
+        id: 39,
+        title: "Password Cracking Lab",
+        difficulty: "intermediate",
+        level: "intermediate",
+        levelLabel: "Intermediate",
+        description: "Use a wordlist attack against hashed credentials in a controlled lab environment.",
+        tags: ["hashcat", "passwords", "cracking"],
+        tools: ["Hashcat", "rockyou.txt", "sample hashes"],
+        goal: "Understand why weak passwords fall quickly and how hash strength matters.",
+        steps: [
+          "Generate or obtain safe practice hashes.",
+          "Run a dictionary attack with a common wordlist.",
+          "Record which hashes cracked and how fast.",
+          "Summarize what makes a password cracking-resistant."
+        ]
+      },
+      {
+        id: 40,
+        title: "Metasploit Basics",
+        difficulty: "intermediate",
+        level: "intermediate",
+        levelLabel: "Intermediate",
+        description: "Use Metasploit to exploit a known vulnerability in a lab target such as Metasploitable.",
+        tags: ["metasploit", "exploitation", "lab"],
+        tools: ["Metasploit", "Metasploitable", "Kali"],
+        goal: "Learn the basic exploit-search-run workflow in a safe environment.",
+        steps: [
+          "Search for a module matching your target service.",
+          "Set required options (RHOSTS, payload).",
+          "Run the exploit and confirm access.",
+          "Document the vulnerability and what access was gained."
+        ]
+      },
+      {
+        id: 41,
+        title: "OSINT Footprinting",
+        difficulty: "intermediate",
+        level: "intermediate",
+        levelLabel: "Intermediate",
+        description: "Use passive open-source tools to gather information about a target domain or organization.",
+        tags: ["osint", "recon", "passive"],
+        tools: ["theHarvester", "Maltego", "Shodan"],
+        goal: "Understand what an attacker can learn without touching the target directly.",
+        steps: [
+          "Choose a safe practice target (your own domain or a lab domain).",
+          "Run email and subdomain harvesting.",
+          "Check Shodan for exposed services.",
+          "Write a report of findings as if briefing a client."
+        ]
+      },
+      {
+        id: 42,
+        title: "Wireless Network Recon",
+        difficulty: "intermediate",
+        level: "intermediate",
+        levelLabel: "Intermediate",
+        description: "Survey nearby wireless networks and analyze what information beacons expose.",
+        tags: ["wireless", "wifi", "recon"],
+        tools: ["airmon-ng", "airodump-ng", "Wireshark"],
+        goal: "Understand what 802.11 management frames reveal about a network.",
+        steps: [
+          "Enable monitor mode on a wireless adapter.",
+          "Capture beacon frames in the area.",
+          "Record SSIDs, BSSIDs, channels, and encryption types.",
+          "Document any open or WEP networks as high-risk findings."
+        ]
+      },
+      {
+        id: 43,
+        title: "Active Directory Enumeration",
+        difficulty: "intermediate",
+        level: "intermediate",
+        levelLabel: "Intermediate",
+        description: "Enumerate users, groups, and policies in a lab Active Directory environment.",
+        tags: ["active-directory", "windows", "enumeration"],
+        tools: ["BloodHound", "ldapsearch", "net commands"],
+        goal: "Map the AD structure an attacker would target for privilege escalation.",
+        steps: [
+          "Enumerate domain users and groups.",
+          "Identify privileged accounts and admin group membership.",
+          "Find accounts with weak or no expiry policies.",
+          "Document the attack paths you discovered."
+        ]
+      },
+      {
+        id: 44,
+        title: "Linux Privilege Escalation",
+        difficulty: "intermediate",
+        level: "intermediate",
+        levelLabel: "Intermediate",
+        description: "Identify and exploit a misconfiguration to escalate from a low-privilege user to root in a lab.",
+        tags: ["privesc", "linux", "exploitation"],
+        tools: ["LinPEAS", "sudo -l", "find"],
+        goal: "Learn the most common local privilege escalation paths on Linux.",
+        steps: [
+          "Start as a low-privilege user on the lab host.",
+          "Run automated enumeration to find misconfigurations.",
+          "Exploit one finding to gain elevated access.",
+          "Document the path and how to remediate it."
+        ]
+      },
+      {
+        id: 45,
+        title: "Web Application SQL Injection",
+        difficulty: "intermediate",
+        level: "intermediate",
+        levelLabel: "Intermediate",
+        description: "Test a vulnerable lab web application for SQL injection and extract sample data.",
+        tags: ["sqli", "web", "exploitation"],
+        tools: ["SQLMap", "Burp Suite", "DVWA"],
+        goal: "Understand how input validation failures lead to database exposure.",
+        steps: [
+          "Set up a vulnerable app such as DVWA.",
+          "Manually test an input field for injection.",
+          "Use SQLMap to automate and confirm the finding.",
+          "Document the vulnerable parameter and sample extracted data."
+        ]
+      },
+      {
+        id: 46,
+        title: "Cross-Site Scripting Lab",
+        difficulty: "intermediate",
+        level: "intermediate",
+        levelLabel: "Intermediate",
+        description: "Identify and demonstrate a reflected or stored XSS vulnerability in a lab web app.",
+        tags: ["xss", "web", "exploitation"],
+        tools: ["Browser", "Burp Suite", "DVWA"],
+        goal: "Understand how unsanitized output leads to script injection.",
+        steps: [
+          "Find an input field that reflects output to the page.",
+          "Inject a simple script payload.",
+          "Confirm execution in the browser.",
+          "Write a description of the risk and a remediation recommendation."
+        ]
+      },
+      {
+        id: 47,
+        title: "Incident Response Simulation",
+        difficulty: "intermediate",
+        level: "intermediate",
+        levelLabel: "Intermediate",
+        description: "Respond to a simulated security event by collecting evidence, triaging, and writing an incident report.",
+        tags: ["incident-response", "blue-team", "reporting"],
+        tools: ["journalctl", "Wireshark", "notes"],
+        goal: "Practice the structured steps of an IR process from detection to documentation.",
+        steps: [
+          "Review logs for indicators of compromise.",
+          "Identify affected hosts and timeline of events.",
+          "Contain the simulated threat.",
+          "Write a post-incident report with lessons learned."
+        ]
+      },
+      {
+        id: 48,
+        title: "OPNsense IDS Rule Tuning",
+        difficulty: "intermediate",
+        level: "intermediate",
+        levelLabel: "Intermediate",
+        description: "Configure and test Suricata rules inside OPNsense to detect lab attack traffic.",
+        tags: ["ids", "opnsense", "suricata"],
+        tools: ["OPNsense", "Suricata", "Nmap"],
+        goal: "Learn how detection rules are written, enabled, and tested.",
+        steps: [
+          "Enable Suricata on an OPNsense interface.",
+          "Download a rule set and enable a relevant rule.",
+          "Generate traffic that should trigger the rule.",
+          "Confirm the alert fires and document what triggered it."
+        ]
+      },
+      {
+        id: 49,
+        title: "Phishing Email Analysis",
+        difficulty: "intermediate",
+        level: "intermediate",
+        levelLabel: "Intermediate",
+        description: "Analyze a sample phishing email for indicators of compromise including headers, links, and attachments.",
+        tags: ["phishing", "email", "analysis"],
+        tools: ["email headers", "VirusTotal", "any.run"],
+        goal: "Build the habit of methodical email triage used in SOC environments.",
+        steps: [
+          "Obtain a safe phishing sample from a repository.",
+          "Inspect raw headers for spoofed or unusual fields.",
+          "Check embedded URLs against threat intelligence.",
+          "Write a triage report with verdict and indicators."
+        ]
+      },
+      {
+        id: 50,
+        title: "Threat Modeling Exercise",
+        difficulty: "intermediate",
+        level: "intermediate",
+        levelLabel: "Intermediate",
+        description: "Apply STRIDE to a simple lab service to identify and prioritize potential threats.",
+        tags: ["threat-modeling", "stride", "planning"],
+        tools: ["STRIDE template", "draw.io", "notes"],
+        goal: "Practice structured threat thinking before touching a lab target.",
+        steps: [
+          "Choose a lab service or application to model.",
+          "Draw a basic data flow diagram.",
+          "Apply STRIDE categories to each component.",
+          "Prioritize findings by likelihood and impact."
+        ]
+      },
+      {
+        id: 51,
+        title: "TLS Certificate Inspection",
+        difficulty: "intermediate",
+        level: "intermediate",
+        levelLabel: "Intermediate",
+        description: "Examine TLS certificates on lab services for weak configuration, expiry, and chain issues.",
+        tags: ["tls", "certificates", "hardening"],
+        tools: ["openssl", "Browser DevTools", "testssl.sh"],
+        goal: "Learn how certificate problems undermine transport security.",
+        steps: [
+          "Connect to a lab HTTPS service and inspect its certificate.",
+          "Check the cipher suite and protocol version.",
+          "Run testssl.sh for a full report.",
+          "Document any findings and recommended fixes."
+        ]
+      },
+      {
+        id: 52,
+        title: "SIEM Log Ingestion Lab",
+        difficulty: "intermediate",
+        level: "intermediate",
+        levelLabel: "Intermediate",
+        description: "Forward logs from a lab host into a SIEM and build a basic detection rule.",
+        tags: ["siem", "logging", "detection"],
+        tools: ["Wazuh", "rsyslog", "Lab host"],
+        goal: "Understand how logs flow from source to detection platform.",
+        steps: [
+          "Configure a lab host to forward logs to Wazuh.",
+          "Confirm logs are arriving and indexed.",
+          "Create a simple rule to alert on failed SSH logins.",
+          "Trigger the condition and confirm the alert fires."
+        ]
+      },
+    ]
       {
         id: 53,
         title: "Building a Vulnerability Scanner in Python",
@@ -1959,7 +1953,7 @@
         ]
       },
 
-      // ── ADVANCED ROADMAP (71–100) ─────────────────────────────────────────
+      // ── ADVANCED ROADMAP (73–102) ─────────────────────────────────────────
       {
         id: 73,
         title: "Cross‑Site Scripting Automation",
