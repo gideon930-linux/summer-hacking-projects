@@ -352,13 +352,13 @@
       background: rgba(58,168,255,.12);
       border:1px solid rgba(58,168,255,.28);
     }
-    
+
       .pill.advanced {
         color:#e6d8ff;
         background: rgba(150,110,255,.14);
         border:1px solid rgba(150,110,255,.3);
       }
-    
+
     .count { color: var(--muted); }
 
     .grid {
@@ -671,6 +671,14 @@
       <div class="grid" id="intermediateGrid"></div>
     </section>
 
+    <section class="section" id="advancedSection">
+      <div class="section-head">
+        <h2 class="section-title">Advanced Projects <span class="pill advanced">Advanced</span></h2>
+        <div class="count" id="advancedCount">0 projects</div>
+      </div>
+      <div class="grid" id="advancedGrid"></div>
+    </section>
+
     <footer>
       Built for hands-on learning, documentation, and consistent progress.
     </footer>
@@ -716,7 +724,7 @@
 
 
   <script>
-    // ── Project Data (102 total: 32 beginner, 29 intermediate, 41 advanced ) ─────────────────
+    // ── Project Data (103 total: 33 beginner, 40 intermediate, 30 advanced) ─────
     const projects = [
       // ── BEGINNER (0-32) ──────────────────────────────────────────────────────────
       {
@@ -1058,12 +1066,13 @@
           "Explain what each one helps protect."
         ]
       },
+      {
         id: 20,
         title: "MAC Address Spoofing",
         difficulty: "beginner",
         level: "beginner",
         levelLabel: "Beginner",
-        description: "Change the MAC address of a lab system’s interface and observe how it affects identification on the network.",
+        description: "Change the MAC address of a lab system's interface and observe how it affects identification on the network.",
         tags: ["network", "layer2", "spoofing"],
         tools: ["macchanger", "ip", "Wireshark"],
         goal: "Understand how MAC addresses are used and how spoofing can impact discovery and logging.",
@@ -1144,13 +1153,13 @@
       },
       {
         id: 25,
-        title: "Wi‑Fi Network Scanning",
+        title: "Wi-Fi Network Scanning",
         difficulty: "beginner",
         level: "beginner",
         levelLabel: "Beginner",
         description: "Scan for nearby wireless networks and observe SSIDs, channels, and basic security info.",
         tags: ["wifi", "wireless", "recon"],
-        tools: ["airmon-ng", "airodump-ng", "Wi‑Fi adapter"],
+        tools: ["airmon-ng", "airodump-ng", "Wi-Fi adapter"],
         goal: "Learn how wireless scanning tools present network metadata.",
         steps: [
           "Enable monitor mode on a compatible adapter in your lab.",
@@ -1178,16 +1187,16 @@
       },
       {
         id: 27,
-        title: "Information Gathering with Recon‑ng",
+        title: "Information Gathering with Recon-ng",
         difficulty: "beginner",
         level: "beginner",
         levelLabel: "Beginner",
-        description: "Use Recon‑ng in a lab context to collect open-source information about controlled targets.",
+        description: "Use Recon-ng in a lab context to collect open-source information about controlled targets.",
         tags: ["osint", "recon", "automation"],
-        tools: ["Recon‑ng", "Kali Linux"],
-        goal: "Gain familiarity with Recon‑ng modules and workflows.",
+        tools: ["Recon-ng", "Kali Linux"],
+        goal: "Gain familiarity with Recon-ng modules and workflows.",
         steps: [
-          "Set up Recon‑ng workspaces for lab-only domains or training targets.",
+          "Set up Recon-ng workspaces for lab-only domains or training targets.",
           "Run basic modules to gather non-sensitive metadata.",
           "Review outputs and module configuration options.",
           "Write up the strengths and limits of automated OSINT."
@@ -1221,7 +1230,7 @@
         tools: ["Python", "Lab VM"],
         goal: "Explore how keylogging works while keeping activity strictly confined to a lab.",
         steps: [
-          "Implement a simple keystroke capture script on a non‑production VM.",
+          "Implement a simple keystroke capture script on a non-production VM.",
           "Log local test input from your own account only.",
           "Review storage and exfiltration considerations within the lab.",
           "Write mitigation ideas such as endpoint detection and least privilege."
@@ -1233,7 +1242,7 @@
         difficulty: "beginner",
         level: "beginner",
         levelLabel: "Beginner",
-        description: "Deploy and monitor a low‑interaction honeypot to observe scan and probe behavior.",
+        description: "Deploy and monitor a low-interaction honeypot to observe scan and probe behavior.",
         tags: ["honeypot", "network", "detection"],
         tools: ["Cowrie or Dionaea", "Lab network"],
         goal: "Understand how honeypots capture attacker telemetry.",
@@ -1256,7 +1265,7 @@
         goal: "Learn how to create and parse custom packets programmatically.",
         steps: [
           "Send simple ICMP and TCP packets with Scapy.",
-          "Capture traffic with Wireshark to cross‑check.",
+          "Capture traffic with Wireshark to cross-check.",
           "Implement filters and basic dissectors in code.",
           "Document interesting protocol behaviors observed."
         ]
@@ -1277,6 +1286,7 @@
           "Compare results with and without advanced operators.",
           "Capture guidance on ethical OSINT boundaries."
         ]
+      },
       // ── INTERMEDIATE (33-72) ──────────────────────────────────────────────────────
       {
         id: 33,
@@ -1618,7 +1628,6 @@
           "Trigger the condition and confirm the alert fires."
         ]
       },
-    ]
       {
         id: 53,
         title: "Building a Vulnerability Scanner in Python",
@@ -1638,10 +1647,10 @@
       },
       {
         id: 54,
-        title: "Privilege Escalation Lab",
+        title: "Windows Privilege Escalation Lab",
         difficulty: "intermediate",
         level: "intermediate",
-        levelLabel: "Intermediate",  
+        levelLabel: "Intermediate",
         description: "Explore privilege escalation paths on Windows or Linux in a fully controlled environment.",
         tags: ["priv-esc", "os", "lab"],
         tools: ["Linux or Windows VM", "Privilege escalation checklists"],
@@ -1655,7 +1664,7 @@
       },
       {
         id: 55,
-        title: "Metasploit Basics",
+        title: "Metasploit Framework Deep Dive",
         difficulty: "intermediate",
         level: "intermediate",
         levelLabel: "Intermediate",
@@ -1715,7 +1724,7 @@
         tools: ["Browser", "Burp Suite", "Lab app"],
         goal: "Learn how cross-site request forgery works and how to prevent it.",
         steps: [
-          "Identify a state‑changing endpoint in a test application.",
+          "Identify a state-changing endpoint in a test application.",
           "Build a simple CSRF proof-of-concept page targeting your own account.",
           "Verify whether anti-CSRF tokens or same-site cookies block the attack.",
           "Record implementation strategies for defenses."
@@ -1725,7 +1734,7 @@
         id: 59,
         title: "Setting Up a C2 Server Lab",
         difficulty: "intermediate",
-         level: "intermediate",
+        level: "intermediate",
         levelLabel: "Intermediate",
         description: "Create a command-and-control lab using safe tooling to understand traffic patterns.",
         tags: ["c2", "infrastructure", "lab"],
@@ -1798,7 +1807,7 @@
         description: "Use SET in a purely controlled environment to understand pre-built social engineering workflows.",
         tags: ["social-engineering", "toolkit", "awareness"],
         tools: ["SET", "Kali Linux"],
-        goal: "Gain familiarity with SET modules while keeping usage ethical and lab‑only.",
+        goal: "Gain familiarity with SET modules while keeping usage ethical and lab-only.",
         steps: [
           "Launch SET on a lab machine and explore module categories.",
           "Generate sample campaigns targeting only lab accounts you control.",
@@ -1832,7 +1841,7 @@
         description: "Use Netdiscover to quickly identify active hosts on a subnet.",
         tags: ["netdiscover", "recon", "network"],
         tools: ["Netdiscover", "Lab subnet"],
-        goal: "Compare Netdiscover’s output and capabilities with Nmap host discovery.",
+        goal: "Compare Netdiscover's output and capabilities with Nmap host discovery.",
         steps: [
           "Run Netdiscover across your lab range.",
           "Record discovered hosts and MAC addresses.",
@@ -1852,7 +1861,7 @@
         goal: "See how SQLMap enumerates databases and structures during tests.",
         steps: [
           "Identify a lab-only vulnerable parameter.",
-          "Run SQLMap in safe, read‑only modes to enumerate databases.",
+          "Run SQLMap in safe, read-only modes to enumerate databases.",
           "Export sample table contents from a test database.",
           "Write mitigation steps such as input validation and least privilege."
         ]
@@ -1880,7 +1889,7 @@
         difficulty: "intermediate",
         level: "intermediate",
         levelLabel: "Intermediate",
-        description: "Simulate ARP poisoning to study man‑in‑the‑middle traffic on your lab network.",
+        description: "Simulate ARP poisoning to study man-in-the-middle traffic on your lab network.",
         tags: ["arp", "mitm", "network"],
         tools: ["Bettercap or arpspoof", "Wireshark"],
         goal: "Understand ARP spoofing behavior and how to detect it.",
@@ -1959,38 +1968,10 @@
           "Summarize how to operationalize remediation efforts."
         ]
       },
-<section class="section" id="beginnerSection">
-  <div class="section-head">
-    <h2 class="section-title">Beginner Projects <span class="pill beginner">Beginner</span></h2>
-    <div class="count" id="beginnerCount">0 projects</div>
-  </div>
-  <div class="grid" id="beginnerGrid"></div>
-</section>
-
-<section class="section" id="intermediateSection">
-  <div class="section-head">
-    <h2 class="section-title">Intermediate Projects <span class="pill intermediate">Intermediate</span></h2>
-    <div class="count" id="intermediateCount">0 projects</div>
-  </div>
-  <div class="grid" id="intermediateGrid"></div>
-</section>
-
-<section class="section" id="advancedSection">
-  <div class="section-head">
-    <h2 class="section-title">Advanced Projects <span class="pill advanced">Advanced</span></h2>
-    <div class="count" id="advancedCount">0 projects</div>
-  </div>
-  <div class="grid" id="advancedGrid"></div>
-</section>
-
-<footer>
-  Built for hands-on learning, documentation, and consistent progress.
-</footer>
-    
-      // ── ADVANCED ROADMAP (73–102) ─────────────────────────────────────────
+      // ── ADVANCED (73-102) ─────────────────────────────────────────
       {
         id: 73,
-        title: "Cross‑Site Scripting Automation",
+        title: "Cross-Site Scripting Automation",
         difficulty: "advanced",
         level: "advanced",
         levelLabel: "Advanced",
@@ -2007,18 +1988,18 @@
       },
       {
         id: 74,
-        title: "Cross‑Site Request Forgery Automation",
+        title: "Cross-Site Request Forgery Automation",
         difficulty: "advanced",
         level: "advanced",
-        levelLabel: "Advanced", 
+        levelLabel: "Advanced",
         description: "Build tooling to streamline CSRF testing for lab applications.",
         tags: ["csrf", "automation", "web"],
         tools: ["Python", "Burp macros"],
         goal: "Reduce manual CSRF test effort while respecting security boundaries.",
         steps: [
-          "Identify state‑changing endpoints in your lab apps.",
+          "Identify state-changing endpoints in your lab apps.",
           "Automate generation of CSRF proof-of-concept pages.",
-          "Test protection mechanisms such as tokens and same‑site cookies.",
+          "Test protection mechanisms such as tokens and same-site cookies.",
           "Summarize lessons for secure-by-default design."
         ]
       },
@@ -2050,7 +2031,7 @@
         tools: ["Python or C", "Sandboxed lab VMs"],
         goal: "Study malware techniques without impacting real systems.",
         steps: [
-          "Define strictly lab‑only objectives and boundaries.",
+          "Define strictly lab-only objectives and boundaries.",
           "Implement features like persistence or C2 in a sandboxed environment.",
           "Track behavior using EDR and logging tools.",
           "Write a detailed analysis and mitigation report."
@@ -2061,7 +2042,7 @@
         title: "Developing a Remote Keylogger",
         difficulty: "advanced",
         level: "advanced",
-        levelLabel: "Advanced",  
+        levelLabel: "Advanced",
         description: "Extend your keylogger lab project with remote reporting capabilities.",
         tags: ["keylogger", "exfil", "lab"],
         tools: ["Python", "Secure lab server"],
@@ -2075,7 +2056,7 @@
       },
       {
         id: 78,
-        title: "Post‑Exploitation with Metasploit",
+        title: "Post-Exploitation with Metasploit",
         difficulty: "advanced",
         level: "advanced",
         levelLabel: "Advanced",
@@ -2118,7 +2099,7 @@
         tools: ["Custom scripts", "Backups", "Isolation"],
         goal: "Understand impact patterns and resilience strategies.",
         steps: [
-          "Define a lab‑only dataset and backup strategy.",
+          "Define a lab-only dataset and backup strategy.",
           "Implement file encryption and key handling in code.",
           "Observe detection signals and restoration workflows.",
           "Document full incident response lifecycle in the lab."
@@ -2245,19 +2226,19 @@
       },
       {
         id: 88,
-        title: "Custom Brute‑Force Tools with Python",
+        title: "Custom Brute-Force Tools with Python",
         difficulty: "advanced",
         level: "advanced",
         levelLabel: "Advanced",
-        description: "Write Python tools that perform controlled brute‑force testing against lab services.",
+        description: "Write Python tools that perform controlled brute-force testing against lab services.",
         tags: ["python", "bruteforce", "auth"],
         tools: ["Python", "Lab services"],
         goal: "Learn how custom tooling can simulate attacker behavior.",
         steps: [
           "Implement flexible credential cycling logic targeting lab endpoints.",
           "Integrate rate limiting and safety controls.",
-          "Compare your tool with off‑the‑shelf solutions.",
-          "Document blue‑team detection and blocking ideas."
+          "Compare your tool with off-the-shelf solutions.",
+          "Document blue-team detection and blocking ideas."
         ]
       },
       {
@@ -2371,10 +2352,10 @@
         description: "Simulate password spraying in a lab to understand exposure and defense.",
         tags: ["password-spraying", "auth", "lab"],
         tools: ["Custom scripts", "AD or local auth lab"],
-        goal: "Assess how spraying differs from traditional brute‑force.",
+        goal: "Assess how spraying differs from traditional brute-force.",
         steps: [
           "Configure accounts with test passwords and policies.",
-          "Run low‑and‑slow spraying patterns against your own lab domain.",
+          "Run low-and-slow spraying patterns against your own lab domain.",
           "Monitor logs, SIEM, and lockout events.",
           "Document detection logic and mitigation options."
         ]
@@ -2432,7 +2413,7 @@
       },
       {
         id: 99,
-        title: "Bypassing Two‑Factor Authentication",
+        title: "Bypassing Two-Factor Authentication",
         difficulty: "advanced",
         level: "advanced",
         levelLabel: "Advanced",
@@ -2444,7 +2425,7 @@
           "Research known 2FA bypass scenarios like MFA fatigue.",
           "Configure a lab service with basic 2FA.",
           "Simulate abuse patterns only against your own accounts.",
-          "Document guidance for robust multi‑factor designs."
+          "Document guidance for robust multi-factor designs."
         ]
       },
       {
@@ -2466,7 +2447,7 @@
       },
       {
         id: 101,
-        title: "Zero‑Day Vulnerability Research Lab",
+        title: "Zero-Day Vulnerability Research Lab",
         difficulty: "advanced",
         level: "advanced",
         levelLabel: "Advanced",
@@ -2483,21 +2464,23 @@
       },
       {
         id: 102,
-        title: "End‑to‑End Pentest Simulation",
+        title: "End-to-End Pentest Simulation",
         difficulty: "advanced",
         level: "advanced",
         levelLabel: "Advanced",
         description: "Design and execute a full engagement simulation against your own lab environment.",
         tags: ["pentest", "end-to-end", "lab"],
         tools: ["Recon tools", "Exploit frameworks", "Reporting templates"],
-        goal: "Tie together reconnaissance, exploitation, post‑exploitation, and reporting in one project.",
+        goal: "Tie together reconnaissance, exploitation, post-exploitation, and reporting in one project.",
         steps: [
-          "Define scope and objectives for a lab‑only environment.",
-          "Perform recon, initial access, and post‑exploitation.",
+          "Define scope and objectives for a lab-only environment.",
+          "Perform recon, initial access, and post-exploitation.",
           "Run detection and response simulations.",
           "Produce a full report with findings and remediation actions."
         ]
       }
+    ];
+
     // ── Persistence via localStorage ──────────────────────────────────────────
     const STORAGE_KEY = 'hackingTracker_v1';
 
@@ -2538,8 +2521,10 @@
     // ── DOM refs ───────────────────────────────────────────────────────────────
     const beginnerGrid      = document.getElementById('beginnerGrid');
     const intermediateGrid  = document.getElementById('intermediateGrid');
+    const advancedGrid      = document.getElementById('advancedGrid');
     const beginnerSection   = document.getElementById('beginnerSection');
     const intermediateSection = document.getElementById('intermediateSection');
+    const advancedSection   = document.getElementById('advancedSection');
     const searchInput       = document.getElementById('searchInput');
     const progressRing      = document.getElementById('progressRing');
     const progressPercent   = document.getElementById('progressPercent');
@@ -2548,10 +2533,8 @@
     const totalCount        = document.getElementById('totalCount');
     const beginnerCount     = document.getElementById('beginnerCount');
     const intermediateCount = document.getElementById('intermediateCount');
-    const advancedGrid      = document.getElementById('advancedGrid');
-    const advancedSection   = document.getElementById('advancedSection');
     const advancedCount     = document.getElementById('advancedCount');
-    
+
     const modalBackdrop  = document.getElementById('modalBackdrop');
     const modalTitle     = document.getElementById('modalTitle');
     const modalMeta      = document.getElementById('modalMeta');
@@ -2577,11 +2560,10 @@
       const isDone = !!state.completed[project.id];
 
       const matchesFilter =
-     state.filter === 'all' ||
-     state.filter === project.difficulty ||
-     state.filter === project.level ||
-     (state.filter === 'done' && isDone) ||
-     (state.filter === 'todo' && !isDone);
+        state.filter === 'all' ||
+        state.filter === project.difficulty ||
+        (state.filter === 'done' && isDone) ||
+        (state.filter === 'todo' && !isDone);
 
       return matchesSearch && matchesFilter;
     }
@@ -2595,76 +2577,67 @@
         .replaceAll("'", '&#39;');
     }
 
-     function projectCard(project) {
-   const done = !!state.completed[project.id];
-   return `
-     <article class="card project ${done ? 'done' : ''}">
-       <div class="project-top">
-         <div class="project-id">Project ${String(project.id).padStart(2, '0')}</div>
-         <div class="check" aria-hidden="true">✓</div>
-       </div>
-       <h3>${escapeHtml(project.title)}</h3>
-       <p>${escapeHtml(project.description)}</p>
-       <div class="tags">
-         <span class="tag">${escapeHtml(project.levelLabel || project.difficulty)}</span>
-         ${project.tags.map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join('')}
-       </div>
-       <div class="actions">
-         <button class="btn btn-secondary" type="button" data-action="view" data-id="${project.id}">View details</button>
-         <button class="btn btn-primary" type="button" data-action="toggle" data-id="${project.id}">${done ? 'Completed' : 'Mark done'}</button>
-       </div>
-     </article>
-   `;
- }
+    function projectCard(project) {
+      const done = !!state.completed[project.id];
+      return `
+        <article class="card project ${done ? 'done' : ''}">
+          <div class="project-top">
+            <div class="project-id">Project ${String(project.id).padStart(2, '0')}</div>
+            <div class="check" aria-hidden="true">✓</div>
+          </div>
+          <h3>${escapeHtml(project.title)}</h3>
+          <p>${escapeHtml(project.description)}</p>
+          <div class="tags">
+            <span class="tag">${escapeHtml(project.levelLabel || project.difficulty)}</span>
+            ${project.tags.map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join('')}
+          </div>
+          <div class="actions">
+            <button class="btn btn-secondary" type="button" data-action="view" data-id="${project.id}">View details</button>
+            <button class="btn btn-primary" type="button" data-action="toggle" data-id="${project.id}">${done ? 'Completed' : 'Mark done'}</button>
+          </div>
+        </article>
+      `;
+    }
 
     function renderGrid(grid, items, emptyText) {
       if (!items.length) {
-        // Use textContent instead of innerHTML — prevents any future accidental
-        // XSS if emptyText ever incorporates user-controlled input (e.g. search term).
         const div = document.createElement('div');
         div.className = 'empty';
         div.textContent = emptyText;
         grid.replaceChildren(div);
         return;
       }
-      // projectCard output is safe: all user-visible strings pass through
-      // escapeHtml() before being embedded. Notes are written via .value (textarea)
-      // and never reflected into innerHTML.
       grid.innerHTML = items.map(projectCard).join('');
     }
 
     function render() {
-      const filtered    = projects.filter(matchesProject);
-    const beginner = filtered.filter(p => p.difficulty === 'beginner');
-    const intermediate = filtered.filter(p => p.difficulty === 'intermediate');
-    const advanced = filtered.filter(p => p.difficulty === 'advanced');
-    
-    renderGrid(beginnerGrid, beginner, 'No beginner projects match your current filter.');
-    renderGrid(intermediateGrid, intermediate, 'No intermediate projects match your current filter.');
-    renderGrid(advancedGrid, advanced, 'No advanced projects match your current filter.');
-    
-    beginnerSection.style.display = 'block';
-    intermediateSection.style.display = 'block';
-    advancedSection.style.display = 'block';
-    
-    const bTotal = projects.filter(p => p.difficulty === 'beginner').length;
-    const iTotal = projects.filter(p => p.difficulty === 'intermediate').length;
-    const aTotal = projects.filter(p => p.difficulty === 'advanced').length;
-    
-    beginnerCount.textContent = `${bTotal} projects`;
-    intermediateCount.textContent = `${iTotal} projects`;
-    advancedCount.textContent = `${aTotal} projects`;
+      const filtered      = projects.filter(matchesProject);
+      const beginner      = filtered.filter(p => p.difficulty === 'beginner');
+      const intermediate  = filtered.filter(p => p.difficulty === 'intermediate');
+      const advanced      = filtered.filter(p => p.difficulty === 'advanced');
+
+      renderGrid(beginnerGrid,     beginner,     'No beginner projects match your current filter.');
+      renderGrid(intermediateGrid, intermediate, 'No intermediate projects match your current filter.');
+      renderGrid(advancedGrid,     advanced,     'No advanced projects match your current filter.');
+
+      const bTotal = projects.filter(p => p.difficulty === 'beginner').length;
+      const iTotal = projects.filter(p => p.difficulty === 'intermediate').length;
+      const aTotal = projects.filter(p => p.difficulty === 'advanced').length;
+
+      beginnerCount.textContent     = `${bTotal} projects`;
+      intermediateCount.textContent = `${iTotal} projects`;
+      advancedCount.textContent     = `${aTotal} projects`;
 
       updateStats();
       syncFilterUI();
     }
 
     function updateStats() {
-      const total    = projects.length;
-      const complete = Object.values(state.completed).filter(Boolean).length;
+      const total     = projects.length;
+      const complete  = Object.values(state.completed).filter(Boolean).length;
       const remaining = total - complete;
-      const percent  = total ? Math.round((complete / total) * 100) : 0;
-      const degrees  = Math.round((percent / 100) * 360);
+      const percent   = total ? Math.round((complete / total) * 100) : 0;
+      const degrees   = Math.round((percent / 100) * 360);
 
       completedCount.textContent  = String(complete);
       remainingCount.textContent  = String(remaining);
@@ -2761,15 +2734,12 @@
     const REPO_NAME     = 'summer-hacking-projects';
     const BACKUP_BRANCH = 'progress-backup';
     const LATEST_PATH   = 'backups/latest.json';
-    const TOKEN_LS_KEY   = 'hackingTracker_ghToken';   // obfuscated, localStorage (opt-in)
+    const TOKEN_LS_KEY   = 'hackingTracker_ghToken';    // obfuscated, localStorage (opt-in)
     const TOKEN_SS_KEY   = 'hackingTracker_ghToken_ss'; // obfuscated, sessionStorage
     const OBFKEY_SS_KEY  = 'hackingTracker_obfKey';     // per-session XOR key (sessionStorage)
+    const GH_API         = 'https://api.github.com';
 
     // ── Token obfuscation helpers ──────────────────────────────────────────
-    // Generates a fresh 32-byte XOR key and stores it in sessionStorage.
-    // This key is lost when the tab closes, making the obfuscated blob in
-    // localStorage unreadable without a matching key — a deterrent against
-    // offline storage scraping, not a substitute for encryption.
     function getOrCreateObfKey() {
       let stored = sessionStorage.getItem(OBFKEY_SS_KEY);
       if (stored) return JSON.parse(stored);
@@ -2797,9 +2767,6 @@
       const obf = xorObfuscate(raw, key);
       sessionStorage.setItem(TOKEN_SS_KEY, obf);
       if (persist) {
-        // Also write to localStorage so the obfuscated blob survives tab close.
-        // The XOR key is session-scoped, so if the session ends and a new one
-        // starts, the LS blob becomes undecipherable and is discarded gracefully.
         localStorage.setItem(TOKEN_LS_KEY, obf);
       } else {
         localStorage.removeItem(TOKEN_LS_KEY);
@@ -2814,24 +2781,19 @@
 
     function getSavedToken() {
       const key = getOrCreateObfKey();
-      // Prefer sessionStorage (same tab, freshest key)
       const ss = sessionStorage.getItem(TOKEN_SS_KEY);
       if (ss) return xorDeobfuscate(ss, key);
-      // Fall back to localStorage blob — only works if the session key is still live
       const ls = localStorage.getItem(TOKEN_LS_KEY);
       if (ls) {
         const t = xorDeobfuscate(ls, key);
         if (t.startsWith('ghp_') || t.startsWith('github_pat_') || t.length > 10) {
-          // Re-cache in sessionStorage so future calls skip the LS round-trip
           sessionStorage.setItem(TOKEN_SS_KEY, ls);
           return t;
         }
-        // LS blob is from a previous session with a different key — discard it
         localStorage.removeItem(TOKEN_LS_KEY);
       }
       return '';
     }
-    const GH_API        = 'https://api.github.com';
 
     const backupBtn      = document.getElementById('backupBtn');
     const restoreBtn     = document.getElementById('restoreBtn');
@@ -2840,14 +2802,11 @@
     const tokenInput     = document.getElementById('tokenInput');
     const tokenCancelBtn = document.getElementById('tokenCancelBtn');
     const tokenSaveBtn   = document.getElementById('tokenSaveBtn');
+    const tokenClearBtn  = document.getElementById('tokenClearBtn');
 
     function setStatus(msg, type = '') {
       backupStatus.textContent = msg;
       backupStatus.className   = 'backup-status' + (type ? ' ' + type : '');
-    }
-
-    function getSavedToken() {
-      return localStorage.getItem(TOKEN_KEY) || '';
     }
 
     function b64Encode(str) {
@@ -2914,7 +2873,7 @@
       const datedPath = `backups/progress-${ts}.json`;
       try {
         await upsertFile(datedPath,   wrapper, `backup: snapshot ${ts} (${done} completed)`, token);
-        await upsertFile(LATEST_PATH, wrapper, `backup: update latest.json (${ts})`,         token);
+        await upsertFile(LATEST_PATH, wrapper, `backup: update latest.json (${ts})`,          token);
         const label = ts.slice(0, 10) + ' ' + ts.slice(11, 16).replace('-', ':') + ' UTC';
         setStatus(`✓ Saved ${label} — ${done} completed`, 'ok');
         localStorage.setItem('hackingTracker_lastBackup', ts);
@@ -2965,12 +2924,14 @@
 
     function openTokenModal(onSave) {
       tokenInput.value = getSavedToken();
+      const persistCheck = document.getElementById('tokenPersistCheck');
+      if (persistCheck) persistCheck.checked = !!localStorage.getItem(TOKEN_LS_KEY);
       tokenBackdrop.classList.add('show');
       tokenBackdrop.setAttribute('aria-hidden', 'false');
       tokenSaveBtn.onclick = () => {
         const t = tokenInput.value.trim();
         if (!t) { tokenInput.focus(); return; }
-        storeToken(t, document.getElementById('tokenPersistCheck')?.checked ?? false);
+        storeToken(t, persistCheck?.checked ?? false);
         tokenBackdrop.classList.remove('show');
         tokenBackdrop.setAttribute('aria-hidden', 'true');
         setStatus('Validating token…');
@@ -2979,8 +2940,6 @@
         });
       };
     }
-
-    const tokenClearBtn = document.getElementById('tokenClearBtn');
 
     tokenClearBtn.addEventListener('click', () => {
       clearToken();
@@ -2995,16 +2954,7 @@
       tokenBackdrop.setAttribute('aria-hidden', 'true');
     });
 
-    // Pre-tick the persist checkbox if localStorage already has an obfuscated blob
-    document.getElementById('tokenBackdrop').addEventListener('show-token-modal', () => {
-      const persistCheck = document.getElementById('tokenPersistCheck');
-      if (persistCheck) persistCheck.checked = !!localStorage.getItem(TOKEN_LS_KEY);
-    });
-
     // ── GitHub token scope validation ────────────────────────────────────────
-    // Calls /user with the provided token and checks that it has at least
-    // public_repo or repo scope by inspecting the x-oauth-scopes response header.
-    // This runs once after the user saves a new token.
     async function validateTokenScope(token) {
       try {
         const res = await fetch(`${GH_API}/user`, {
@@ -3020,10 +2970,8 @@
         }
         const scopes = res.headers.get('x-oauth-scopes') || '';
         const scopeList = scopes.split(',').map(s => s.trim());
-        // Fine-grained tokens don't return x-oauth-scopes — treat absence as OK
         if (scopes && !scopeList.includes('repo') && !scopeList.includes('public_repo')) {
           setStatus('Warning: token may lack repo scope — backup may fail.', 'err');
-          // Don't block — fine-grained tokens will work even though scopes header is empty
         }
         return true;
       } catch { return true; } // Network error — don't block the attempt
