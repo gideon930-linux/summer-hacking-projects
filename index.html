@@ -352,7 +352,13 @@
       background: rgba(58,168,255,.12);
       border:1px solid rgba(58,168,255,.28);
     }
-
+    
+      .pill.advanced {
+        color:#e6d8ff;
+        background: rgba(150,110,255,.14);
+        border:1px solid rgba(150,110,255,.3);
+      }
+    
     .count { color: var(--muted); }
 
     .grid {
@@ -640,12 +646,13 @@
       </div>
 
       <div class="filters">
-        <button class="chip active" type="button" data-filter="all">All</button>
-        <button class="chip" type="button" data-filter="beginner">Beginner</button>
-        <button class="chip" type="button" data-filter="intermediate">Intermediate</button>
-        <button class="chip" type="button" data-filter="done">Completed</button>
-        <button class="chip" type="button" data-filter="todo">To Do</button>
-      </div>
+  <button class="chip active" type="button" data-filter="all">All</button>
+  <button class="chip" type="button" data-filter="beginner">Beginner</button>
+  <button class="chip" type="button" data-filter="intermediate">Intermediate</button>
+  <button class="chip" type="button" data-filter="advanced">Advanced</button>
+  <button class="chip" type="button" data-filter="done">Completed</button>
+  <button class="chip" type="button" data-filter="todo">To Do</button>
+</div>
     </div>
 
     <section class="section" id="beginnerSection">
@@ -1952,7 +1959,34 @@
           "Summarize how to operationalize remediation efforts."
         ]
       },
+<section class="section" id="beginnerSection">
+  <div class="section-head">
+    <h2 class="section-title">Beginner Projects <span class="pill beginner">Beginner</span></h2>
+    <div class="count" id="beginnerCount">0 projects</div>
+  </div>
+  <div class="grid" id="beginnerGrid"></div>
+</section>
 
+<section class="section" id="intermediateSection">
+  <div class="section-head">
+    <h2 class="section-title">Intermediate Projects <span class="pill intermediate">Intermediate</span></h2>
+    <div class="count" id="intermediateCount">0 projects</div>
+  </div>
+  <div class="grid" id="intermediateGrid"></div>
+</section>
+
+<section class="section" id="advancedSection">
+  <div class="section-head">
+    <h2 class="section-title">Advanced Projects <span class="pill advanced">Advanced</span></h2>
+    <div class="count" id="advancedCount">0 projects</div>
+  </div>
+  <div class="grid" id="advancedGrid"></div>
+</section>
+
+<footer>
+  Built for hands-on learning, documentation, and consistent progress.
+</footer>
+    
       // ── ADVANCED ROADMAP (73–102) ─────────────────────────────────────────
       {
         id: 73,
@@ -2514,7 +2548,10 @@
     const totalCount        = document.getElementById('totalCount');
     const beginnerCount     = document.getElementById('beginnerCount');
     const intermediateCount = document.getElementById('intermediateCount');
-
+    const advancedGrid      = document.getElementById('advancedGrid');
+    const advancedSection   = document.getElementById('advancedSection');
+    const advancedCount     = document.getElementById('advancedCount');
+    
     const modalBackdrop  = document.getElementById('modalBackdrop');
     const modalTitle     = document.getElementById('modalTitle');
     const modalMeta      = document.getElementById('modalMeta');
