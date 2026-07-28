@@ -1313,9 +1313,958 @@
           "Create a simple rule to alert on failed SSH logins.",
           "Trigger the condition and confirm the alert fires."
         ]
-      }
-    ];
+      },
+    ]
+              // ── BEGINNER ROADMAP CONTINUED (up to 30) ─────────────────────────────
+      {
+        id: 40,
+        title: "MAC Address Spoofing",
+        difficulty: "beginner",
+        description: "Change the MAC address of a lab system’s interface and observe how it affects identification on the network.",
+        tags: ["network", "layer2", "spoofing"],
+        tools: ["macchanger", "ip", "Wireshark"],
+        goal: "Understand how MAC addresses are used and how spoofing can impact discovery and logging.",
+        steps: [
+          "Record the original MAC address for a lab interface.",
+          "Use macchanger or ip link to temporarily spoof a new address.",
+          "Verify changes using arp, ip neigh, or Wireshark.",
+          "Document detection ideas and safe lab practices."
+        ]
+      },
+      {
+        id: 41,
+        title: "Brute Forcing SSH Login",
+        difficulty: "beginner",
+        description: "Simulate password guessing against a hardened SSH service in a controlled lab.",
+        tags: ["ssh", "auth", "bruteforce"],
+        tools: ["hydra", "wordlists", "SSH lab host"],
+        goal: "Learn how authentication attacks work and how to defend against them.",
+        steps: [
+          "Configure a lab VM with SSH and test accounts.",
+          "Run a small, time-limited brute-force attempt using hydra.",
+          "Review logs to see how failed attempts are recorded.",
+          "Capture mitigation ideas like lockouts and MFA."
+        ]
+      },
+      {
+        id: 42,
+        title: "Simple Password Cracker",
+        difficulty: "beginner",
+        description: "Write or configure a basic password-cracking workflow against lab-only hashes.",
+        tags: ["hashes", "passwords", "cracking"],
+        tools: ["Hashcat", "John the Ripper", "Sample hashes"],
+        goal: "Understand how hash types and wordlists affect cracking success.",
+        steps: [
+          "Generate sample password hashes using a known algorithm.",
+          "Run a wordlist-based attack with Hashcat or John.",
+          "Compare crack times and success across algorithms.",
+          "Record takeaways for password policy design."
+        ]
+      },
+      {
+        id: 43,
+        title: "SQL Injection Basics",
+        difficulty: "beginner",
+        description: "Explore simple SQL injection behavior using a deliberately vulnerable lab application.",
+        tags: ["web", "sql", "injection"],
+        tools: ["DVWA or bWAPP", "Browser"],
+        goal: "Recognize how unsafe query building leads to injection vulnerabilities.",
+        steps: [
+          "Deploy a vulnerable web app in your lab.",
+          "Trigger basic SQL injection using test payloads.",
+          "Observe how input affects query results and errors.",
+          "Write notes on parameterization and safer patterns."
+        ]
+      },
+      {
+        id: 44,
+        title: "Exploring XSS Vulnerabilities",
+        difficulty: "beginner",
+        description: "Inject benign scripts into a lab web app to understand reflected and stored XSS.",
+        tags: ["web", "xss", "client-side"],
+        tools: ["DVWA or Juice Shop", "Browser"],
+        goal: "Differentiate between XSS types and mitigation techniques.",
+        steps: [
+          "Locate an input or comment field that mishandles HTML.",
+          "Craft simple script payloads that display safe pop-ups.",
+          "Test persistence and scope of the payload.",
+          "Document defenses such as encoding and CSP."
+        ]
+      },
+      {
+        id: 45,
+        title: "Wi‑Fi Network Scanning",
+        difficulty: "beginner",
+        description: "Scan for nearby wireless networks and observe SSIDs, channels, and basic security info.",
+        tags: ["wifi", "wireless", "recon"],
+        tools: ["airmon-ng", "airodump-ng", "Wi‑Fi adapter"],
+        goal: "Learn how wireless scanning tools present network metadata.",
+        steps: [
+          "Enable monitor mode on a compatible adapter in your lab.",
+          "Run airodump-ng to list nearby SSIDs and channels.",
+          "Capture a short, legal scan session in a controlled space.",
+          "Summarize what each field in the scan output means."
+        ]
+      },
+      {
+        id: 46,
+        title: "Social Engineering Basics",
+        difficulty: "beginner",
+        description: "Explore social engineering concepts with strictly simulated scenarios and no real targets.",
+        tags: ["social-engineering", "awareness", "human"],
+        tools: ["Documentation", "Scenario planning"],
+        goal: "Understand psychological techniques without engaging in unethical activity.",
+        steps: [
+          "Research common social engineering methods and case studies.",
+          "Design purely hypothetical attack scenarios for a fake organization.",
+          "Map technical and non-technical controls that would prevent them.",
+          "Capture recommendations for security awareness training."
+        ]
+      },
+      {
+        id: 47,
+        title: "Information Gathering with Recon‑ng",
+        difficulty: "beginner",
+        description: "Use Recon‑ng in a lab context to collect open-source information about controlled targets.",
+        tags: ["osint", "recon", "automation"],
+        tools: ["Recon‑ng", "Kali Linux"],
+        goal: "Gain familiarity with Recon‑ng modules and workflows.",
+        steps: [
+          "Set up Recon‑ng workspaces for lab-only domains or training targets.",
+          "Run basic modules to gather non-sensitive metadata.",
+          "Review outputs and module configuration options.",
+          "Write up the strengths and limits of automated OSINT."
+        ]
+      },
+      {
+        id: 48,
+        title: "Email Phishing Simulation",
+        difficulty: "beginner",
+        description: "Design and send phishing-style emails in a closed lab environment where you control all accounts.",
+        tags: ["phishing", "email", "awareness"],
+        tools: ["Local mail server", "Test accounts"],
+        goal: "Study how phishing messages are constructed and detected, without targeting real users.",
+        steps: [
+          "Deploy a local-only mail service or use disposable lab accounts.",
+          "Create sample phishing templates with clear markers.",
+          "Measure how spam filters and security tools react.",
+          "Document defenses such as training and mail filtering."
+        ]
+      },
+      {
+        id: 49,
+        title: "Building a Simple Keylogger",
+        difficulty: "beginner",
+        description: "Develop a basic keylogging utility on a dedicated lab machine to understand monitoring risks.",
+        tags: ["malware-lab", "monitoring", "keylogging"],
+        tools: ["Python", "Lab VM"],
+        goal: "Explore how keylogging works while keeping activity strictly confined to a lab.",
+        steps: [
+          "Implement a simple keystroke capture script on a non‑production VM.",
+          "Log local test input from your own account only.",
+          "Review storage and exfiltration considerations within the lab.",
+          "Write mitigation ideas such as endpoint detection and least privilege."
+        ]
+      },
+      {
+        id: 50,
+        title: "Setting Up a Honeypot",
+        difficulty: "beginner",
+        description: "Deploy and monitor a low‑interaction honeypot to observe scan and probe behavior.",
+        tags: ["honeypot", "network", "detection"],
+        tools: ["Cowrie or Dionaea", "Lab network"],
+        goal: "Understand how honeypots capture attacker telemetry.",
+        steps: [
+          "Install a honeypot tool on a segmented lab host.",
+          "Expose safe ports to your lab network and controlled scanners.",
+          "Review captured sessions and log formats.",
+          "Summarize how honeypots support threat hunting."
+        ]
+      },
+      {
+        id: 51,
+        title: "Packet Sniffing with Scapy",
+        difficulty: "beginner",
+        description: "Use Scapy to craft and inspect packets inside your lab network.",
+        tags: ["scapy", "packets", "python"],
+        tools: ["Scapy", "Python", "Lab hosts"],
+        goal: "Learn how to create and parse custom packets programmatically.",
+        steps: [
+          "Send simple ICMP and TCP packets with Scapy.",
+          "Capture traffic with Wireshark to cross‑check.",
+          "Implement filters and basic dissectors in code.",
+          "Document interesting protocol behaviors observed."
+        ]
+      },
+      {
+        id: 52,
+        title: "Google Dorking for OSINT",
+        difficulty: "beginner",
+        description: "Practice search operators to refine open-source intelligence queries.",
+        tags: ["osint", "search", "dorking"],
+        tools: ["Browser", "Search engine"],
+        goal: "Improve your ability to find public information efficiently and ethically.",
+        steps: [
+          "Review core search operators like site:, filetype:, and intitle:.",
+          "Design dorks that target generic training websites or documentation.",
+          "Compare results with and without advanced operators.",
+          "Capture guidance on ethical OSINT boundaries."
+        ]
+      },
 
+      // ── INTERMEDIATE ROADMAP CONTINUED (31–70) ────────────────────────────
+      {
+        id: 53,
+        title: "Building a Vulnerability Scanner in Python",
+        difficulty: "intermediate",
+        description: "Create a simple Python-based scanner that checks hosts for selected lab vulnerabilities.",
+        tags: ["python", "scanner", "automation"],
+        tools: ["Python", "Lab hosts"],
+        goal: "Learn how vulnerability scanning logic is structured.",
+        steps: [
+          "Define a set of basic checks such as open ports and HTTP headers.",
+          "Implement scanning routines against lab systems.",
+          "Store results in a structured format for review.",
+          "Document limitations and opportunities for improvement."
+        ]
+      },
+      {
+        id: 54,
+        title: "Privilege Escalation Lab",
+        difficulty: "intermediate",
+        description: "Explore privilege escalation paths on Windows or Linux in a fully controlled environment.",
+        tags: ["priv-esc", "os", "lab"],
+        tools: ["Linux or Windows VM", "Privilege escalation checklists"],
+        goal: "Identify misconfigurations that allow privilege escalation and ways to fix them.",
+        steps: [
+          "Gather system information such as services, scheduled tasks, and permissions.",
+          "Test common escalation vectors like weak services or misconfigured sudo.",
+          "Confirm escalation only on lab machines you own.",
+          "Write a remediation list to harden the environment."
+        ]
+      },
+      {
+        id: 55,
+        title: "Metasploit Basics",
+        difficulty: "intermediate",
+        description: "Use Metasploit modules against deliberately vulnerable lab targets.",
+        tags: ["metasploit", "exploit", "framework"],
+        tools: ["Metasploit", "Vulnerable VM"],
+        goal: "Understand how exploits and payloads are orchestrated in a framework.",
+        steps: [
+          "Configure Metasploit to talk to a lab-only vulnerable host.",
+          "Select a module and verify version matches the target.",
+          "Execute the exploit and observe session behavior.",
+          "Document safe usage guidelines and patching steps."
+        ]
+      },
+      {
+        id: 56,
+        title: "Exploring Directory Traversal",
+        difficulty: "intermediate",
+        description: "Demonstrate directory traversal against a lab web app to see how path handling can be abused.",
+        tags: ["web", "files", "traversal"],
+        tools: ["DVWA or custom vulnerable app", "Browser"],
+        goal: "Recognize insecure file path usage and fix it.",
+        steps: [
+          "Deploy a test app that mishandles file path input.",
+          "Craft payloads that attempt to read unintended files.",
+          "Identify which protections stop traversal attacks.",
+          "Summarize secure file access patterns."
+        ]
+      },
+      {
+        id: 57,
+        title: "Session Hijacking in HTTP",
+        difficulty: "intermediate",
+        description: "Study how weak session handling can lead to hijacking, using only lab-controlled accounts.",
+        tags: ["sessions", "web", "http"],
+        tools: ["Burp Suite", "Browser", "Lab app"],
+        goal: "Understand how cookies and tokens protect sessions.",
+        steps: [
+          "Inspect session cookies and headers for a lab app.",
+          "Experiment with copying or modifying session tokens in your own browser.",
+          "Observe how secure attributes like HttpOnly and Secure change behavior.",
+          "Document best practices for session management."
+        ]
+      },
+      {
+        id: 58,
+        title: "Exploiting CSRF Vulnerabilities",
+        difficulty: "intermediate",
+        description: "Demonstrate CSRF against a lab web app lacking token protections.",
+        tags: ["web", "csrf", "forms"],
+        tools: ["Browser", "Burp Suite", "Lab app"],
+        goal: "Learn how cross-site request forgery works and how to prevent it.",
+        steps: [
+          "Identify a state‑changing endpoint in a test application.",
+          "Build a simple CSRF proof-of-concept page targeting your own account.",
+          "Verify whether anti-CSRF tokens or same-site cookies block the attack.",
+          "Record implementation strategies for defenses."
+        ]
+      },
+      {
+        id: 59,
+        title: "Setting Up a C2 Server Lab",
+        difficulty: "intermediate",
+        description: "Create a command-and-control lab using safe tooling to understand traffic patterns.",
+        tags: ["c2", "infrastructure", "lab"],
+        tools: ["C2 framework in lab", "Monitoring tools"],
+        goal: "Observe how C2 traffic looks from both attacker and defender perspectives.",
+        steps: [
+          "Deploy a C2 framework on an isolated network segment.",
+          "Connect only lab agents from hosts you control.",
+          "Capture traffic with Wireshark or Zeek for analysis.",
+          "Document blue-team detection ideas and network controls."
+        ]
+      },
+      {
+        id: 60,
+        title: "SSL Stripping with Bettercap",
+        difficulty: "intermediate",
+        description: "Simulate SSL stripping in a lab network to understand downgrade attacks.",
+        tags: ["bettercap", "ssl", "mitm"],
+        tools: ["Bettercap", "Lab router", "Test clients"],
+        goal: "See how insecure configurations allow traffic to be downgraded.",
+        steps: [
+          "Set up Bettercap on a dedicated lab host.",
+          "Route controlled client traffic through the tool.",
+          "Observe how HTTPS enforcement prevents stripping.",
+          "Capture mitigation techniques like HSTS and secure configs."
+        ]
+      },
+      {
+        id: 61,
+        title: "Wireless Network Hacking Lab",
+        difficulty: "intermediate",
+        description: "Experiment with wireless security on your own lab access point and clients.",
+        tags: ["wifi", "lab", "security"],
+        tools: ["aircrack-ng", "Bettercap", "Lab AP"],
+        goal: "Explore how legacy wireless configurations can be attacked and improved.",
+        steps: [
+          "Configure a lab AP with test credentials and legacy security.",
+          "Run capture tools against your own traffic and handshake.",
+          "Attempt offline cracking of captured material in a safe environment.",
+          "Upgrade security and document improved posture."
+        ]
+      },
+      {
+        id: 62,
+        title: "Code Injection in Web Applications",
+        difficulty: "intermediate",
+        description: "Investigate code injection patterns in lab web apps and how to prevent them.",
+        tags: ["web", "code-injection", "security"],
+        tools: ["Burp Suite", "Custom lab app"],
+        goal: "Identify unsafe dynamic execution paths in server-side code.",
+        steps: [
+          "Deploy a test app that evaluates user input unsafely.",
+          "Craft payloads that attempt to trigger code execution.",
+          "Verify how strict validation and sandboxing block injection.",
+          "Record safe coding guidelines and review checklists."
+        ]
+      },
+      {
+        id: 63,
+        title: "Advanced Social Engineering Toolkit (SET)",
+        difficulty: "intermediate",
+        description: "Use SET in a purely controlled environment to understand pre-built social engineering workflows.",
+        tags: ["social-engineering", "toolkit", "awareness"],
+        tools: ["SET", "Kali Linux"],
+        goal: "Gain familiarity with SET modules while keeping usage ethical and lab‑only.",
+        steps: [
+          "Launch SET on a lab machine and explore module categories.",
+          "Generate sample campaigns targeting only lab accounts you control.",
+          "Review how payloads and templates are built.",
+          "Document strong policy boundaries for real-world environments."
+        ]
+      },
+      {
+        id: 64,
+        title: "Password Cracking with Hydra",
+        difficulty: "intermediate",
+        description: "Scale up controlled password attacks against lab services using Hydra.",
+        tags: ["hydra", "auth", "bruteforce"],
+        tools: ["Hydra", "Wordlists", "Lab services"],
+        goal: "Explore authentication attack tuning and detection opportunities.",
+        steps: [
+          "Enumerate login services on your lab network.",
+          "Run constrained hydra attacks against your own accounts.",
+          "Monitor logs and IDS alerts during the activity.",
+          "Capture lessons for rate limiting and account lockouts."
+        ]
+      },
+      {
+        id: 65,
+        title: "Network Mapping with Netdiscover",
+        difficulty: "intermediate",
+        description: "Use Netdiscover to quickly identify active hosts on a subnet.",
+        tags: ["netdiscover", "recon", "network"],
+        tools: ["Netdiscover", "Lab subnet"],
+        goal: "Compare Netdiscover’s output and capabilities with Nmap host discovery.",
+        steps: [
+          "Run Netdiscover across your lab range.",
+          "Record discovered hosts and MAC addresses.",
+          "Compare results to previous Nmap scans.",
+          "Note scenarios where each tool is preferable."
+        ]
+      },
+      {
+        id: 66,
+        title: "SQL Injection Exploitation with SQLMap",
+        difficulty: "intermediate",
+        description: "Automate SQL injection testing and exploitation with SQLMap against lab-only targets.",
+        tags: ["sqlmap", "sql", "automation"],
+        tools: ["SQLMap", "Vulnerable lab app"],
+        goal: "See how SQLMap enumerates databases and structures during tests.",
+        steps: [
+          "Identify a lab-only vulnerable parameter.",
+          "Run SQLMap in safe, read‑only modes to enumerate databases.",
+          "Export sample table contents from a test database.",
+          "Write mitigation steps such as input validation and least privilege."
+        ]
+      },
+      {
+        id: 67,
+        title: "File Upload Exploitation Lab",
+        difficulty: "intermediate",
+        description: "Explore how insecure file upload handling can lead to exploitation in a lab environment.",
+        tags: ["web", "uploads", "validation"],
+        tools: ["Vulnerable lab app", "Burp Suite"],
+        goal: "Learn safe patterns for handling user-uploaded content.",
+        steps: [
+          "Deploy a web app that accepts file uploads.",
+          "Test extension, type, and size restrictions.",
+          "Demonstrate how weak validation allows dangerous uploads.",
+          "Document hardened configuration and validation approaches."
+        ]
+      },
+      {
+        id: 68,
+        title: "ARP Poisoning and MITM Attack Lab",
+        difficulty: "intermediate",
+        description: "Simulate ARP poisoning to study man‑in‑the‑middle traffic on your lab network.",
+        tags: ["arp", "mitm", "network"],
+        tools: ["Bettercap or arpspoof", "Wireshark"],
+        goal: "Understand ARP spoofing behavior and how to detect it.",
+        steps: [
+          "Set up an isolated lab subnet with dedicated victim and attacker VMs.",
+          "Use a tool to poison ARP caches between lab hosts.",
+          "Capture traffic and confirm interception patterns.",
+          "Record defensive techniques such as static ARP mappings and monitoring."
+        ]
+      },
+      {
+        id: 69,
+        title: "Exploit Development Basics",
+        difficulty: "intermediate",
+        description: "Work through a simple exploit development exercise on a custom vulnerable binary.",
+        tags: ["exploit-dev", "binary", "lab"],
+        tools: ["GDB", "pwntools", "Vulnerable binary"],
+        goal: "Gain comfort with controlled exploitation workflow steps.",
+        steps: [
+          "Compile a deliberately vulnerable program in your lab.",
+          "Identify overflow points and offsets using GDB.",
+          "Craft a payload that exercises control safely.",
+          "Document each stage from crash to reliable exploit."
+        ]
+      },
+      {
+        id: 70,
+        title: "Reconnaissance with Shodan",
+        difficulty: "intermediate",
+        description: "Use Shodan to explore internet-exposed services conceptually, focusing on understanding rather than targeting.",
+        tags: ["shodan", "recon", "exposure"],
+        tools: ["Shodan", "Browser"],
+        goal: "Recognize patterns in exposed services and misconfigurations.",
+        steps: [
+          "Search for generic service banners and device types.",
+          "Analyze common misconfiguration themes from public data.",
+          "Avoid direct interaction with sensitive systems; work from metadata only.",
+          "Write recommendations for hardening lab and production environments."
+        ]
+      },
+      {
+        id: 71,
+        title: "Web Application Security with ZAP",
+        difficulty: "intermediate",
+        description: "Run OWASP ZAP scans against lab applications and review findings.",
+        tags: ["zap", "web", "vuln-scanning"],
+        tools: ["OWASP ZAP", "Lab web apps"],
+        goal: "Learn how automated web scanners identify common weaknesses.",
+        steps: [
+          "Configure ZAP to proxy traffic for a lab app.",
+          "Run a baseline and active scan in controlled mode.",
+          "Review and triage discovered issues.",
+          "Write a remediation plan for key findings."
+        ]
+      },
+      {
+        id: 72,
+        title: "Automated Vulnerability Scanning with OpenVAS",
+        difficulty: "intermediate",
+        description: "Deploy OpenVAS to scan lab hosts and interpret results.",
+        tags: ["openvas", "scanner", "reports"],
+        tools: ["OpenVAS", "Lab subnet"],
+        goal: "Understand how network vulnerability scanners categorize and report issues.",
+        steps: [
+          "Install and configure OpenVAS in your lab.",
+          "Run scans against selected lab hosts.",
+          "Review severity ratings and false positives.",
+          "Summarize how to operationalize remediation efforts."
+        ]
+      },
+
+      // ── ADVANCED ROADMAP (71–100) ─────────────────────────────────────────
+      {
+        id: 73,
+        title: "Cross‑Site Scripting Automation",
+        difficulty: "advanced",
+        description: "Automate safe XSS testing against lab web apps using scripts and tooling.",
+        tags: ["xss", "automation", "web"],
+        tools: ["Burp Suite", "Custom scripts"],
+        goal: "Scale XSS discovery in a controlled environment.",
+        steps: [
+          "Define payload sets appropriate for lab testing.",
+          "Automate injection across selected parameters.",
+          "Log and categorize successful conditions.",
+          "Capture guidance for production-safe testing."
+        ]
+      },
+      {
+        id: 74,
+        title: "Cross‑Site Request Forgery Automation",
+        difficulty: "advanced",
+        description: "Build tooling to streamline CSRF testing for lab applications.",
+        tags: ["csrf", "automation", "web"],
+        tools: ["Python", "Burp macros"],
+        goal: "Reduce manual CSRF test effort while respecting security boundaries.",
+        steps: [
+          "Identify state‑changing endpoints in your lab apps.",
+          "Automate generation of CSRF proof-of-concept pages.",
+          "Test protection mechanisms such as tokens and same‑site cookies.",
+          "Summarize lessons for secure-by-default design."
+        ]
+      },
+      {
+        id: 75,
+        title: "Exploit Vulnerable APIs",
+        difficulty: "advanced",
+        description: "Explore insecure API patterns in lab services and how to fix them.",
+        tags: ["api", "security", "testing"],
+        tools: ["Postman or Hoppscotch", "Lab APIs"],
+        goal: "Identify broken auth and input handling in API designs.",
+        steps: [
+          "Deploy or identify an intentionally vulnerable lab API.",
+          "Test authentication, authorization, and input validation.",
+          "Demonstrate controlled exploitation scenarios.",
+          "Document secure patterns for API design."
+        ]
+      },
+      {
+        id: 76,
+        title: "Custom Malware Development Lab",
+        difficulty: "advanced",
+        description: "Design controlled malware-style behavior for research on a dedicated lab network.",
+        tags: ["malware-lab", "behavior", "analysis"],
+        tools: ["Python or C", "Sandboxed lab VMs"],
+        goal: "Study malware techniques without impacting real systems.",
+        steps: [
+          "Define strictly lab‑only objectives and boundaries.",
+          "Implement features like persistence or C2 in a sandboxed environment.",
+          "Track behavior using EDR and logging tools.",
+          "Write a detailed analysis and mitigation report."
+        ]
+      },
+      {
+        id: 77,
+        title: "Developing a Remote Keylogger",
+        difficulty: "advanced",
+        description: "Extend your keylogger lab project with remote reporting capabilities.",
+        tags: ["keylogger", "exfil", "lab"],
+        tools: ["Python", "Secure lab server"],
+        goal: "Understand exfiltration channels while keeping data limited to test inputs.",
+        steps: [
+          "Add encrypted transmission of logs to a lab server.",
+          "Monitor network patterns with Wireshark or Zeek.",
+          "Assess detection opportunities at host and network layers.",
+          "Document containment and defense recommendations."
+        ]
+      },
+      {
+        id: 78,
+        title: "Post‑Exploitation with Metasploit",
+        difficulty: "advanced",
+        description: "Chain post-exploitation modules after initial access on lab targets.",
+        tags: ["post-exploitation", "metasploit", "lab"],
+        tools: ["Metasploit", "Lab VMs"],
+        goal: "Explore realistic post-compromise workflows.",
+        steps: [
+          "Gain controlled access to a lab host via a known exploit.",
+          "Use meterpreter and related modules to enumerate the environment.",
+          "Simulate lateral movement in a segmented lab.",
+          "Capture detection and response playbook ideas."
+        ]
+      },
+      {
+        id: 79,
+        title: "Exploit Evasion Techniques",
+        difficulty: "advanced",
+        description: "Experiment with bypassing basic defenses in your lab to understand evasive behavior.",
+        tags: ["evasion", "defense", "lab"],
+        tools: ["Metasploit", "Custom payloads", "EDR"],
+        goal: "Learn how defenses and attackers adapt to each other.",
+        steps: [
+          "Test payload encoding and obfuscation against endpoint security.",
+          "Observe which techniques still trigger alerts.",
+          "Tune detection rules to catch evasive behavior.",
+          "Write lessons on sustainable defense strategies."
+        ]
+      },
+      {
+        id: 80,
+        title: "Advanced Ransomware Simulation",
+        difficulty: "advanced",
+        description: "Simulate ransomware-style behavior in a lab to study detection and recovery.",
+        tags: ["ransomware-lab", "crypto", "response"],
+        tools: ["Custom scripts", "Backups", "Isolation"],
+        goal: "Understand impact patterns and resilience strategies.",
+        steps: [
+          "Define a lab‑only dataset and backup strategy.",
+          "Implement file encryption and key handling in code.",
+          "Observe detection signals and restoration workflows.",
+          "Document full incident response lifecycle in the lab."
+        ]
+      },
+      {
+        id: 81,
+        title: "Browser Exploitation Lab",
+        difficulty: "advanced",
+        description: "Investigate browser exploitation concepts using older or intentionally vulnerable builds in a sandbox.",
+        tags: ["browser", "exploit", "lab"],
+        tools: ["Old browser VMs", "Exploit PoCs"],
+        goal: "Study how browser vulnerabilities manifest and are patched.",
+        steps: [
+          "Deploy vulnerable browser versions on isolated VMs.",
+          "Execute safe proof-of-concept exploits under close monitoring.",
+          "Compare behavior against patched versions.",
+          "Write a timeline and mitigation summary."
+        ]
+      },
+      {
+        id: 82,
+        title: "Wireless Deauthentication Attack Lab",
+        difficulty: "advanced",
+        description: "Simulate deauth attacks against your own lab AP and clients.",
+        tags: ["wifi", "deauth", "lab"],
+        tools: ["aircrack-ng", "Lab AP", "Test devices"],
+        goal: "Understand how deauth attacks disrupt connections and how to defend.",
+        steps: [
+          "Configure a dedicated AP and clients in a closed lab.",
+          "Run deauth tests and track connection stability.",
+          "Monitor logs and IDS alerts triggered by the activity.",
+          "Capture defense strategies like 802.11w and monitoring."
+        ]
+      },
+      {
+        id: 83,
+        title: "Developing a Python RAT",
+        difficulty: "advanced",
+        description: "Create a remote access tool in Python for research on your own lab hosts.",
+        tags: ["rat-lab", "remote-access", "python"],
+        tools: ["Python", "Lab server", "Client VMs"],
+        goal: "Explore RAT features while staying isolated and ethical.",
+        steps: [
+          "Implement basic command execution and file operations.",
+          "Add authentication and encryption for lab traffic.",
+          "Observe RAT behavior from defender tooling.",
+          "Document comprehensive mitigations and hardening steps."
+        ]
+      },
+      {
+        id: 84,
+        title: "Reverse Shell Development",
+        difficulty: "advanced",
+        description: "Build and test custom reverse shells in a controlled network.",
+        tags: ["reverse-shell", "networking", "lab"],
+        tools: ["Python or Bash", "Netcat", "Lab hosts"],
+        goal: "Understand reverse shell mechanics and detection points.",
+        steps: [
+          "Implement a basic reverse shell in your language of choice.",
+          "Connect lab clients back to a listener you control.",
+          "Monitor host and network telemetry during sessions.",
+          "Capture detection and blocking techniques."
+        ]
+      },
+      {
+        id: 85,
+        title: "Code Injection in DLL Files",
+        difficulty: "advanced",
+        description: "Research DLL injection techniques on a Windows lab VM.",
+        tags: ["dll-injection", "windows", "lab"],
+        tools: ["Windows VM", "Process Explorer", "Custom DLLs"],
+        goal: "Study how DLL injection works and how to defend against it.",
+        steps: [
+          "Set up a test Windows VM with monitoring tools.",
+          "Implement basic DLL injection for lab processes.",
+          "Observe process behavior and memory changes.",
+          "Document mitigations such as code integrity and monitoring."
+        ]
+      },
+      {
+        id: 86,
+        title: "Privilege Escalation on Linux",
+        difficulty: "advanced",
+        description: "Perform a deep privilege escalation study on Linux lab hosts.",
+        tags: ["linux", "priv-esc", "lab"],
+        tools: ["LinPEAS", "Manual enumeration", "Linux VMs"],
+        goal: "Identify complex escalation paths and mitigation strategies.",
+        steps: [
+          "Run automated enumeration tools to gather candidate vectors.",
+          "Manually verify promising escalation paths.",
+          "Patch or reconfigure systems to close each issue.",
+          "Summarize lessons learned in a hardened baseline document."
+        ]
+      },
+      {
+        id: 87,
+        title: "Exploiting Windows SMB Vulnerabilities",
+        difficulty: "advanced",
+        description: "Investigate SMB-related vulnerabilities on Windows lab machines.",
+        tags: ["smb", "windows", "exploit"],
+        tools: ["Windows VMs", "Metasploit modules", "Wireshark"],
+        goal: "Understand SMB risks and patching practices.",
+        steps: [
+          "Set up older Windows builds in a strictly isolated environment.",
+          "Use safe exploit modules to demonstrate SMB issues.",
+          "Monitor traffic and system logs during attacks.",
+          "Apply patches and verify vulnerabilities are closed."
+        ]
+      },
+      {
+        id: 88,
+        title: "Custom Brute‑Force Tools with Python",
+        difficulty: "advanced",
+        description: "Write Python tools that perform controlled brute‑force testing against lab services.",
+        tags: ["python", "bruteforce", "auth"],
+        tools: ["Python", "Lab services"],
+        goal: "Learn how custom tooling can simulate attacker behavior.",
+        steps: [
+          "Implement flexible credential cycling logic targeting lab endpoints.",
+          "Integrate rate limiting and safety controls.",
+          "Compare your tool with off‑the‑shelf solutions.",
+          "Document blue‑team detection and blocking ideas."
+        ]
+      },
+      {
+        id: 89,
+        title: "Advanced SQL Injection Automation",
+        difficulty: "advanced",
+        description: "Enhance SQL injection automation workflows beyond basic SQLMap usage.",
+        tags: ["sql", "automation", "db"],
+        tools: ["Python", "SQLMap", "Lab apps"],
+        goal: "Build repeatable SQL injection testing pipelines.",
+        steps: [
+          "Integrate SQLMap or similar tools into scripts for batch testing.",
+          "Add reporting that highlights critical issues.",
+          "Run pipelines against multiple lab applications.",
+          "Summarize how to adapt the workflow for secure engagements."
+        ]
+      },
+      {
+        id: 90,
+        title: "Creating Persistent Backdoors",
+        difficulty: "advanced",
+        description: "Investigate persistence mechanisms on lab hosts for defense-focused research.",
+        tags: ["persistence", "startup", "lab"],
+        tools: ["Windows and Linux VMs", "Autoruns", "systemd"],
+        goal: "Recognize and remove common persistence techniques.",
+        steps: [
+          "Implement startup entries or services that persist across reboots.",
+          "Monitor host behavior and system logs.",
+          "Develop detection rules and hardening steps.",
+          "Document procedures for incident cleanup."
+        ]
+      },
+      {
+        id: 91,
+        title: "NTLM Hash Extraction",
+        difficulty: "advanced",
+        description: "Extract and analyze NTLM hashes on Windows lab machines you own.",
+        tags: ["ntlm", "hashes", "windows"],
+        tools: ["Impacket", "Mimikatz-like tools", "Windows lab"],
+        goal: "Understand NTLM handling and related risks.",
+        steps: [
+          "Configure a dedicated Windows lab domain or standalone host.",
+          "Use tools to extract NTLM material under controlled conditions.",
+          "Test offline cracking with lab-only passwords.",
+          "Draft recommendations for credential protection."
+        ]
+      },
+      {
+        id: 92,
+        title: "Social Media Phishing Campaigns Lab",
+        difficulty: "advanced",
+        description: "Design simulated social media phishing campaigns for awareness training.",
+        tags: ["phishing", "social-media", "awareness"],
+        tools: ["Documentation", "Training platform"],
+        goal: "Understand how social channels can be abused without targeting real users.",
+        steps: [
+          "Study common social media phishing techniques.",
+          "Create mock campaigns for fictional organizations.",
+          "Analyze likely victim responses and defense options.",
+          "Summarize countermeasures and awareness messaging."
+        ]
+      },
+      {
+        id: 93,
+        title: "Advanced Network Tunneling",
+        difficulty: "advanced",
+        description: "Explore network tunneling techniques through lab proxies and VPNs.",
+        tags: ["tunneling", "network", "lab"],
+        tools: ["SSH", "VPN", "Proxychains"],
+        goal: "Understand how tunnels bypass controls and how to detect them.",
+        steps: [
+          "Set up multiple network segments in your lab.",
+          "Experiment with SSH, VPN, and application-level tunneling.",
+          "Monitor traffic patterns and log entries.",
+          "Document detection and prevention strategies."
+        ]
+      },
+      {
+        id: 94,
+        title: "Developing WAF Bypass Techniques",
+        difficulty: "advanced",
+        description: "Test web application firewall rules in a lab to design and prevent bypasses.",
+        tags: ["waf", "bypass", "web"],
+        tools: ["ModSecurity or cloud WAF lab", "Burp Suite"],
+        goal: "See how WAF rules can be tuned to resist advanced payloads.",
+        steps: [
+          "Deploy a WAF-protected lab application.",
+          "Craft payload variations to test rule coverage.",
+          "Review logs and blocked requests.",
+          "Iteratively tune rules and record best practices."
+        ]
+      },
+      {
+        id: 95,
+        title: "Password Spraying Attack Simulation",
+        difficulty: "advanced",
+        description: "Simulate password spraying in a lab to understand exposure and defense.",
+        tags: ["password-spraying", "auth", "lab"],
+        tools: ["Custom scripts", "AD or local auth lab"],
+        goal: "Assess how spraying differs from traditional brute‑force.",
+        steps: [
+          "Configure accounts with test passwords and policies.",
+          "Run low‑and‑slow spraying patterns against your own lab domain.",
+          "Monitor logs, SIEM, and lockout events.",
+          "Document detection logic and mitigation options."
+        ]
+      },
+      {
+        id: 96,
+        title: "Reverse Engineering for Malware Analysis",
+        difficulty: "advanced",
+        description: "Dissect malware-style binaries in a controlled lab to understand internals.",
+        tags: ["reverse-engineering", "malware", "lab"],
+        tools: ["Ghidra or IDA", "Sandboxed VMs"],
+        goal: "Improve static and dynamic analysis skills.",
+        steps: [
+          "Acquire or build sample malware-like binaries for lab testing.",
+          "Perform static analysis to map functions and structures.",
+          "Run controlled dynamic analysis in sandboxes.",
+          "Write detailed reports on behavior and indicators."
+        ]
+      },
+      {
+        id: 97,
+        title: "Automating Reconnaissance with Python",
+        difficulty: "advanced",
+        description: "Build Python tools to automate reconnaissance workflows.",
+        tags: ["python", "recon", "automation"],
+        tools: ["Python", "Lab targets"],
+        goal: "Turn manual recon tasks into repeatable tooling.",
+        steps: [
+          "List recon tasks you perform frequently.",
+          "Implement modules to handle DNS, HTTP, and network probes.",
+          "Combine modules into a cohesive recon pipeline.",
+          "Capture lessons on safe and ethical automation."
+        ]
+      },
+      {
+        id: 98,
+        title: "Custom Protocol Exploitation Lab",
+        difficulty: "advanced",
+        description: "Investigate custom or lesser-known protocols in your lab for exploitation potential.",
+        tags: ["protocols", "exploit", "lab"],
+        tools: ["Wireshark", "Scapy", "Custom services"],
+        goal: "Understand how protocol design affects security.",
+        steps: [
+          "Select a protocol or build a simple custom one.",
+          "Map message flows and field meanings.",
+          "Design controlled exploitation scenarios.",
+          "Document recommendations for protocol hardening."
+        ]
+      },
+      {
+        id: 99,
+        title: "Bypassing Two‑Factor Authentication",
+        difficulty: "advanced",
+        description: "Study 2FA abuse patterns conceptually and in lab setups.",
+        tags: ["2fa", "auth", "lab"],
+        tools: ["Test 2FA setup", "Lab accounts"],
+        goal: "Recognize weaknesses in second-factor implementations.",
+        steps: [
+          "Research known 2FA bypass scenarios like MFA fatigue.",
+          "Configure a lab service with basic 2FA.",
+          "Simulate abuse patterns only against your own accounts.",
+          "Document guidance for robust multi‑factor designs."
+        ]
+      },
+      {
+        id: 100,
+        title: "Code Injection Exploits for Shellcode Execution",
+        difficulty: "advanced",
+        description: "Develop code injection scenarios leading to controlled shellcode execution in a sandbox.",
+        tags: ["shellcode", "code-injection", "lab"],
+        tools: ["Assembler or C", "GDB", "Lab binaries"],
+        goal: "Deepen your exploit development skills with shellcode.",
+        steps: [
+          "Build or select a vulnerable lab binary suitable for shellcode work.",
+          "Craft payloads that inject and run shellcode safely.",
+          "Trace execution flow and memory changes.",
+          "Summarize mitigations such as DEP, ASLR, and compiler hardening."
+        ]
+      },
+      {
+        id: 101,
+        title: "Zero‑Day Vulnerability Research Lab",
+        difficulty: "advanced",
+        description: "Create a structured lab workflow for researching undisclosed vulnerabilities responsibly.",
+        tags: ["zero-day", "research", "lab"],
+        tools: ["Fuzzers", "Code review tools", "Lab apps"],
+        goal: "Practice responsible research workflows even when no public advisory exists.",
+        steps: [
+          "Define scope and rules of engagement for lab-only targets.",
+          "Run fuzzing and deep code review against selected components.",
+          "Record potential issues and responsible disclosure processes.",
+          "Document a repeatable research playbook."
+        ]
+      },
+      {
+        id: 102,
+        title: "End‑to‑End Pentest Simulation",
+        difficulty: "advanced",
+        description: "Design and execute a full engagement simulation against your own lab environment.",
+        tags: ["pentest", "end-to-end", "lab"],
+        tools: ["Recon tools", "Exploit frameworks", "Reporting templates"],
+        goal: "Tie together reconnaissance, exploitation, post‑exploitation, and reporting in one project.",
+        steps: [
+          "Define scope and objectives for a lab‑only environment.",
+          "Perform recon, initial access, and post‑exploitation.",
+          "Run detection and response simulations.",
+          "Produce a full report with findings and remediation actions."
+        ]
+      }
     // ── Persistence via localStorage ──────────────────────────────────────────
     const STORAGE_KEY = 'hackingTracker_v1';
 
