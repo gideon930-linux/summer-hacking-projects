@@ -2397,19 +2397,25 @@
 
     function render() {
       const filtered    = projects.filter(matchesProject);
-      const beginner    = filtered.filter(p => p.difficulty === 'beginner');
-      const intermediate = filtered.filter(p => p.difficulty === 'intermediate');
-
-      renderGrid(beginnerGrid,     beginner,     'No beginner projects match your current filter.');
-      renderGrid(intermediateGrid, intermediate, 'No intermediate projects match your current filter.');
-
-      beginnerSection.style.display    = 'block';
-      intermediateSection.style.display = 'block';
-
-      const bTotal = projects.filter(p => p.difficulty === 'beginner').length;
-      const iTotal = projects.filter(p => p.difficulty === 'intermediate').length;
-      beginnerCount.textContent    = `${bTotal} projects`;
-      intermediateCount.textContent = `${iTotal} projects`;
+    const beginner = filtered.filter(p => p.difficulty === 'beginner');
+    const intermediate = filtered.filter(p => p.difficulty === 'intermediate');
+    const advanced = filtered.filter(p => p.difficulty === 'advanced');
+    
+    renderGrid(beginnerGrid, beginner, 'No beginner projects match your current filter.');
+    renderGrid(intermediateGrid, intermediate, 'No intermediate projects match your current filter.');
+    renderGrid(advancedGrid, advanced, 'No advanced projects match your current filter.');
+    
+    beginnerSection.style.display = 'block';
+    intermediateSection.style.display = 'block';
+    advancedSection.style.display = 'block';
+    
+    const bTotal = projects.filter(p => p.difficulty === 'beginner').length;
+    const iTotal = projects.filter(p => p.difficulty === 'intermediate').length;
+    const aTotal = projects.filter(p => p.difficulty === 'advanced').length;
+    
+    beginnerCount.textContent = `${bTotal} projects`;
+    intermediateCount.textContent = `${iTotal} projects`;
+    advancedCount.textContent = `${aTotal} projects`;
 
       updateStats();
       syncFilterUI();
